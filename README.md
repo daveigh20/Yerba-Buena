@@ -1,33 +1,63 @@
-# Herb & Tea Benefits Search
+# Yerba Buena
 
-A searchable lookup of herbs and teas and their traditional wellness benefits.
-Search by herb (e.g. "ginger") or by benefit (e.g. "sleep").
+A React + TypeScript web app for herbs, remedies, and everyday well-being.
 
-## Files
-- `herb_search.py` – Python version (search logic, Streamlit section, command-line tool)
-- `HerbSearch.jsx` – React version (uses Tailwind classes)
-- `requirements.txt` – Python dependencies (Streamlit)
+## Getting started
 
-## Python usage
+You need [Node.js](https://nodejs.org/) 18 or newer.
+
 ```bash
-pip install -r requirements.txt
-streamlit run herb_search.py        # standalone page
-python herb_search.py ginger        # command line
+npm install
+npm run dev        # start the dev server at http://localhost:5173
+npm test           # run unit tests
+npm run build      # type-check and build for production (output in dist/)
 ```
-In an existing Streamlit app:
-```python
-from herb_search import render
-render()
+
+## Features
+
+| Route | Feature |
+| --- | --- |
+| `/herbs` | **Herb Search**: search 43 herbs and teas by name, other names, scientific name, or benefit. Filter by herbal vs. true tea. Matching remedies appear below the herbs. |
+| `/herbs/:herbId` | **Herb page**: description, parts used, flavor, how to use it, traditional benefits, cautions, the remedies that use it, and herbs it pairs with. |
+| `/remedies` | **Remedies**: 25 simple teas, syrups, and steams, with a filter. |
+| `/remedies/:remedyId` | **Remedy page**: ingredients (linked to herb pages), steps, and cautions for the remedy and every herb in it. |
+| `/trail-map` | **Trail Map**: route stops on an OpenStreetMap map. Edit the stops in `src/features/trail-map/stops.ts`. |
+| `/check-in` | **Well-being Check-in**: a quick "how are you feeling today?" check-in. |
+
+Coming soon: sign-up and log-in, avatar, workouts, and habit tracker.
+
+## Project structure
+
 ```
-For other frameworks, use `from herb_search import search`.
+src/
+  main.tsx, App.tsx       # entry point and routes
+  styles.css              # global styles (light and dark mode)
+  components/             # shared UI: layout, back link
+  hooks/                  # shared hooks
+  pages/                  # home and not-found pages
+  features/
+    herbs/
+      data/herbs.ts       # herb profiles (the HerbId type comes from this list)
+      data/benefits.ts    # benefit list from the source article, verbatim
+      data/remedies.ts    # remedy recipes
+      data/index.ts       # catalog helpers: getHerb, remediesForHerb, ...
+      lib/                # search and text normalization (with tests)
+      components/, pages/
+    trail-map/
+    wellbeing/
+```
 
-## React usage
-Copy `HerbSearch.jsx` into your project and render `<HerbSearch />`.
+New features go in their own folder under `src/features/` and get a route in `src/App.tsx`.
 
-## Source
-Data adapted from The Tea House on Los Rios, "The Power of Tea: 100 Health and Wellness Benefits":
-https://theteahouseonlosrios.com/blogs/news/the-power-of-tea-100-health-and-wellness-benefits
+### Adding an herb or remedy
 
-These are traditional and general wellness claims from a tea retailer, not medical advice.
-Talk with a healthcare professional before using herbs, especially if you're pregnant,
-nursing, or taking medication.
+1. Add the id to `HERB_IDS` and its profile to `HERB_PROFILES` in `data/herbs.ts`. TypeScript reports an error if either one is missing.
+2. To give it benefits, add a line to `RAW` in `data/benefits.ts` and map the name in `SOURCE_NAME_TO_ID`.
+3. Add remedies to `data/remedies.ts`. Set `herbId` on an ingredient to link it to an herb page.
+4. Run `npm test`. The catalog tests check that every herb has benefits and cautions, and that no remedy uses an herb marked as not for homemade remedies.
+
+## Sources and disclaimer
+
+Herb benefits are adapted from The Tea House on Los Rios, ["The Power of Tea: 100 Health and Wellness Benefits"](https://theteahouseonlosrios.com/blogs/news/the-power-of-tea-100-health-and-wellness-benefits). The herb descriptions, cautions, and remedies were written for this app from general herbal knowledge. They should be reviewed before launch.
+
+This information is educational and isn't medical advice. Talk with a healthcare professional before using herbs, especially if you're pregnant, nursing, or taking medication.
