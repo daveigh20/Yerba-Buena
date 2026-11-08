@@ -9,12 +9,21 @@ const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
  * 2. If the browser says where the request came from (Origin / Sec-Fetch-Site), it must be us.
  * The session cookie is also SameSite=Lax, which stops it being sent on cross-site POSTs.
  */
+/** An allowed origin may end in ":*" to match any port, e.g. "http://localhost:*". */
+export function originAllowed(origin: string, allowedOrigins: string[]): boolean {
+  return allowedOrigins.some((allowed) => {
+    if (!allowed.endsWith(":*")) return allowed === origin;
+    const prefix = allowed.slice(0, -1); // "http://localhost:"
+    return origin.startsWith(prefix) && /^\d+$/.test(origin.slice(prefix.length));
+  });
+}
+
 export function csrfProtection(allowedOrigins: string[]) {
   return (req: Request, res: Response, next: NextFunction) => {
     if (SAFE_METHODS.has(req.method)) return next();
 
     const origin = req.get("origin");
-    if ((origin && !allowedOrigins.includes(origin)) || req.get("sec-fetch-site") === "cross-site") {
+    if ((origin && !originAllowed(origin, allowedOrigins)) || req.get("sec-fetch-site") === "cross-site") {
       res.status(403).json({ error: "Cross-site request blocked." });
       return;
     }

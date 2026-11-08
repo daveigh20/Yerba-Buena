@@ -46,7 +46,8 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     port,
     databaseUrl: env.DATABASE_URL ?? "postgres://localhost:5432/yerba_buena",
     isProduction,
-    allowedOrigins: origins ?? ["http://localhost:5173", `http://localhost:${port}`],
+    // In development, accept the web app on any local port (Vite moves to 5174, 5175… when 5173 is taken).
+    allowedOrigins: origins ?? ["http://localhost:*", "http://127.0.0.1:*"],
     trustProxy: trustProxyFrom(env.TRUST_PROXY),
     sessionDays: intFrom(env.SESSION_DAYS, 30),
     authRateLimit: intFrom(env.AUTH_RATE_LIMIT, 20),
