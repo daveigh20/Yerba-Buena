@@ -645,6 +645,129 @@ mark {
 .check-in__result .lead {
   margin: 0 0 16px;
 }
+.check-in__result p {
+  margin: 0 0 16px;
+}
+.check-in h2:focus {
+  outline: none;
+}
+.check-in__title {
+  font-size: 1.25rem;
+  margin-bottom: 6px;
+}
+.check-in__subtitle {
+  font-size: 1.15rem;
+  margin-top: 28px;
+}
+.check-in__follow-up .small {
+  margin: 0 0 12px;
+}
+.check-in__topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.check-in__topics .chip {
+  padding: 6px 14px;
+}
+.chip[aria-pressed="true"] {
+  background: var(--brand-soft);
+  border-color: var(--brand);
+  color: var(--brand-strong);
+  font-weight: 600;
+}
+.check-in__label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.check-in__textarea {
+  width: 100%;
+  font: inherit;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  resize: vertical;
+  margin-bottom: 6px;
+}
+.check-in__textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-soft);
+}
+.check-in__actions,
+.check-in__crisis-actions,
+.check-in__resource-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.link-button {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--brand-strong);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.check-in__crisis {
+  background: var(--caution-bg);
+  border: 2px solid var(--caution-border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  color: var(--caution-text);
+  margin-bottom: 16px;
+}
+.check-in__crisis h2 {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+.check-in__crisis p {
+  margin: 0 0 12px;
+}
+.check-in__crisis p:last-child {
+  margin: 12px 0 0;
+}
+.check-in__message {
+  margin: 12px 0;
+}
+.check-in__message .lead {
+  margin: 0 0 8px;
+}
+.check-in__message ul {
+  padding-left: 1.2em;
+}
+.check-in__message li + li {
+  margin-top: 4px;
+}
+.check-in__resources {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  margin: 8px 0 20px;
+}
+.check-in__resource p {
+  margin: 4px 0 12px;
+}
+.check-in__resource-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+.check-in__resource-actions .chip {
+  text-decoration: none;
+}
+.check-in__support > .muted.small {
+  margin: 0 0 16px;
+}
 
 /* ---------- Map ---------- */
 

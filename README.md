@@ -22,7 +22,7 @@ npm run build      # type-check and build for production (output in dist/)
 | `/remedies` | **Remedies**: 25 simple teas, syrups, and steams, with a filter. |
 | `/remedies/:remedyId` | **Remedy page**: ingredients (linked to herb pages), steps, and cautions for the remedy and every herb in it. |
 | `/trail-map` | **Trail Map**: route stops on an OpenStreetMap map. Edit the stops in `src/features/trail-map/stops.ts`. |
-| `/check-in` | **Well-being Check-in**: a quick "how are you feeling today?" check-in. |
+| `/check-in` | **Well-being Check-in**: a quick "how are you feeling today?" check-in. If someone isn't feeling good, it asks what's going on and shows support and helplines that match (for example, grief resources after a loss, or crisis lines if they mention self-harm). Edit topics and helplines in `src/features/wellbeing/support.ts`. |
 
 Coming soon: sign-up and log-in, avatar, workouts, and habit tracker.
 
