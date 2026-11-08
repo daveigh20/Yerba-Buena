@@ -785,3 +785,146 @@ mark {
   margin-top: 16px;
   padding-left: 1.4em;
 }
+
+/* ---------- Accounts (sign up / log in) ---------- */
+
+:root {
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --danger: #ff8a7a;
+    --danger-soft: #3a1d1a;
+  }
+}
+
+.auth-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.button--small {
+  padding: 6px 14px;
+  font-size: 0.9rem;
+}
+.button--block {
+  width: 100%;
+}
+.button:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+
+.auth-card {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 28px;
+}
+.auth-card--wide {
+  max-width: 620px;
+}
+.auth-card h1 {
+  font-size: 2rem;
+}
+.auth-card > .muted {
+  margin: 6px 0 20px;
+}
+.auth-card__switch {
+  margin: 20px 0 0;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.form__section {
+  font-size: 1.05rem;
+  margin-top: 4px;
+}
+.form__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 520px) {
+  .form__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.field__label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0;
+}
+.field__hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.field__error {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--danger);
+}
+
+.input {
+  width: 100%;
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-soft);
+}
+.input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr));
+  gap: 8px 16px;
+  margin-bottom: 6px;
+}
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brand);
+}
+
+.alert {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+.alert--error {
+  background: var(--danger-soft);
+  color: var(--danger);
+}

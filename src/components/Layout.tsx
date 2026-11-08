@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "../features/auth/AuthContext";
 
 const NAV = [
   { to: "/herbs", label: "Herbs" },
@@ -10,6 +11,7 @@ const NAV = [
 
 export default function Layout() {
   const { pathname } = useLocation();
+  const { user } = useAuth();
 
   // Start each new page at the top.
   useEffect(() => {
@@ -38,6 +40,24 @@ export default function Layout() {
               ))}
             </ul>
           </nav>
+          {user !== undefined && (
+            <div className="auth-nav">
+              {user ? (
+                <NavLink to="/account" className="nav__link">
+                  {user.name.split(" ")[0]}
+                </NavLink>
+              ) : (
+                <>
+                  <NavLink to="/login" className="nav__link">
+                    Log in
+                  </NavLink>
+                  <Link to="/signup" className="button button--small">
+                    Sign up
+                  </Link>
+                </>
+              )}
+            </div>
+          )}
         </div>
       </header>
       <main id="main" className="container main">

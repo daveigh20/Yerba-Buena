@@ -8,7 +8,7 @@ const FEATURES = [
   { to: "/check-in", title: "Well-being Check-in", text: "Take a moment to note how you're feeling today." },
 ];
 
-const COMING_SOON = ["Sign up & log in", "Avatar", "Workouts", "Habit Tracker"];
+const COMING_SOON = ["Avatar", "Workouts", "Habit Tracker"];
 
 export default function HomePage() {
   useDocumentTitle(undefined);

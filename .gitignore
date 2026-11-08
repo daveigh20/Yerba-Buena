@@ -10,3 +10,11 @@ coverage/
 !.vscode/extensions.json
 .idea/
 .claude/
+
+# Cloudflare / Wrangler
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+# API build output
+dist-server/

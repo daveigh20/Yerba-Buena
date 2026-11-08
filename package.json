@@ -4,28 +4,54 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "dev": "concurrently -k -n web,api -c green,blue \"npm:dev:web\" \"npm:dev:api\"",
+    "dev:web": "vite",
+    "dev:api": "tsx watch server/src/index.ts",
+    "build": "npm run typecheck && vite build && npm run build:api",
+    "build:api": "rm -rf dist-server && tsc -p server/tsconfig.build.json && cp -R server/migrations dist-server/server/",
+    "start": "NODE_ENV=production node dist-server/server/src/index.js",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit",
+    "db:migrate": "tsx server/src/db/migrate-cli.ts",
+    "typecheck": "tsc --noEmit && tsc -p server/tsconfig.json",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build:web": "tsc --noEmit && vite build",
+    "cf:whoami": "wrangler whoami",
+    "cf:preview": "npm run build:web && wrangler dev",
+    "cf:deploy": "npm run build:web && wrangler deploy"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
     "leaflet": "^1.9.4",
+    "pg": "^8.13.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-leaflet": "^4.2.1",
-    "react-router-dom": "^6.28.0"
+    "react-router-dom": "^6.28.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.2.17",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^5.0.1",
     "@types/leaflet": "^1.9.14",
     "@types/node": "^22.10.1",
+    "@types/pg": "^8.11.10",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@types/supertest": "^6.0.2",
     "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.2",
     "typescript": "~5.6.3",
     "vite": "^5.4.11",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.8",
+    "wrangler": "^4.158.0"
+  },
+  "engines": {
+    "node": ">=20.6"
   }
 }
