@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import herbsHero from "../assets/herbs-hero.svg";
 
 const FEATURES = [
   { to: "/herbs", title: "Herb Search", text: "Look up herbs and teas by name or by what they're traditionally used for." },
@@ -15,11 +16,20 @@ export default function HomePage() {
   return (
     <>
       <section className="hero">
-        <h1>Yerba Buena</h1>
-        <p className="lead">Herbs, remedies, and small habits for everyday well-being.</p>
-        <Link to="/herbs" className="button">
-          Search herbs
-        </Link>
+        <div className="hero__text">
+          <h1>Yerba Buena</h1>
+          <p className="lead">Herbs, remedies, and small habits for everyday well-being.</p>
+          <Link to="/herbs" className="button">
+            Search herbs
+          </Link>
+        </div>
+        <img
+          className="hero__image"
+          src={herbsHero}
+          alt="Illustration of mint, rosemary, sage and chamomile on an orange background"
+          width={600}
+          height={450}
+        />
       </section>
 
       <ul className="card-grid">
