@@ -106,6 +106,10 @@ export const TOPICS: Record<TopicId, Topic> = {
       /\b(died|dies|dying|death|passed away|funeral|grief|grieving|mourning|bereave\w*)\b/,
       /\blost (my|our|a) (mom|mother|mum|dad|father|parent|son|daughter|child|baby|brother|sister|husband|wife|partner|friend|grand\w*|aunt|uncle|cousin|pet|dog|cat)\b/,
       /\bmiscarr\w*/,
+      // Spanish
+      /\b(murio|murieron|fallecio|fallecieron|muerte|funeral|velorio|luto|duelo)\b/,
+      /\bperdi a (mi|mis|nuestro|nuestra) (mama|madre|papa|padre|padres|hijo|hija|bebe|hermano|hermana|esposo|esposa|pareja|amigo|amiga|abuel\w*|tia|tio|prim\w*|mascota|perro|perrita|perrito|gato|gatito)\b/,
+      /\b(aborto espontaneo|perdi (el|al|mi) bebe)\b/,
     ],
   },
   stress: {
@@ -118,7 +122,10 @@ export const TOPICS: Record<TopicId, Topic> = {
       "A short walk or a warm cup of tea can give your mind a break.",
     ],
     resources: ["988", "nami"],
-    keywords: [/\b(stress\w*|overwhelm\w*|burn(ed|t)? out|burnout|pressure|exhausted|too much|lost my job|deadline\w*)\b/],
+    keywords: [
+      /\b(stress\w*|overwhelm\w*|burn(ed|t)? out|burnout|pressure|exhausted|too much|lost my job|deadline\w*)\b/,
+      /\b(estres\w*|agobiad[oa]s?|abrumad[oa]s?|presion|agotad[oa]s?|quemad[oa]s?|demasiad[oa]|perdi mi (trabajo|empleo))\b/,
+    ],
   },
   lonely: {
     id: "lonely",
@@ -129,7 +136,10 @@ export const TOPICS: Record<TopicId, Topic> = {
       "Spend a little time somewhere with other people, like a café, library, or park.",
     ],
     resources: ["988", "nami", "crisis-text"],
-    keywords: [/\b(lonely|loneliness|alone|isolated|no friends|no one|nobody)\b/],
+    keywords: [
+      /\b(lonely|loneliness|alone|isolated|no friends|no one|nobody)\b/,
+      /\b(soledad|aislad[oa]s?|(me siento|estoy|tan|muy) sol[oa]|sin amigos|nadie)\b/,
+    ],
   },
   anxious: {
     id: "anxious",
@@ -140,7 +150,10 @@ export const TOPICS: Record<TopicId, Topic> = {
       "Breathe out slowly, longer than you breathe in.",
     ],
     resources: ["988", "nami", "crisis-text"],
-    keywords: [/\b(anxious|anxiety|panic\w*|worr(y|ied|ying)|scared|afraid|nervous|fear)\b/],
+    keywords: [
+      /\b(anxious|anxiety|panic\w*|worr(y|ied|ying)|scared|afraid|nervous|fear)\b/,
+      /\b(ansiedad|ansios[oa]s?|panico|preocupad[oa]s?|preocupacion\w*|miedo|asustad[oa]s?|nervios[oa]?s?|angustia\w*)\b/,
+    ],
   },
   down: {
     id: "down",
@@ -151,7 +164,11 @@ export const TOPICS: Record<TopicId, Topic> = {
       "Do one small kind thing for yourself, like a shower, a meal, or some fresh air.",
     ],
     resources: ["988", "nami", "crisis-text"],
-    keywords: [/\b(sad|depress\w*|hopeless|empty|numb|crying|cry|miserable|worthless|heartbroken)\b/, /\b(feeling|feel|felt|so|really|been) down\b/],
+    keywords: [
+      /\b(sad|depress\w*|hopeless|empty|numb|crying|cry|miserable|worthless|heartbroken)\b/,
+      /\b(feeling|feel|felt|so|really|been) down\b/,
+      /\b(triste|tristeza|deprimid[oa]s?|depresion|sin esperanza|vaci[oa]|llorando|lloro|llorar|desanimad[oa]s?|bajonead[oa]s?|corazon roto|no valgo nada)\b/,
+    ],
   },
   other: {
     id: "other",
@@ -176,11 +193,24 @@ const CRISIS_KEYWORDS: RegExp[] = [
   /\bbetter off (dead|without me)\b/,
   /\b(dont|do not) want to (live|be alive|be here|wake up)\b/,
   /\bcant go on\b/,
+  // Spanish
+  /\b(matarme|suicidarme|quitarme la vida)\b/,
+  /\b(me quiero|quiero|quisiera) morir(me)?\b/,
+  /\bme quiero matar\b/,
+  /\bno quiero (vivir|seguir viviendo|estar aqui|despertar)\b/,
+  /\b(hacerme dano|lastimarme|cortarme|me corto|me lastimo)\b/,
+  /\bautolesion\w*/,
+  /\b(mejor muert[oa]|estarian mejor sin mi)\b/,
+  /\b(acabar|terminar) con (todo|mi vida)\b/,
+  /\bno (tengo|hay) (razon|razones|motivo|motivos) para vivir\b/,
+  /\bya no puedo seguir\b/,
 ];
 
-/** Lowercase, drop apostrophes, and turn other punctuation into spaces. */
+/** Lowercase, drop accents and apostrophes, and turn other punctuation into spaces. */
 export function normalizeText(text: string): string {
   return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .replace(/['’]/g, "")
     .replace(/[^a-z0-9]+/g, " ")

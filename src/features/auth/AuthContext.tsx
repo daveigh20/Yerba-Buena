@@ -1,12 +1,12 @@
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import type { LoginInput, PublicUser, SignupInput } from "../../../shared/auth";
+import type { BasicSignupInput, LoginInput, PublicUser, SignupInput } from "../../../shared/auth";
 import { api, ApiRequestError } from "../../lib/api";
 
 interface AuthState {
   /** undefined while we're still checking whether there's a session. */
   user: PublicUser | null | undefined;
   login(input: LoginInput): Promise<PublicUser>;
-  signup(input: SignupInput): Promise<PublicUser>;
+  signup(input: SignupInput | BasicSignupInput): Promise<PublicUser>;
   logout(): Promise<void>;
 }
 
@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return res.user;
   }, []);
 
-  const signup = useCallback(async (input: SignupInput) => {
+  const signup = useCallback(async (input: SignupInput | BasicSignupInput) => {
     const res = await api<{ user: PublicUser }>("/auth/signup", { body: input });
     setUser(res.user);
     return res.user;

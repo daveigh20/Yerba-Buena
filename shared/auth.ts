@@ -65,6 +65,9 @@ export const signupSchema = z.object({
     .transform((list) => [...new Set(list)]),
 });
 
+/** The shorter form used on the public site, which stores no health details. */
+export const basicSignupSchema = signupSchema.pick({ name: true, email: true, password: true });
+
 export const loginSchema = z.object({
   email: z.string().trim().toLowerCase().min(1, "Please enter your email."),
   password: z.string().min(1, "Please enter your password.").max(PASSWORD_MAX),
@@ -76,6 +79,7 @@ export type SignupInput = Omit<z.input<typeof signupSchema>, "age" | "weightKg" 
   weightKg: number | string;
   heightCm: number | string;
 };
+export type BasicSignupInput = z.input<typeof basicSignupSchema>;
 export type SignupData = z.output<typeof signupSchema>;
 export type LoginInput = z.input<typeof loginSchema>;
 
@@ -84,9 +88,10 @@ export interface PublicUser {
   id: number;
   name: string;
   email: string;
-  age: number;
-  weightKg: number;
-  heightCm: number;
+  /** null for accounts made with the shorter public form. */
+  age: number | null;
+  weightKg: number | null;
+  heightCm: number | null;
   goal: string;
   conditions: string[];
   createdAt: string;

@@ -1,21 +1,32 @@
 // Cloudflare deployment config for Yerba Buena.
 // Docs: https://developers.cloudflare.com/workers/wrangler/configuration/
 //
-// Today this serves the built React app (dist/) as static assets on Workers.
-// The Express + Postgres API in server/ is not deployed here yet; see
-// "Deploying to Cloudflare" in README.md for how it fits in later.
+// Serves the built React app (dist/) as static assets, plus the accounts API in worker/
+// with a D1 database. See "Deploying to Cloudflare" in README.md.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "yerba-buena",
+  "main": "worker/index.ts",
   // Cloudflare account that owns this project (from the dashboard URL).
   "account_id": "e57558abe6180b3112ca068aedd4800b",
   "compatibility_date": "2026-11-01",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    // Only the API runs code; every other request is a plain static file.
+    "run_worker_first": ["/api/*"],
     // React Router handles routes like /herbs/:herbId, so unknown paths get index.html.
     "not_found_handling": "single-page-application"
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "yerba-buena",
+      "database_id": "7623cc42-6d9e-4e18-a0f8-1cc3b4741edb",
+      "migrations_dir": "worker/migrations"
+    }
+  ],
   // Serve on <name>.<subdomain>.workers.dev until a custom domain is added.
   "workers_dev": true,
   "observability": {

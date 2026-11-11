@@ -31,7 +31,7 @@ export function searchHerbs(herbs: Herb[], query: string, category: CategoryFilt
       scored.push({ result: { herb, matchedOn: "name", matchedBenefits: [] }, score: RANK.name + startsWord });
       continue;
     }
-    if ([...herb.aliases, herb.scientificName, herb.id].some((n) => normalize(n).includes(q))) {
+    if ([...herb.aliases, ...(herb.searchNames ?? []), herb.scientificName, herb.id].some((n) => normalize(n).includes(q))) {
       scored.push({ result: { herb, matchedOn: "alias", matchedBenefits: [] }, score: RANK.alias });
       continue;
     }

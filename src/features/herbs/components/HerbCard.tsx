@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useT } from "../../../i18n/LanguageContext";
 import { remediesForHerb } from "../data";
 import { normalize } from "../lib/normalize";
 import type { HerbResult } from "../lib/search";
@@ -8,12 +9,13 @@ import Highlight from "./Highlight";
 const PREVIEW_COUNT = 3;
 
 export default function HerbCard({ result, query }: { result: HerbResult; query: string }) {
+  const t = useT();
   const { herb, matchedOn, matchedBenefits } = result;
   const benefits = matchedOn === "benefit" ? matchedBenefits : herb.benefits.slice(0, PREVIEW_COUNT);
   const more = herb.benefits.length - benefits.length;
   const remedyCount = remediesForHerb(herb.id).length;
   const q = normalize(query);
-  const matchedAlias = matchedOn === "alias" ? herb.aliases.find((a) => normalize(a).includes(q)) : undefined;
+  const matchedAlias = matchedOn === "alias" ? [...herb.aliases, ...(herb.searchNames ?? [])].find((a) => normalize(a).includes(q)) : undefined;
 
   return (
     <Link to={`/herbs/${herb.id}`} className="card card--link herb-card">
@@ -28,7 +30,7 @@ export default function HerbCard({ result, query }: { result: HerbResult; query:
       </p>
       {matchedAlias && (
         <p className="small muted">
-          Also called <Highlight text={matchedAlias} query={query} />
+          {t.herbs.alsoCalled} <Highlight text={matchedAlias} query={query} />
         </p>
       )}
       <ul className="benefit-preview">
@@ -39,11 +41,9 @@ export default function HerbCard({ result, query }: { result: HerbResult; query:
         ))}
       </ul>
       <p className="herb-card__foot small muted">
-        {more > 0 && <span>+{more} more benefits</span>}
+        {more > 0 && <span>{t.herbs.moreBenefits(more)}</span>}
         {remedyCount > 0 && (
-          <span className="herb-card__remedies">
-            {remedyCount} {remedyCount === 1 ? "remedy" : "remedies"}
-          </span>
+          <span className="herb-card__remedies">{t.herbs.remedyCount(remedyCount)}</span>
         )}
       </p>
     </Link>

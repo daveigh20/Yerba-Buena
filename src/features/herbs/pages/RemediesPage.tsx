@@ -2,25 +2,28 @@ import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
 import RemedyCard from "../components/RemedyCard";
-import { REMEDIES } from "../data";
+import { useT } from "../../../i18n/LanguageContext";
+import { useCatalog } from "../data";
 import { searchRemedies } from "../lib/search";
 
 export default function RemediesPage() {
-  useDocumentTitle("Remedies");
+  const t = useT();
+  const { remedies: all } = useCatalog();
+  useDocumentTitle(t.remedies.title);
   const [params, setParams] = useSearchParams();
   const query = params.get("q") ?? "";
-  const remedies = useMemo(() => (query.trim() ? searchRemedies(REMEDIES, query) : REMEDIES), [query]);
+  const remedies = useMemo(() => (query.trim() ? searchRemedies(all, query) : all), [all, query]);
 
   return (
     <>
       <header className="page-header">
-        <h1>Remedies</h1>
-        <p className="lead muted">Simple teas, syrups, and steams made with herbs from the catalog.</p>
+        <h1>{t.remedies.title}</h1>
+        <p className="lead muted">{t.remedies.lead}</p>
       </header>
 
       <form role="search" className="search" onSubmit={(e) => e.preventDefault()}>
         <label htmlFor="remedy-search" className="visually-hidden">
-          Filter remedies
+          {t.remedies.filterLabel}
         </label>
         <input
           id="remedy-search"
@@ -28,18 +31,18 @@ export default function RemediesPage() {
           className="search__input"
           value={query}
           onChange={(e) => setParams(e.target.value ? { q: e.target.value } : {}, { replace: true })}
-          placeholder="Filter by name, use, or ingredient…"
+          placeholder={t.remedies.filterPlaceholder}
           autoComplete="off"
         />
       </form>
 
       <p className="small muted" aria-live="polite">
-        {remedies.length} {remedies.length === 1 ? "remedy" : "remedies"}
+        {t.remedies.count(remedies.length)}
       </p>
 
       {remedies.length === 0 ? (
         <div className="empty-state">
-          <p>No remedies match “{query}”.</p>
+          <p>{t.remedies.noMatch(query)}</p>
         </div>
       ) : (
         <ul className="card-grid">

@@ -66,3 +66,24 @@ describe("assess", () => {
     expect(r.resources).toEqual(expect.arrayContaining(["988", "crisis-text", "emergency"]));
   });
 });
+
+describe("Spanish text", () => {
+  it("flags thoughts of suicide or self-harm", () => {
+    expect(detectCrisis("Me quiero morir")).toBe(true);
+    expect(detectCrisis("pienso en quitarme la vida")).toBe(true);
+    expect(detectCrisis("ya no quiero vivir")).toBe(true);
+    expect(detectCrisis("a veces me lastimo")).toBe(true);
+    expect(detectCrisis("pensamientos suicidas")).toBe(true);
+    expect(detectCrisis("se murió mi abuela")).toBe(false);
+  });
+
+  it("finds topics", () => {
+    expect(detectTopics("Me siento mal porque murió mi mamá")).toContain("grief");
+    expect(detectTopics("Perdí a mi perro")).toContain("grief");
+    expect(detectTopics("Estoy muy estresada con el trabajo")).toEqual(["stress"]);
+    expect(detectTopics("me siento sola")).toEqual(["lonely"]);
+    expect(detectTopics("tengo mucha ansiedad")).toEqual(["anxious"]);
+    expect(detectTopics("estoy triste")).toEqual(["down"]);
+    expect(detectTopics("solo quiero dormir")).toEqual([]);
+  });
+});

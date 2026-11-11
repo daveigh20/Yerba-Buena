@@ -134,6 +134,7 @@ mark {
 
 .app {
   min-height: 100vh;
+  min-height: 100dvh; /* follows Safari's collapsing address bar */
   display: flex;
   flex-direction: column;
 }
@@ -157,6 +158,13 @@ mark {
   position: sticky;
   top: 0;
   z-index: 1100; /* above Leaflet map controls (1000) */
+}
+
+/* The header wraps to two rows on phones, too tall to keep pinned over the page. */
+@media (max-width: 720px) {
+  .site-header {
+    position: static;
+  }
 }
 
 .site-header__inner {
@@ -797,9 +805,95 @@ mark {
   height: min(65vh, 520px);
   width: 100%;
 }
-.stops {
-  margin-top: 16px;
+.trail-step {
+  margin-top: 20px;
+}
+.trail-step h2 {
+  margin-top: 0;
+}
+.trail-where {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.trail-where__search {
+  display: flex;
+  flex: 1 1 280px;
+  gap: 8px;
+}
+.trail-where__search .input {
+  flex: 1;
+  min-width: 0;
+}
+.trail-choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.trail-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.trail-option {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.trail-option:hover {
+  border-color: var(--brand);
+}
+.trail-option[aria-pressed="true"] {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+.trail-modes {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.trail-guide__summary {
+  margin: 16px 0 8px;
+}
+.trail-guide__steps {
+  margin: 0 0 16px;
   padding-left: 1.4em;
+}
+.trail-guide__steps li + li {
+  margin-top: 4px;
+}
+.trail-guide__heading {
+  margin: 24px 0 0;
+}
+.trail-images {
+  display: grid;
+  gap: 16px;
+}
+.trail-images figure {
+  margin: 0;
+}
+.trail-images img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+.trail-komoot__frame {
+  display: block;
+  width: 100%;
+  height: 540px;
+  border: 0;
 }
 
 /* ---------- Accounts (sign up / log in) ---------- */
@@ -943,4 +1037,20 @@ mark {
 .alert--error {
   background: var(--danger-soft);
   color: var(--danger);
+}
+
+.lang-switch {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.lang-switch:hover {
+  background: var(--brand-soft);
+  border-color: var(--brand);
 }

@@ -6,6 +6,11 @@ export interface Config {
   isProduction: boolean;
   /** Origins allowed to make state-changing requests (CSRF protection). */
   allowedOrigins: string[];
+  /**
+   * Also accept requests whose Origin matches the Host they were sent to (development only),
+   * so the app works when opened by IP address, e.g. from a phone on the same Wi-Fi.
+   */
+  allowSameHostOrigin: boolean;
   /** Express "trust proxy" setting. Needed behind a load balancer so rate limiting sees real client IPs. */
   trustProxy: boolean | number | string;
   sessionDays: number;
@@ -48,6 +53,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     isProduction,
     // In development, accept the web app on any local port (Vite moves to 5174, 5175… when 5173 is taken).
     allowedOrigins: origins ?? ["http://localhost:*", "http://127.0.0.1:*"],
+    allowSameHostOrigin: !isProduction,
     trustProxy: trustProxyFrom(env.TRUST_PROXY),
     sessionDays: intFrom(env.SESSION_DAYS, 30),
     authRateLimit: intFrom(env.AUTH_RATE_LIMIT, 20),

@@ -18,12 +18,28 @@ export function originAllowed(origin: string, allowedOrigins: string[]): boolean
   });
 }
 
-export function csrfProtection(allowedOrigins: string[]) {
+/**
+ * `allowSameHost` also accepts an Origin whose host equals the Host the request was sent to (development
+ * only: the page and API share one address through Vite's proxy, which may be a Wi-Fi IP like
+ * 192.168.1.20 or a temporary https://….trycloudflare.com link). Only the host is compared, because a
+ * tunnel serves https to the browser but forwards plain http to us.
+ */
+function sameHost(origin: string, host: string | undefined): boolean {
+  try {
+    return host !== undefined && new URL(origin).host === host;
+  } catch {
+    return false;
+  }
+}
+
+export function csrfProtection(allowedOrigins: string[], { allowSameHost = false } = {}) {
   return (req: Request, res: Response, next: NextFunction) => {
     if (SAFE_METHODS.has(req.method)) return next();
 
     const origin = req.get("origin");
-    if ((origin && !originAllowed(origin, allowedOrigins)) || req.get("sec-fetch-site") === "cross-site") {
+    const originOk =
+      !origin || (allowSameHost && sameHost(origin, req.get("host"))) || originAllowed(origin, allowedOrigins);
+    if (!originOk || req.get("sec-fetch-site") === "cross-site") {
       res.status(403).json({ error: "Cross-site request blocked." });
       return;
     }
