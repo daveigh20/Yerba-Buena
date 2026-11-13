@@ -236,4 +236,166 @@ export const JAPANESE_HERB_TEXT_ES: Record<JapaneseHerbId, JapaneseHerbText> = {
       "No hay suficiente información sobre su seguridad en el embarazo o la lactancia, así que evita cantidades mayores o medicinales.",
     ],
   },
+  "naginata-koju": {
+    name: "Naginata kōju",
+    aliases: ["naginata koju", "elsholtzia", "menta de fin de verano", "bálsamo vietnamita", "kinh gioi"],
+    partsUsed: ["Hoja", "Sumidad florida"],
+    flavor: "Mentolado y cálido, con un aroma alimonado y un poco medicinal",
+    summary: "Una hierba de la familia de la menta que calienta el cuerpo y se toma en té para los resfriados y el frío.",
+    description:
+      "La naginata kōju es una hierba silvestre de la familia de la menta. Su nombre viene de sus espigas de flores, que se curvan hacia un lado como la hoja de una naginata (una alabarda japonesa). Desde hace mucho se usa en todo Japón en tés para calentar el cuerpo, aliviar los resfriados y mejorar la circulación. Waho-An Nature Tokyo la usa en una mezcla de té para calentar el cuerpo y apoyar la inmunidad, junto con yomogi e ibuki jakōsō.",
+    howToUse: [
+      "En té: pon 1 o 2 cucharaditas de la hierba seca en una taza o tetera y vierte 1 taza de agua caliente, justo después de hervir.",
+      "Tapa y deja reposar 5 minutos para que los aceites aromáticos se queden en la taza, y luego cuela.",
+      "Tómala caliente cuando sientas frío o al empezar un resfriado. Un poco de miel suaviza el toque mentolado.",
+      "Para una mezcla que calienta: combina partes iguales de naginata kōju, ibuki jakōsō y yomogi, y prepara 1 o 2 cucharaditas de la mezcla de la misma forma.",
+      "Las hojas frescas se pueden agregar en poca cantidad a sopas o ensaladas, como las hierbas vietnamitas (en mercados vietnamitas se vende como kinh giới).",
+    ],
+    storage:
+      "Guarda la hierba seca en un frasco hermético, lejos del calor y la luz, y úsala dentro de un año. Envuelve las ramitas frescas en una toalla de papel húmeda, guárdalas en el refrigerador y úsalas en pocos días.",
+    cautions: [
+      "Evítala si tienes alergia a las plantas de la familia de la menta.",
+      "Hay poca investigación sobre su seguridad en cantidades mayores. Consulta primero a tu médico si tomas medicamentos.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  "ibuki-jakoso": {
+    name: "Ibuki jakōsō",
+    aliases: ["ibuki jakoso", "tomillo japonés", "tomillo silvestre", "serpol japonés"],
+    partsUsed: ["Hoja", "Sumidad florida"],
+    flavor: "Herbal y sabroso como el tomillo de jardín, pero más suave y floral",
+    summary: "El tomillo silvestre nativo de Japón, que se toma en té para aliviar la garganta y la nariz.",
+    description:
+      "La ibuki jakōsō es el tomillo silvestre nativo de Japón. Es una planta baja y rastrera con flores rosas diminutas, y su nombre viene del monte Ibuki y de su aroma almizclado (jakō significa almizcle). Igual que el tomillo de jardín, tiene propiedades antibacterianas naturales, y tradicionalmente se usa para el dolor de garganta, la tos y la nariz tapada. Waho-An Nature Tokyo la combina con yomogi y naginata kōju en un té para calentar el cuerpo y apoyar la inmunidad.",
+    howToUse: [
+      "En té: deja reposar 1 cucharadita de la hierba seca (o unas ramitas frescas) en 1 taza de agua caliente de 5 a 10 minutos, tapada.",
+      "Para el dolor de garganta: agrega una cucharada de miel y tómalo despacio mientras está caliente.",
+      "Para la nariz tapada: vierte agua caliente sobre un puñado de la hierba en un tazón, inclínate sobre él con una toalla sobre la cabeza y respira el vapor unos minutos. Mantén la cara a una distancia segura del agua caliente.",
+      "En la cocina: úsala como el tomillo de jardín, con verduras asadas, pollo o pescado.",
+      "Para una mezcla que calienta: combínala con naginata kōju y yomogi y prepárala como té.",
+    ],
+    storage:
+      "Guarda las hojas secas en un frasco hermético, lejos de la luz, hasta por un año. Las ramitas frescas duran como una semana en el refrigerador, envueltas en una toalla de papel húmeda.",
+    cautions: [
+      "Evítala si tienes alergia al tomillo o a otras plantas de la familia de la menta.",
+      "Las hierbas de la familia del tomillo pueden hacer más lenta la coagulación en cantidades grandes. Deja de tomarla como té medicinal 2 semanas antes de una cirugía.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  toki: {
+    name: "Tōki",
+    aliases: ["toki", "touki", "raíz de angélica japonesa", "yamato toki", "dong quai"],
+    partsUsed: ["Raíz"],
+    flavor: "Terroso y parecido al apio, con un final agridulce y un poco picante",
+    summary: "Una raíz que calienta el cuerpo y que en Japón se valora como hierba para la mujer: cólicos, frío y ciclos.",
+    description:
+      "El tōki es la raíz de la angélica japonesa, pariente cercana del dong quai chino. Es una de las hierbas más importantes del kampō (la medicina tradicional japonesa) y tradicionalmente se usa para calentar el cuerpo, mejorar la circulación y apoyar la salud de la mujer: aliviar los cólicos menstruales y los ciclos irregulares, el frío y la retención de líquidos. Waho-An Nature Tokyo lo usa como hierba principal en una mezcla de té para mujeres que calienta el cuerpo.",
+    howToUse: [
+      "El tōki casi siempre se vende en rodajas de raíz seca. Enjuágalas rápido antes de usarlas.",
+      "En decocción: hierve a fuego lento de 3 a 5 gramos (unas 2 o 3 rodajas) en 2 tazas de agua de 15 a 20 minutos, hasta que el líquido se reduzca como un tercio.",
+      "Cuela y tómalo caliente. Su sabor es fuerte, así que puedes agregar jengibre o un poco de miel, o mezclarlo con hierbas más suaves.",
+      "En la cocina: agrega una rodaja a un caldo de pollo o de cerdo mientras se cocina, como se hace en muchas sopas tónicas del este de Asia.",
+      "Las hojas de tōki son más suaves y se pueden usar en té o en el baño.",
+    ],
+    storage:
+      "Guarda las rodajas de raíz seca en un recipiente hermético en un lugar fresco y seco. Duran como un año. Revisa que no tengan moho ni insectos si llevan mucho tiempo guardadas.",
+    cautions: [
+      "No lo tomes si estás embarazada, buscas embarazarte o estás amamantando. Tradicionalmente se cree que la raíz de angélica estimula el útero.",
+      "Puede hacer más lenta la coagulación de la sangre. Consulta primero a tu médico si tomas anticoagulantes (como warfarina) o vas a tener una cirugía.",
+      "Evítalo si tienes una condición sensible a las hormonas, como endometriosis o ciertos tipos de cáncer, a menos que tu médico lo apruebe.",
+      "Es de la familia de la zanahoria y el apio. Evítalo si tienes alergia al apio, al perejil o a la zanahoria. También puede hacer la piel más sensible al sol.",
+    ],
+  },
+  tachibana: {
+    name: "Naranja tachibana",
+    aliases: ["tachibana", "naranja silvestre japonesa", "cítrico silvestre"],
+    partsUsed: ["Cáscara del fruto", "Hoja", "Flor"],
+    flavor: "Muy ácido y brillante, con una cáscara aromática y un poco amarga",
+    summary: "El único cítrico silvestre nativo de Japón, cuya cáscara aromática se prepara en un té afrutado para la mañana.",
+    description:
+      "La tachibana es una naranja pequeña y ácida, y el único cítrico silvestre nativo de Japón. Aparece en las crónicas más antiguas del país y en el Palacio Imperial, donde hay un árbol de tachibana junto a la sala principal. El fruto es demasiado ácido para comerlo fresco, pero su cáscara seca se usa en tés y es rica en nobiletina, un compuesto cítrico que se está estudiando por sus efectos en el metabolismo. Waho-An Nature Tokyo la usa en una mezcla para dar energía en la mañana y en otra para relajarse en la noche.",
+    howToUse: [
+      "En té: deja reposar 1 cucharadita de cáscara seca de tachibana en 1 taza de agua caliente por unos 5 minutos.",
+      "Tómalo en la mañana como un estimulante sin cafeína en lugar del café.",
+      "Para una mezcla afrutada: combina la cáscara con hojas de gettō y pétalos de hamanasu, y prepara 1 o 2 cucharaditas de la mezcla.",
+      "Para secar tu propia cáscara: usa fruta sin cera, quita lo más que puedas de la parte blanca y seca la cáscara en tiras finas en un lugar tibio y ventilado o en el horno a temperatura baja hasta que truene.",
+      "En la cocina: ralla un poco de cáscara fresca sobre pescado asado, aderezos o postres, como harías con la ralladura de yuzu.",
+    ],
+    storage:
+      "Guarda la cáscara seca en un frasco hermético, lejos de la luz. Tiene más aroma en los primeros 6 meses. La fruta fresca dura de 1 a 2 semanas en el refrigerador.",
+    cautions: [
+      "Evítala si tienes alergia a los cítricos.",
+      "La tachibana silvestre es rara y está protegida en partes de Japón. Compra cáscara seca o fruta de árboles cultivados y no la recolectes.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  getto: {
+    name: "Gettō",
+    aliases: ["getto", "gettou", "jengibre de concha", "sannin", "lirio de porcelana"],
+    partsUsed: ["Hoja", "Semilla"],
+    flavor: "Fresco y dulce picante, con un aroma parecido al jengibre y un poco floral",
+    summary: "Una hoja de Okinawa de la familia del jengibre, rica en antioxidantes, que se toma en té o envuelve pasteles de arroz.",
+    description:
+      "El gettō, también llamado jengibre de concha, es una planta alta de la familia del jengibre que crece silvestre en Okinawa, donde se le conoce como sannin. Sus hojas son ricas en polifenoles, que son antioxidantes, y se aprecian por su aroma fresco y especiado. En Okinawa las hojas se usan para envolver muchī, pasteles de arroz al vapor que se hacen para una fiesta de invierno, y también se preparan en té. Waho-An Nature Tokyo usa el gettō en una mezcla para relajarse en la noche.",
+    howToUse: [
+      "En té: deja reposar 1 o 2 cucharaditas de hoja de gettō seca y picada en 1 taza de agua caliente por 5 minutos.",
+      "Para un sabor más fuerte, mejor hierve la hoja seca a fuego lento de 5 a 10 minutos.",
+      "Tómalo caliente o frío como té helado. Combina bien con la cáscara de tachibana y los pétalos de hamanasu.",
+      "Para envolver muchī: envuelve masa dulce de harina de arroz en hojas frescas y cocínala al vapor de 15 a 20 minutos. Las hojas dan su aroma pero no se comen.",
+      "Pon hojas frescas debajo del arroz o del pescado mientras se cocina al vapor para perfumar la comida.",
+    ],
+    storage:
+      "Guarda las hojas secas en un recipiente hermético, lejos de la humedad y la luz. Duran hasta un año. Las hojas frescas duran varios días en el refrigerador, envueltas en una toalla húmeda.",
+    cautions: [
+      "Evítalo si tienes alergia al jengibre o a la cúrcuma.",
+      "El aceite esencial de gettō es solo para aromatizar. No lo tomes.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  hamanasu: {
+    name: "Rosa hamanasu",
+    aliases: ["hamanasu", "rosa de playa", "rosa rugosa", "rosa japonesa", "escaramujo", "té de pétalos de rosa"],
+    partsUsed: ["Pétalos", "Escaramujos (fruto)"],
+    flavor: "Pétalos dulces y florales, y escaramujos ácidos y afrutados",
+    summary: "Una rosa silvestre de playa cuyos pétalos aromáticos y escaramujos ricos en vitamina C hacen un té relajante.",
+    description:
+      "La hamanasu es una rosa silvestre que crece en las playas de arena del norte de Japón, sobre todo en Hokkaido. Sus pétalos rosa intenso tienen un aroma dulce y fuerte, y sus escaramujos rojos y redondos son ricos en vitamina C. Tradicionalmente se usa para apoyar una piel sana y calmar el cuerpo y la mente. Waho-An Nature Tokyo la agrega a una mezcla para relajarse en la noche.",
+    howToUse: [
+      "Té de pétalos: deja reposar 1 o 2 cucharaditas de pétalos secos (o un puñito de pétalos frescos sin fumigar) en 1 taza de agua caliente de 3 a 5 minutos.",
+      "Té de escaramujos: machaca 1 o 2 cucharaditas de escaramujos secos y hiérvelos a fuego lento en 1 taza de agua por unos 10 minutos.",
+      "Cuela el té de escaramujos con un colador fino o un filtro de papel. Las semillas tienen pelitos que pueden irritar la garganta.",
+      "Para una mezcla de noche: combina los pétalos con hojas de gettō, cáscara de tachibana y un poco de dokudami.",
+      "Los escaramujos frescos, sin semillas, se pueden cocinar en mermelada o jarabe.",
+    ],
+    storage:
+      "Guarda los pétalos y escaramujos secos en frascos herméticos, lejos de la luz, y úsalos dentro de un año. Los pétalos pierden su aroma más rápido, así que compra poca cantidad.",
+    cautions: [
+      "Usa solo rosas que no hayan sido fumigadas. Las de florería casi siempre lo están.",
+      "Evítala si tienes alergia a las rosas.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  dokudami: {
+    name: "Dokudami",
+    aliases: ["houttuynia", "menta de pescado", "hoja de pescado", "planta camaleón", "juuyaku", "té de dokudami"],
+    partsUsed: ["Hoja", "Tallo", "Flor"],
+    flavor: "Fuerte y con olor a pescado cuando está fresca, pero suave, terrosa y un poco dulce como té seco",
+    summary: "Una hoja en forma de corazón, la de las “diez medicinas”, que se prepara en un té depurativo.",
+    description:
+      "La dokudami es una planta de hojas en forma de corazón que crece en lugares húmedos y sombreados en todo Japón. También se le llama jūyaku, “diez medicinas”, porque se usaba para muchísimos malestares. El té de dokudami seca es uno de los remedios caseros más conocidos de Japón, y tradicionalmente se usa para depurar el cuerpo, aliviar la retención de líquidos y el estreñimiento, y apoyar una piel sana. Waho-An Nature Tokyo la incluye en una mezcla de té depurativo.",
+    howToUse: [
+      "Úsala siempre seca para el té. Al secarse pierde el fuerte olor a pescado de las hojas frescas.",
+      "En té: hierve a fuego lento 1 cucharada (unos 5 gramos) de dokudami seca en 2 o 3 tazas de agua de 5 a 10 minutos, y luego cuela.",
+      "Tómalo caliente o frío, entre comidas. Empieza con 1 taza al día.",
+      "Mézclala con té de cebada tostada (mugicha) o con otras hierbas, como gettō y hamanasu, para un sabor más suave.",
+      "En la cocina vietnamita las hojas frescas (diếp cá) se comen crudas con carne asada y fideos, si te gusta un sabor intenso.",
+    ],
+    storage:
+      "Guarda la hierba seca en un recipiente hermético, lejos de la humedad. Dura como un año. Guarda el té preparado en el refrigerador y tómalo en 2 días.",
+    cautions: [
+      "Es un diurético y laxante suave. Toma mucha agua y no la uses si tomas diuréticos, a menos que tu médico lo apruebe.",
+      "Tiene mucho potasio. Si tienes problemas de los riñones o tomas medicamentos que suben el potasio, consulta primero a tu médico.",
+      "No la uses si estás embarazada o amamantando, porque no hay suficiente información sobre su seguridad.",
+    ],
+  },
 };

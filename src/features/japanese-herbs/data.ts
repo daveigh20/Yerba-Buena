@@ -22,6 +22,12 @@ export const JAPANESE_SOURCES: readonly JapaneseSource[] = [
     publisher: "The Times of India",
     url: "https://timesofindia.indiatimes.com/life-style/food-news/10-japanese-herbs-that-are-used-for-longevity/photostory/119201702.cms",
   },
+  {
+    // The wa-herbs in the shop's tea blends. Yomogi is already above. Shop prices aren't included.
+    title: "Wa-herb",
+    publisher: "Waho-An Nature Tokyo",
+    url: "https://natura-w.com/en/waherb.html",
+  },
 ];
 
 export const JAPANESE_HERB_IDS = [
@@ -35,6 +41,13 @@ export const JAPANESE_HERB_IDS = [
   "gobo",
   "kombu",
   "ashitaba",
+  "naginata-koju",
+  "ibuki-jakoso",
+  "toki",
+  "tachibana",
+  "getto",
+  "hamanasu",
+  "dokudami",
 ] as const;
 
 export type JapaneseHerbId = (typeof JAPANESE_HERB_IDS)[number];
@@ -77,6 +90,13 @@ export const JAPANESE_HERB_BASE: Record<JapaneseHerbId, JapaneseHerbBase> = {
   gobo: { japaneseName: "牛蒡", romaji: "Gobō", scientificName: "Arctium lappa" },
   kombu: { japaneseName: "昆布", romaji: "Kombu", scientificName: "Saccharina japonica" },
   ashitaba: { japaneseName: "明日葉", romaji: "Ashitaba", scientificName: "Angelica keiskei" },
+  "naginata-koju": { japaneseName: "ナギナタコウジュ", romaji: "Naginata-kōju", scientificName: "Elsholtzia ciliata" },
+  "ibuki-jakoso": { japaneseName: "イブキジャコウソウ", romaji: "Ibuki-jakōsō", scientificName: "Thymus quinquecostatus" },
+  toki: { japaneseName: "当帰", romaji: "Tōki", scientificName: "Angelica acutiloba" },
+  tachibana: { japaneseName: "橘", romaji: "Tachibana", scientificName: "Citrus tachibana" },
+  getto: { japaneseName: "月桃", romaji: "Gettō", scientificName: "Alpinia zerumbet" },
+  hamanasu: { japaneseName: "ハマナス", romaji: "Hamanasu", scientificName: "Rosa rugosa" },
+  dokudami: { japaneseName: "ドクダミ", romaji: "Dokudami", scientificName: "Houttuynia cordata" },
 };
 
 const FOOD_AMOUNTS = "Enjoy it in the amounts used in cooking. If you're pregnant or breastfeeding, don't take it in larger, medicinal amounts.";
@@ -311,6 +331,168 @@ export const JAPANESE_HERB_TEXT_EN: Record<JapaneseHerbId, JapaneseHerbText> = {
       "Its yellow sap contains compounds that can make skin more sensitive to sunlight. Wash your hands after handling fresh stems, and be careful in the sun if you take it often.",
       "It may slow blood clotting. Check with your doctor first if you take blood thinners or have surgery coming up.",
       "There isn't enough safety information for pregnancy or breastfeeding, so avoid larger, medicinal amounts.",
+    ],
+  },
+  "naginata-koju": {
+    name: "Naginata Kōju",
+    aliases: ["naginata koju", "naginatakoju", "elsholtzia", "crested late summer mint", "vietnamese balm", "kinh gioi"],
+    partsUsed: ["Leaf", "Flowering top"],
+    flavor: "Minty and warm, with a lemony, slightly medicinal scent",
+    summary: "A warming mint-family herb brewed as a tea for colds and chills.",
+    description:
+      "Naginata kōju is a wild herb in the mint family, named for its flower spikes, which curve to one side like the blade of a naginata (a Japanese halberd). It has long been used across Japan in teas to warm the body, ease colds, and support circulation. Waho-An Nature Tokyo uses it in a warming tea blend for immunity, together with yomogi and ibuki jakōsō.",
+    howToUse: [
+      "For tea: put 1 to 2 teaspoons of the dried herb in a cup or teapot and pour over 1 cup of hot water, just off the boil.",
+      "Cover and steep for 5 minutes so the aromatic oils stay in the cup, then strain.",
+      "Drink it warm when you feel chilled or at the start of a cold. A little honey softens the minty bite.",
+      "For a warming blend: mix equal parts naginata kōju, ibuki jakōsō, and yomogi, and brew 1 to 2 teaspoons of the mix the same way.",
+      "Fresh leaves can be torn into soups or salads in small amounts, the way you'd use Vietnamese herbs (it's sold as kinh giới in Vietnamese markets).",
+    ],
+    storage:
+      "Keep the dried herb in an airtight jar away from heat and light, and use it within a year. Wrap fresh sprigs in a damp paper towel, refrigerate, and use within a few days.",
+    cautions: [
+      "Avoid it if you're allergic to mint-family plants.",
+      "There's little research on its safety in larger amounts. Check with your doctor first if you're taking medicine.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  "ibuki-jakoso": {
+    name: "Ibuki Jakōsō",
+    aliases: ["ibuki jakoso", "ibukijakoso", "japanese thyme", "wild thyme", "japanese wild thyme"],
+    partsUsed: ["Leaf", "Flowering top"],
+    flavor: "Herbal and savory like garden thyme, but softer and more floral",
+    summary: "Japan's native wild thyme, sipped as a tea to soothe the throat and nose.",
+    description:
+      "Ibuki jakōsō is Japan's native wild thyme. It's a low, creeping plant with tiny pink flowers, named after Mount Ibuki and its musky scent (jakō means musk). Like garden thyme, it has natural antibacterial properties, and it's traditionally used for sore throats, coughs, and stuffy noses. Waho-An Nature Tokyo pairs it with yomogi and naginata kōju in a warming tea for immunity.",
+    howToUse: [
+      "For tea: steep 1 teaspoon of the dried herb (or a few fresh sprigs) in 1 cup of hot water for 5 to 10 minutes, covered.",
+      "For a sore throat: stir in a spoonful of honey and sip slowly while it's warm.",
+      "For a stuffy nose: pour hot water over a handful of the herb in a bowl, lean over it with a towel over your head, and breathe in the steam for a few minutes. Keep your face a safe distance from the hot water.",
+      "In cooking: use it like garden thyme, with roast vegetables, chicken, or fish.",
+      "For a warming blend: mix it with naginata kōju and yomogi and brew as a tea.",
+    ],
+    storage:
+      "Keep dried leaves in an airtight jar away from light for up to a year. Fresh sprigs keep in the fridge, wrapped in a damp paper towel, for about a week.",
+    cautions: [
+      "Avoid it if you're allergic to thyme or other mint-family plants.",
+      "Thyme-family herbs may slow blood clotting in large amounts. Stop drinking it as a medicinal tea 2 weeks before surgery.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  toki: {
+    name: "Tōki",
+    aliases: ["toki", "touki", "japanese angelica root", "yamato toki", "dong quai"],
+    partsUsed: ["Root"],
+    flavor: "Earthy and celery-like, with a bittersweet, slightly spicy finish",
+    summary: "A warming root valued in Japan as a women's herb for cramps, chills, and cycles.",
+    description:
+      "Tōki is the root of Japanese angelica, a close relative of Chinese dong quai. It's one of the most important herbs in kampō (traditional Japanese medicine) and is traditionally used to warm the body, improve circulation, and support women's health: easing menstrual cramps and irregular cycles, chills, and water retention. Waho-An Nature Tokyo uses it as the key herb in a warming tea blend for women.",
+    howToUse: [
+      "Tōki is usually sold as dried slices of root. Rinse them briefly before using.",
+      "For a decoction: simmer 3 to 5 grams (about 2 or 3 slices) in 2 cups of water for 15 to 20 minutes, until the liquid is reduced by about a third.",
+      "Strain and drink it warm. Its flavor is strong, so you can add ginger or a little honey, or blend it with milder herbs.",
+      "In cooking: add a slice to chicken or pork soup as it simmers, the way it's used in many East Asian tonic soups.",
+      "Tōki leaves are milder and can be used for tea or in the bath.",
+    ],
+    storage:
+      "Keep dried root slices in an airtight container in a cool, dry place. They last about a year. Check for mold or insects if they've been stored for a long time.",
+    cautions: [
+      "Don't take it if you're pregnant or trying to get pregnant, or while breastfeeding. Angelica root is traditionally thought to stimulate the uterus.",
+      "It may slow blood clotting. Check with your doctor first if you take blood thinners (like warfarin) or have surgery coming up.",
+      "Avoid it if you have a hormone-sensitive condition, such as endometriosis or certain cancers, unless your doctor approves.",
+      "It's in the carrot and celery family. Avoid it if you're allergic to celery, parsley, or carrots. It can also make skin more sensitive to sunlight.",
+    ],
+  },
+  tachibana: {
+    name: "Tachibana Orange",
+    aliases: ["tachibana", "japanese wild orange", "tachibana orange", "wild citrus"],
+    partsUsed: ["Fruit peel", "Leaf", "Flower"],
+    flavor: "Very tart and bright, with a fragrant, slightly bitter peel",
+    summary: "Japan's only native wild citrus, whose fragrant peel is brewed into a fruity morning tea.",
+    description:
+      "Tachibana is a small, tart orange and Japan's only native wild citrus. It appears in Japan's oldest histories and in the Imperial Palace, where a tachibana tree is planted beside the main hall. The fruit is too sour to eat fresh, but its dried peel is used in teas and is rich in nobiletin, a citrus compound being studied for its effects on metabolism. Waho-An Nature Tokyo uses it in an energizing morning blend and an evening blend for relaxing.",
+    howToUse: [
+      "For tea: steep 1 teaspoon of dried tachibana peel in 1 cup of hot water for about 5 minutes.",
+      "Drink it in the morning as a caffeine-free pick-me-up instead of coffee.",
+      "For a fruity blend: mix the peel with gettō leaves and hamanasu petals, and brew 1 to 2 teaspoons of the mix.",
+      "To dry your own peel: use unwaxed fruit, cut away as much of the white pith as you can, and dry the peel in thin strips in a warm, airy spot or a low oven until brittle.",
+      "In cooking: grate a little fresh peel over grilled fish, dressings, or desserts, the way you'd use yuzu zest.",
+    ],
+    storage:
+      "Keep dried peel in an airtight jar away from light. It's most fragrant within 6 months. Fresh fruit keeps in the fridge for 1 to 2 weeks.",
+    cautions: [
+      "Avoid it if you're allergic to citrus.",
+      "Wild tachibana is rare and protected in parts of Japan. Buy dried peel or fruit from cultivated trees, and don't forage it.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  getto: {
+    name: "Gettō",
+    aliases: ["getto", "gettou", "shell ginger", "sannin", "okinawan shell ginger", "pink porcelain lily"],
+    partsUsed: ["Leaf", "Seed"],
+    flavor: "Fresh and spicy-sweet, with a ginger-like, slightly floral scent",
+    summary: "An Okinawan ginger-family leaf rich in antioxidants, brewed as tea or wrapped around rice cakes.",
+    description:
+      "Gettō, also called shell ginger, is a tall plant in the ginger family that grows wild in Okinawa, where it's known as sannin. Its leaves are rich in polyphenols, which are antioxidants, and are prized for their fresh, spicy scent. In Okinawa, the leaves are used to wrap muchī, steamed rice cakes made for a winter festival, and they're also brewed into tea. Waho-An Nature Tokyo uses gettō in a relaxing evening blend.",
+    howToUse: [
+      "For tea: steep 1 to 2 teaspoons of dried, chopped gettō leaf in 1 cup of hot water for 5 minutes.",
+      "For a stronger flavor, simmer the dried leaf in water for 5 to 10 minutes instead.",
+      "Drink it hot or chill it for iced tea. It pairs well with tachibana peel and hamanasu petals.",
+      "To wrap muchī: wrap sweetened rice-flour dough in fresh leaves and steam for 15 to 20 minutes. The leaves add their aroma but aren't eaten.",
+      "Lay fresh leaves under rice or fish as it steams to scent the food.",
+    ],
+    storage:
+      "Keep dried leaves in an airtight container away from humidity and light. They last up to a year. Fresh leaves keep for several days in the fridge, wrapped in a damp towel.",
+    cautions: [
+      "Avoid it if you're allergic to ginger or turmeric.",
+      "Gettō essential oil is for scent only. Don't drink it.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  hamanasu: {
+    name: "Hamanasu Rose",
+    aliases: ["hamanasu", "beach rose", "rugosa rose", "japanese rose", "rose hips", "rose petal tea"],
+    partsUsed: ["Petals", "Hips (fruit)"],
+    flavor: "Sweetly floral petals and tangy, fruity hips",
+    summary: "A wild beach rose whose fragrant petals and vitamin C-rich hips make a calming tea.",
+    description:
+      "Hamanasu is a wild rose that grows on sandy beaches in northern Japan, especially Hokkaido. Its deep pink petals have a strong, sweet scent, and its round red hips are rich in vitamin C. It's traditionally used to support healthy skin and to calm the body and mind. Waho-An Nature Tokyo adds it to a relaxing evening blend.",
+    howToUse: [
+      "Petal tea: steep 1 to 2 teaspoons of dried petals (or a small handful of fresh, unsprayed petals) in 1 cup of hot water for 3 to 5 minutes.",
+      "Hip tea: crush 1 to 2 teaspoons of dried hips and simmer them in 1 cup of water for about 10 minutes.",
+      "Strain hip tea through a fine strainer or paper filter. The seeds have tiny hairs that can irritate the throat.",
+      "For an evening blend: mix petals with gettō leaves, tachibana peel, and a little dokudami.",
+      "Fresh hips can be seeded and cooked into jam or syrup.",
+    ],
+    storage:
+      "Keep dried petals and hips in airtight jars away from light and use within a year. The petals lose their scent faster, so buy small amounts.",
+    cautions: [
+      "Only use roses that weren't sprayed. Florist roses usually are.",
+      "Avoid it if you're allergic to roses.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  dokudami: {
+    name: "Dokudami",
+    aliases: ["houttuynia", "fish mint", "fish leaf", "chameleon plant", "heartleaf", "juuyaku", "dokudami tea"],
+    partsUsed: ["Leaf", "Stem", "Flower"],
+    flavor: "Sharp and fishy when fresh, but mild, earthy, and slightly sweet as a dried tea",
+    summary: "A heart-shaped “ten medicines” leaf brewed into a detox tea.",
+    description:
+      "Dokudami is a heart-leaved plant that grows in shady, damp spots all over Japan. It's also called jūyaku, “ten medicines,” because it was used for so many ailments. Dried dokudami tea is one of Japan's best-known folk remedies, traditionally used to detox the body, ease water retention and constipation, and support healthy skin. Waho-An Nature Tokyo includes it in a detox tea blend.",
+    howToUse: [
+      "Always use it dried for tea. Drying removes the strong fishy smell of the fresh leaves.",
+      "For tea: simmer 1 tablespoon (about 5 grams) of dried dokudami in 2 to 3 cups of water for 5 to 10 minutes, then strain.",
+      "Drink it warm or cold, between meals. Start with 1 cup a day.",
+      "Mix it with roasted barley tea (mugicha) or other herbs, like gettō and hamanasu, for a milder flavor.",
+      "In Vietnamese cooking, the fresh leaves (diếp cá) are eaten raw with grilled meat and noodles, if you enjoy a bold taste.",
+    ],
+    storage:
+      "Keep the dried herb in an airtight container away from humidity. It lasts about a year. Refrigerate brewed tea and drink it within 2 days.",
+    cautions: [
+      "It acts as a mild diuretic and laxative. Drink plenty of water, and don't use it if you take water pills unless your doctor approves.",
+      "It's high in potassium. If you have kidney problems or take potassium-raising medicine, check with your doctor first.",
+      "Don't use it if you're pregnant or breastfeeding, since there isn't enough safety information.",
     ],
   },
 };

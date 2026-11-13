@@ -17,6 +17,13 @@ describe("Japanese herbs", () => {
       "gobo",
       "kombu",
       "ashitaba",
+      "naginata-koju",
+      "ibuki-jakoso",
+      "toki",
+      "tachibana",
+      "getto",
+      "hamanasu",
+      "dokudami",
     ]);
   });
 
@@ -30,6 +37,14 @@ describe("Japanese herbs", () => {
       expect(mainNames.has(herb.name.toLowerCase()), herb.id).toBe(false);
       expect(mainSpecies.has(herb.scientificName.toLowerCase()), herb.id).toBe(false);
       expect(genus(herb.scientificName), herb.id).not.toBe("panax"); // Ginseng is already in the main catalog.
+    }
+  });
+
+  it("leaves out the shop prices from the Waho-An source", () => {
+    for (const lang of ["en", "es"] as const) {
+      for (const herb of getJapaneseHerbs(lang)) {
+        expect(JSON.stringify(herb), `${lang} ${herb.id}`).not.toMatch(/\byen\b|¥|円|special price|loose leaf pack|\bpack \(/i);
+      }
     }
   });
 

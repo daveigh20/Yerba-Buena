@@ -9,7 +9,7 @@ export default function JapaneseSourceNote() {
       {t.japanese.sourceNote.before}{" "}
       {JAPANESE_SOURCES.map((source, i) => (
         <Fragment key={source.url}>
-          {i > 0 && ` ${t.japanese.sourceNote.and} `}
+          {i > 0 && (i === JAPANESE_SOURCES.length - 1 ? ` ${t.japanese.sourceNote.and} ` : ", ")}
           <a href={source.url} target="_blank" rel="noopener noreferrer" lang="en">
             {source.publisher}, “{source.title}”
           </a>

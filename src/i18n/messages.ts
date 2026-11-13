@@ -45,7 +45,7 @@ const en = {
   },
   japanese: {
     title: "Japanese Herbs",
-    lead: "Herbs and spices that give Japanese cooking its fresh, clean flavors, and how to use each one at home.",
+    lead: "Herbs, spices, and wa-herb teas that give Japanese cooking and wellness their fresh, clean flavors, and how to use each one at home.",
     count: (n: number) => plural(n, "herb", "herbs"),
     viewHowTo: "How to use it →",
     searchLabel: "Search Japanese herbs",
@@ -391,7 +391,7 @@ const es: Messages = {
   },
   japanese: {
     title: "Hierbas japonesas",
-    lead: "Hierbas y especias que le dan a la cocina japonesa sus sabores frescos y limpios, y cómo usar cada una en casa.",
+    lead: "Hierbas, especias y tés de wa-herb que le dan a la cocina y el bienestar japoneses sus sabores frescos y limpios, y cómo usar cada una en casa.",
     count: (n: number) => esPlural(n, "hierba", "hierbas"),
     viewHowTo: "Cómo usarla →",
     searchLabel: "Buscar hierbas japonesas",
