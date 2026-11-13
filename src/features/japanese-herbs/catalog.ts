@@ -21,6 +21,9 @@ export function useJapaneseHerbs() {
   const { lang } = useLanguage();
   return useMemo(() => {
     const herbs = getJapaneseHerbs(lang);
-    return { lang, herbs, getHerb: (id: string | undefined) => herbs.find((h) => h.id === id) };
+    // On the Spanish site, English names still find the herb ("japanese pepper" finds Sansho).
+    const otherNames = (herb: JapaneseHerb) =>
+      lang === "en" ? [] : [JAPANESE_HERB_TEXT_EN[herb.id].name, ...JAPANESE_HERB_TEXT_EN[herb.id].aliases];
+    return { lang, herbs, otherNames, getHerb: (id: string | undefined) => herbs.find((h) => h.id === id) };
   }, [lang]);
 }

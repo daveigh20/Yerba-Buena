@@ -1072,6 +1072,10 @@ mark {
 .jp-card p {
   margin: 0 0 8px;
 }
+.jp-card__match {
+  border-left: 3px solid var(--border);
+  padding-left: 10px;
+}
 .jp-card__foot {
   margin-top: auto !important;
   font-weight: 500;
