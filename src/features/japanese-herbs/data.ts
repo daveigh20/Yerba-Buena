@@ -486,7 +486,7 @@ export const JAPANESE_HERB_TEXT_EN: Record<JapaneseHerbId, JapaneseHerbText> = {
     flavor: "Minty and warm, with a lemony, slightly medicinal scent",
     summary: "A warming mint-family herb brewed as a tea for colds and chills.",
     description:
-      "Naginata kōju is a wild herb in the mint family, named for its flower spikes, which curve to one side like the blade of a naginata (a Japanese halberd). It has long been used across Japan in teas to warm the body, ease colds, and support circulation. Waho-An Nature Tokyo uses it in a warming tea blend for immunity, together with yomogi and ibuki jakōsō.",
+      "Naginata kōju is a wild herb in the mint family, named for its flower spikes, which curve to one side like the blade of a naginata (a Japanese halberd). It has long been used across Japan in teas to warm the body, ease colds, and support circulation.",
     howToUse: [
       "For tea: put 1 to 2 teaspoons of the dried herb in a cup or teapot and pour over 1 cup of hot water, just off the boil.",
       "Cover and steep for 5 minutes so the aromatic oils stay in the cup, then strain.",
@@ -509,7 +509,7 @@ export const JAPANESE_HERB_TEXT_EN: Record<JapaneseHerbId, JapaneseHerbText> = {
     flavor: "Herbal and savory like garden thyme, but softer and more floral",
     summary: "Japan's native wild thyme, sipped as a tea to soothe the throat and nose.",
     description:
-      "Ibuki jakōsō is Japan's native wild thyme. It's a low, creeping plant with tiny pink flowers, named after Mount Ibuki and its musky scent (jakō means musk). Like garden thyme, it has natural antibacterial properties, and it's traditionally used for sore throats, coughs, and stuffy noses. Waho-An Nature Tokyo pairs it with yomogi and naginata kōju in a warming tea for immunity.",
+      "Ibuki jakōsō is Japan's native wild thyme. It's a low, creeping plant with tiny pink flowers, named after Mount Ibuki and its musky scent (jakō means musk). Like garden thyme, it has natural antibacterial properties, and it's traditionally used for sore throats, coughs, and stuffy noses.",
     howToUse: [
       "For tea: steep 1 teaspoon of the dried herb (or a few fresh sprigs) in 1 cup of hot water for 5 to 10 minutes, covered.",
       "For a sore throat: stir in a spoonful of honey and sip slowly while it's warm.",
@@ -532,7 +532,7 @@ export const JAPANESE_HERB_TEXT_EN: Record<JapaneseHerbId, JapaneseHerbText> = {
     flavor: "Earthy and celery-like, with a bittersweet, slightly spicy finish",
     summary: "A warming root valued in Japan as a women's herb for cramps, chills, and cycles.",
     description:
-      "Tōki is the root of Japanese angelica, a close relative of Chinese dong quai. It's one of the most important herbs in kampō (traditional Japanese medicine) and is traditionally used to warm the body, improve circulation, and support women's health: easing menstrual cramps and irregular cycles, chills, and water retention. Waho-An Nature Tokyo uses it as the key herb in a warming tea blend for women.",
+      "Tōki is the root of Japanese angelica, a close relative of Chinese dong quai. It's one of the most important herbs in kampō (traditional Japanese medicine) and is traditionally used to warm the body, improve circulation, and support women's health: easing menstrual cramps and irregular cycles, chills, and water retention.",
     howToUse: [
       "Tōki is usually sold as dried slices of root. Rinse them briefly before using.",
       "For a decoction: simmer 3 to 5 grams (about 2 or 3 slices) in 2 cups of water for 15 to 20 minutes, until the liquid is reduced by about a third.",
@@ -556,7 +556,7 @@ export const JAPANESE_HERB_TEXT_EN: Record<JapaneseHerbId, JapaneseHerbText> = {
     flavor: "Very tart and bright, with a fragrant, slightly bitter peel",
     summary: "Japan's only native wild citrus, whose fragrant peel is brewed into a fruity morning tea.",
     description:
-      "Tachibana is a small, tart orange and Japan's only native wild citrus. It appears in Japan's oldest histories and in the Imperial Palace, where a tachibana tree is planted beside the main hall. The fruit is too sour to eat fresh, but its dried peel is used in teas and is rich in nobiletin, a citrus compound being studied for its effects on metabolism. Waho-An Nature Tokyo uses it in an energizing morning blend and an evening blend for relaxing.",
+      "Tachibana is a small, tart orange and Japan's only native wild citrus. It appears in Japan's oldest histories and in the Imperial Palace, where a tachibana tree is planted beside the main hall. The fruit is too sour to eat fresh, but its dried peel is used in teas and is rich in nobiletin, a citrus compound being studied for its effects on metabolism.",
     howToUse: [
       "For tea: steep 1 teaspoon of dried tachibana peel in 1 cup of hot water for about 5 minutes.",
       "Drink it in the morning as a caffeine-free pick-me-up instead of coffee.",
@@ -579,7 +579,7 @@ export const JAPANESE_HERB_TEXT_EN: Record<JapaneseHerbId, JapaneseHerbText> = {
     flavor: "Fresh and spicy-sweet, with a ginger-like, slightly floral scent",
     summary: "An Okinawan ginger-family leaf rich in antioxidants, brewed as tea or wrapped around rice cakes.",
     description:
-      "Gettō, also called shell ginger, is a tall plant in the ginger family that grows wild in Okinawa, where it's known as sannin. Its leaves are rich in polyphenols, which are antioxidants, and are prized for their fresh, spicy scent. In Okinawa, the leaves are used to wrap muchī, steamed rice cakes made for a winter festival, and they're also brewed into tea. Waho-An Nature Tokyo uses gettō in a relaxing evening blend.",
+      "Gettō, also called shell ginger, is a tall plant in the ginger family that grows wild in Okinawa, where it's known as sannin. Its leaves are rich in polyphenols, which are antioxidants, and are prized for their fresh, spicy scent. In Okinawa, the leaves are used to wrap muchī, steamed rice cakes made for a winter festival, and they're also brewed into tea.",
     howToUse: [
       "For tea: steep 1 to 2 teaspoons of dried, chopped gettō leaf in 1 cup of hot water for 5 minutes.",
       "For a stronger flavor, simmer the dried leaf in water for 5 to 10 minutes instead.",
@@ -602,7 +602,7 @@ export const JAPANESE_HERB_TEXT_EN: Record<JapaneseHerbId, JapaneseHerbText> = {
     flavor: "Sweetly floral petals and tangy, fruity hips",
     summary: "A wild beach rose whose fragrant petals and vitamin C-rich hips make a calming tea.",
     description:
-      "Hamanasu is a wild rose that grows on sandy beaches in northern Japan, especially Hokkaido. Its deep pink petals have a strong, sweet scent, and its round red hips are rich in vitamin C. It's traditionally used to support healthy skin and to calm the body and mind. Waho-An Nature Tokyo adds it to a relaxing evening blend.",
+      "Hamanasu is a wild rose that grows on sandy beaches in northern Japan, especially Hokkaido. Its deep pink petals have a strong, sweet scent, and its round red hips are rich in vitamin C. It's traditionally used to support healthy skin and to calm the body and mind.",
     howToUse: [
       "Petal tea: steep 1 to 2 teaspoons of dried petals (or a small handful of fresh, unsprayed petals) in 1 cup of hot water for 3 to 5 minutes.",
       "Hip tea: crush 1 to 2 teaspoons of dried hips and simmer them in 1 cup of water for about 10 minutes.",
@@ -625,7 +625,7 @@ export const JAPANESE_HERB_TEXT_EN: Record<JapaneseHerbId, JapaneseHerbText> = {
     flavor: "Sharp and fishy when fresh, but mild, earthy, and slightly sweet as a dried tea",
     summary: "A heart-shaped “ten medicines” leaf brewed into a detox tea.",
     description:
-      "Dokudami is a heart-leaved plant that grows in shady, damp spots all over Japan. It's also called jūyaku, “ten medicines,” because it was used for so many ailments. Dried dokudami tea is one of Japan's best-known folk remedies, traditionally used to detox the body, ease water retention and constipation, and support healthy skin. Waho-An Nature Tokyo includes it in a detox tea blend.",
+      "Dokudami is a heart-leaved plant that grows in shady, damp spots all over Japan. It's also called jūyaku, “ten medicines,” because it was used for so many ailments. Dried dokudami tea is one of Japan's best-known folk remedies, traditionally used to detox the body, ease water retention and constipation, and support healthy skin.",
     howToUse: [
       "Always use it dried for tea. Drying removes the strong fishy smell of the fresh leaves.",
       "For tea: simmer 1 tablespoon (about 5 grams) of dried dokudami in 2 to 3 cups of water for 5 to 10 minutes, then strain.",

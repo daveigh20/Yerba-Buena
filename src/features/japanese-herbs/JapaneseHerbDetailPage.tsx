@@ -40,9 +40,9 @@ export default function JapaneseHerbDetailPage() {
                 <img src={image.src} width={image.width} height={image.height} alt={label ?? herb.name} />
                 <figcaption className="small muted">
                   {label && <strong className="jp-photo__label">{label}</strong>}
-                  {t.japanese.photoBy} {image.credit},{" "}
+                  {t.japanese.photoBy}{" "}
                   <a href={image.sourceUrl} target="_blank" rel="noopener noreferrer">
-                    Wikimedia Commons
+                    {image.credit}
                   </a>{" "}
                   (
                   <a href={image.licenseUrl} target="_blank" rel="noopener noreferrer">

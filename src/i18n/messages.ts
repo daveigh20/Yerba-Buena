@@ -63,7 +63,7 @@ const en = {
     cautions: "Cautions",
     others: "More Japanese herbs",
     photoBy: "Photo:",
-    photoNote: "Herb photos are from Wikimedia Commons. Each herb's page credits its photographer and license.",
+    photoNote: "Each herb's page credits its photographer and license.",
     sourceNote: {
       before: "The herbs and their traditional uses come from",
       and: "and",
@@ -411,7 +411,7 @@ const es: Messages = {
     cautions: "Precauciones",
     others: "Más hierbas japonesas",
     photoBy: "Foto:",
-    photoNote: "Las fotos de las hierbas son de Wikimedia Commons. La página de cada hierba da el crédito al fotógrafo y la licencia.",
+    photoNote: "La página de cada hierba da el crédito al fotógrafo y la licencia.",
     sourceNote: {
       before: "Las hierbas y sus usos tradicionales vienen de",
       and: "y",
