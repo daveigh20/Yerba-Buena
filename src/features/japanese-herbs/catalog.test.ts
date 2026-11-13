@@ -66,8 +66,8 @@ describe("Japanese herbs", () => {
     }
   });
 
-  it("gives the ORIFUSI herbs a credited photo that exists and stays small", () => {
-    const withPhotos = ["kuromoji", "dokudami", "getto", "sakura-leaf", "hatomugi", "tsubaki", "hamanasu"];
+  it("gives the herbs with photos a credited photo that exists and stays small", () => {
+    const withPhotos = ["kuromoji", "dokudami", "getto", "sakura-leaf", "hatomugi", "tsubaki", "hamanasu", "kawamidori", "kuko"];
     for (const herb of getJapaneseHerbs("en")) {
       expect(Boolean(herb.images?.length), herb.id).toBe(withPhotos.includes(herb.id));
       for (const image of herb.images ?? []) {

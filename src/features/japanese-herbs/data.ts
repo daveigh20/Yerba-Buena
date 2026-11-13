@@ -251,8 +251,36 @@ export const JAPANESE_HERB_BASE: Record<JapaneseHerbId, JapaneseHerbBase> = {
       },
     ],
   },
-  kawamidori: { japaneseName: "カワミドリ", romaji: "Kawamidori", scientificName: "Agastache rugosa" },
-  kuko: { japaneseName: "枸杞", romaji: "Kuko", scientificName: "Lycium chinense" },
+  kawamidori: {
+    japaneseName: "カワミドリ",
+    romaji: "Kawamidori",
+    scientificName: "Agastache rugosa",
+    images: [
+      {
+        src: "/images/japanese-herbs/kawamidori.jpg",
+        width: 800,
+        height: 600,
+        credit: "Dalgial",
+        ...CC_BY_SA_3,
+        sourceUrl: `${COMMONS}Agastache_rugosa_01.JPG`,
+      },
+    ],
+  },
+  kuko: {
+    japaneseName: "枸杞",
+    romaji: "Kuko",
+    scientificName: "Lycium chinense",
+    images: [
+      {
+        src: "/images/japanese-herbs/kuko.jpg",
+        width: 800,
+        height: 533,
+        credit: "Siamaksabet",
+        ...CC_BY_SA_4,
+        sourceUrl: `${COMMONS}Lycium_chinense(siamak_sabet)_(2).jpg`,
+      },
+    ],
+  },
 };
 
 const FOOD_AMOUNTS = "Enjoy it in the amounts used in cooking. If you're pregnant or breastfeeding, don't take it in larger, medicinal amounts.";
