@@ -5,6 +5,7 @@ import herbsHero from "../assets/herbs-hero.svg";
 
 const FEATURES = [
   { to: "/herbs", key: "herbs" },
+  { to: "/japanese-herbs", key: "japanese" },
   { to: "/remedies", key: "remedies" },
   { to: "/trail-map", key: "trailMap" },
   { to: "/check-in", key: "checkIn" },

@@ -1054,3 +1054,26 @@ mark {
   background: var(--brand-soft);
   border-color: var(--brand);
 }
+
+/* ---------- Japanese herbs ---------- */
+
+.jp-name {
+  font-size: 1.05rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.jp-name--large {
+  font-size: 1.5rem;
+}
+.jp-card {
+  display: flex;
+  flex-direction: column;
+}
+.jp-card p {
+  margin: 0 0 8px;
+}
+.jp-card__foot {
+  margin-top: auto !important;
+  font-weight: 500;
+  color: var(--brand-strong);
+}

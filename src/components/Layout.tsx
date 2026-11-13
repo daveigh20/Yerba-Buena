@@ -5,6 +5,7 @@ import { useLanguage, useT } from "../i18n/LanguageContext";
 
 const NAV = [
   { to: "/herbs", key: "herbs" },
+  { to: "/japanese-herbs", key: "japanese" },
   { to: "/remedies", key: "remedies" },
   { to: "/trail-map", key: "trailMap" },
   { to: "/check-in", key: "checkIn" },

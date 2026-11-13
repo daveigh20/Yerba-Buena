@@ -17,7 +17,7 @@ const en = {
   layout: {
     skip: "Skip to content",
     mainNav: "Main",
-    nav: { herbs: "Herbs", remedies: "Remedies", trailMap: "Trail Map", checkIn: "Check-in" },
+    nav: { herbs: "Herbs", japanese: "Japanese Herbs", remedies: "Remedies", trailMap: "Trail Map", checkIn: "Check-in" },
     logIn: "Log in",
     signUp: "Sign up",
     footer: "Information here is educational, not medical advice.",
@@ -28,6 +28,7 @@ const en = {
     heroAlt: "Illustration of mint, rosemary, sage and chamomile on an orange background",
     features: {
       herbs: { title: "Herb Search", text: "Look up herbs and teas by name or by what they're traditionally used for." },
+      japanese: { title: "Japanese Herbs", text: "Shiso, wasabi, sansho, and more, with step-by-step ways to use each one." },
       remedies: { title: "Remedies", text: "Simple teas, syrups, and steams you can make with herbs from the catalog." },
       trailMap: { title: "Trail Map", text: "Find a trail near you and get directions to it." },
       checkIn: { title: "Well-being Check-in", text: "Take a moment to note how you're feeling today." },
@@ -41,6 +42,26 @@ const en = {
     herb: "We couldn't find that herb.",
     remedy: "We couldn't find that remedy.",
     cta: "Go to herb search",
+  },
+  japanese: {
+    title: "Japanese Herbs",
+    lead: "Herbs and spices that give Japanese cooking its fresh, clean flavors, and how to use each one at home.",
+    count: (n: number) => plural(n, "herb", "herbs"),
+    viewHowTo: "How to use it →",
+    back: "Japanese herbs",
+    notFound: "We couldn't find that Japanese herb.",
+    alsoKnownAs: (names: string) => `Also known as ${names}`,
+    inJapanese: "In Japanese",
+    partsUsed: "Parts used",
+    flavor: "Flavor",
+    howToUse: "How to use it",
+    storage: "Buying and storing",
+    cautions: "Cautions",
+    others: "More Japanese herbs",
+    sourceNote: {
+      before: "The herbs and their traditional uses come from",
+      after: ". Preparation steps, storage tips, and cautions were added by Yerba Buena. This is general information, not medical advice.",
+    },
   },
   herbs: {
     category: { "true-tea": "True tea", herbal: "Herbal" },
@@ -328,7 +349,7 @@ const es: Messages = {
   layout: {
     skip: "Saltar al contenido",
     mainNav: "Principal",
-    nav: { herbs: "Hierbas", remedies: "Remedios", trailMap: "Senderos", checkIn: "¿Cómo estás?" },
+    nav: { herbs: "Hierbas", japanese: "Hierbas japonesas", remedies: "Remedios", trailMap: "Senderos", checkIn: "¿Cómo estás?" },
     logIn: "Iniciar sesión",
     signUp: "Registrarse",
     footer: "Esta información es educativa, no es consejo médico.",
@@ -341,6 +362,10 @@ const es: Messages = {
       herbs: {
         title: "Buscador de hierbas",
         text: "Busca hierbas y tés por nombre o por sus usos tradicionales.",
+      },
+      japanese: {
+        title: "Hierbas japonesas",
+        text: "Shiso, wasabi, sansho y más, con pasos sencillos para usar cada una.",
       },
       remedies: {
         title: "Remedios",
@@ -358,6 +383,26 @@ const es: Messages = {
     herb: "No encontramos esa hierba.",
     remedy: "No encontramos ese remedio.",
     cta: "Ir al buscador de hierbas",
+  },
+  japanese: {
+    title: "Hierbas japonesas",
+    lead: "Hierbas y especias que le dan a la cocina japonesa sus sabores frescos y limpios, y cómo usar cada una en casa.",
+    count: (n: number) => esPlural(n, "hierba", "hierbas"),
+    viewHowTo: "Cómo usarla →",
+    back: "Hierbas japonesas",
+    notFound: "No encontramos esa hierba japonesa.",
+    alsoKnownAs: (names: string) => `También conocida como ${names}`,
+    inJapanese: "En japonés",
+    partsUsed: "Partes que se usan",
+    flavor: "Sabor",
+    howToUse: "Cómo usarla",
+    storage: "Cómo comprarla y guardarla",
+    cautions: "Precauciones",
+    others: "Más hierbas japonesas",
+    sourceNote: {
+      before: "Las hierbas y sus usos tradicionales vienen de",
+      after: ". Yerba Buena agregó los pasos de preparación, consejos para guardarlas y precauciones. Es información general, no consejo médico.",
+    },
   },
   herbs: {
     category: { "true-tea": "Té verdadero", herbal: "Herbal" },
