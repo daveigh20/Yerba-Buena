@@ -64,6 +64,7 @@ const en = {
     others: "More Japanese herbs",
     sourceNote: {
       before: "The herbs and their traditional uses come from",
+      and: "and",
       after: ". Preparation steps, storage tips, and cautions were added by Yerba Buena. This is general information, not medical advice.",
     },
   },
@@ -409,6 +410,7 @@ const es: Messages = {
     others: "Más hierbas japonesas",
     sourceNote: {
       before: "Las hierbas y sus usos tradicionales vienen de",
+      and: "y",
       after: ". Yerba Buena agregó los pasos de preparación, consejos para guardarlas y precauciones. Es información general, no consejo médico.",
     },
   },

@@ -141,5 +141,99 @@ export const JAPANESE_HERB_TEXT_ES: Record<JapaneseHerbId, JapaneseHerbText> = {
       "Evítalo si tienes alergia a plantas de la familia de los cítricos o a la pimienta de Sichuan.",
       FOOD_AMOUNTS,
     ],
+  },  kiku: {
+    name: "Crisantemo",
+    aliases: ["kiku", "té de crisantemo", "kikka", "crisantemo comestible", "shokuyo giku"],
+    partsUsed: ["Flor"],
+    flavor: "Ligero, floral y un poco dulce, con un amargor suave",
+    summary: "Flores doradas que se preparan en un té relajante o se esparcen sobre ensaladas y sashimi.",
+    description:
+      "El crisantemo (kiku) es la flor imperial de Japón, y sus flores se toman en té y también se comen. El té de crisantemo es una bebida popular, que tradicionalmente se toma por la circulación, la salud del corazón y sus antioxidantes, que se cree que ayudan a que la piel se vea joven. Las variedades comestibles (shokuyō-giku) se venden en manojos amarillo brillante o morados, y es común poner flores pequeñas junto al sashimi como adorno.",
+    howToUse: [
+      "Para té: pon de 5 a 8 flores secas en una taza o tetera y vierte 1 taza de agua caliente, recién retirada del hervor.",
+      "Deja reposar de 3 a 5 minutos, hasta que las flores se abran y el té se ponga dorado claro. Tómalo solo o con un poco de miel.",
+      "Vuelve a llenar con agua caliente las mismas flores una o dos veces más. El sabor se hace más suave cada vez.",
+      "Flores comestibles: quítales los pétalos a los shokuyō-giku frescos y blanquéalos en agua hirviendo con un chorrito de vinagre de arroz por unos 30 segundos. El vinagre mantiene el color brillante.",
+      "Enfría los pétalos en agua fría, exprímelos con cuidado y mézclalos con salsa de soya, dashi o un aderezo de ajonjolí (ohitashi), o agrégalos a ensaladas y arroz para sushi.",
+    ],
+    storage:
+      "Guarda las flores secas en un frasco hermético lejos de la luz; conservan su aroma por cerca de un año. Las flores comestibles frescas se marchitan rápido, así que guárdalas en una bolsa en el refrigerador y úsalas en 2 o 3 días. Usa solo flores que se vendan como alimento o té, no crisantemos de florería o de jardín, que pueden estar fumigados.",
+    cautions: [
+      "Evítalo si tienes alergia a plantas de la familia de las margaritas (ambrosía, crisantemos, caléndulas, margaritas).",
+      "Tocar las plantas frescas puede causar sarpullido en algunas personas.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  gobo: {
+    name: "Raíz de bardana",
+    aliases: ["gobo", "gobō", "bardana", "lampazo", "té de gobo", "kinpira gobo"],
+    partsUsed: ["Raíz"],
+    flavor: "Terroso y con sabor a nuez, crujiente y un poco dulce, algo parecido a la alcachofa",
+    summary: "Una raíz larga y terrosa que se saltea con zanahoria, se cocina en sopas o se tuesta para té.",
+    description:
+      "La raíz de bardana (gobō) es una raíz larga y delgada de piel café y carne blanca que en Japón se come como verdura de todos los días. Tradicionalmente se usa para limpiar el cuerpo, ayudar a la digestión y mantener la piel sana, y es rica en fibra, como la inulina. Es más conocida por el kinpira gobō, un salteado dulce y salado con zanahoria, y también se tuesta para hacer un té con sabor tostado y sin cafeína.",
+    howToUse: [
+      "Talla la raíz bajo el chorro de agua con un cepillo o con el lomo de un cuchillo. No la peles, porque gran parte del sabor está justo debajo de la piel.",
+      "Córtala en tiras finas o rebánala en virutas, como si le sacaras punta a un lápiz, y échalas en agua fría de inmediato para que no se pongan cafés. Déjalas remojar de 5 a 10 minutos y escúrrelas.",
+      "Para kinpira gobō: saltea la bardana con tiras de zanahoria en aceite de ajonjolí unos minutos, luego agrega salsa de soya, mirin y un poco de azúcar, y cocina hasta que se consuma el líquido. Termina con ajonjolí.",
+      "En sopas y guisos: agrega rebanadas a la sopa de miso, al tonjiru (sopa de cerdo y verduras) o a guisos. Se queda agradablemente crujiente.",
+      "Para té de gobō: seca virutas finas en el horno a 120 °C (250 °F) o en un sartén sin aceite hasta que estén crujientes y doradas. Deja reposar 1 o 2 cucharaditas en 1 taza de agua caliente por unos 5 minutos.",
+    ],
+    storage:
+      "Envuelve la raíz entera y sin lavar en papel periódico o una toalla de papel húmeda y guárdala en el refrigerador; dura de 1 a 2 semanas. Escoge raíces firmes que no sean muy gruesas, porque las gruesas pueden estar huecas o fibrosas.",
+    cautions: [
+      "Evítala si tienes alergia a plantas de la familia de las margaritas (ambrosía, crisantemos, caléndulas, margaritas).",
+      "Puede ser un diurético suave y bajar el azúcar en la sangre. Si tomas medicamentos para la diabetes o diuréticos, consulta a tu médico antes de tomarla en té todos los días.",
+      "No la recolectes en el campo. La bardana joven se puede confundir con plantas tóxicas como la belladona, así que cómprala en la tienda.",
+      FOOD_AMOUNTS,
+    ],
+  },
+  kombu: {
+    name: "Kombu",
+    aliases: ["konbu", "kelp", "alga", "alga kombu", "kombu para dashi"],
+    partsUsed: ["Hoja seca (alga)"],
+    flavor: "Umami profundo y sabroso, con un ligero sabor a mar",
+    summary: "Alga seca que le da al dashi, la base de las sopas y salsas japonesas, su sabor profundo.",
+    description:
+      "El kombu es un alga gruesa y oscura que se vende seca en hojas planas. Es básico en la cocina japonesa y el ingrediente principal del dashi, el caldo de la sopa de miso, las sopas de fideos y los guisos. Es rico en yodo, vitaminas y minerales, que apoyan la función de la tiroides y un metabolismo sano. El kombu también contiene fucoidán, un compuesto que se está estudiando por sus efectos antiinflamatorios. De sus glutamatos naturales viene la palabra “umami”.",
+    howToUse: [
+      "Limpia la hoja con cuidado con un trapo húmedo. No la enjuagues ni la talles, porque el polvo blanco de la superficie es sabor, no suciedad.",
+      "Dashi en frío: pon un trozo de 10 cm (4 pulgadas) en 4 tazas de agua y déjalo en el refrigerador unas horas o toda la noche. Saca el kombu y usa el caldo.",
+      "Dashi rápido: pon el kombu en agua fría y caliéntala despacio. Sácalo justo antes de que hierva el agua, o el caldo se pone viscoso y amargo.",
+      "Con frijoles y arroz: agrega un trozo pequeño a una olla de frijoles o arroz mientras se cocina para darle más sabor. También ayuda a ablandar los frijoles.",
+      "No tires el kombu usado. Córtalo en tiras finas y cocínalo a fuego lento con salsa de soya y mirin para hacer tsukudani, un acompañamiento dulce y salado para el arroz.",
+    ],
+    storage:
+      "Guarda el kombu seco en un recipiente hermético en un lugar fresco y seco; dura un año o más. Guarda el dashi casero en el refrigerador y úsalo en 3 días, o congélalo en charolas para hielo.",
+    cautions: [
+      "El kombu es uno de los alimentos con más yodo, y demasiado yodo puede alterar la tiroides. Disfrútalo en las cantidades normales de cocina y evita comer mucho todos los días.",
+      "Si tienes un problema de tiroides, tomas medicamento para la tiroides o estás embarazada o amamantando, come porciones pequeñas y consulta a tu médico.",
+      "No tomes suplementos de kelp a menos que te los recomiende un médico. Pueden tener mucho más yodo que los alimentos.",
+      "Tiene mucho sodio de forma natural. Tenlo en cuenta si estás cuidando tu consumo de sal.",
+    ],
+  },
+  ashitaba: {
+    name: "Ashitaba",
+    aliases: ["hoja del mañana", "angélica", "angélica japonesa", "té de ashitaba"],
+    partsUsed: ["Hoja", "Tallo"],
+    flavor: "Fresco y verde, un poco como el apio, con un amargor agradable",
+    summary: "La “hoja del mañana”, una verdura de crecimiento rápido que se come en tempura o se toma en polvo como té.",
+    description:
+      "La ashitaba es originaria de las islas Izu de Japón, y su nombre significa “hoja del mañana” porque una hoja cortada vuelve a crecer al día siguiente. Esta planta verde es rica en antioxidantes, vitaminas y clorofila, y tradicionalmente se usa para limpiar el cuerpo, mejorar la circulación y apoyar al hígado. También se cree que ayuda al cuerpo a renovar sus células y mantenerse joven. Estudios de laboratorio han relacionado sus compuestos (chalconas) con una vida más larga en levaduras y gusanos, pero esto no se ha comprobado en personas.",
+    howToUse: [
+      "Escoge hojas y tallos tiernos. Enjuágalos y corta las puntas duras.",
+      "En tempura: pasa las hojas enteras por una masa ligera y fríelas unos segundos hasta que estén crujientes. Freírlas suaviza el amargor.",
+      "En ohitashi: blanquéala por 1 minuto, enfríala en agua fría, exprímela, córtala en trozos cortos y adereza con salsa de soya y hojuelas de bonito o ajonjolí.",
+      "En salteados y sopas: pícala y agrégala al final de la cocción, como harías con las espinacas.",
+      "En té o licuado: mezcla 1 cucharadita de ashitaba en polvo en 1 taza de agua caliente o fría, o agrégala a un licuado.",
+    ],
+    storage:
+      "Envuelve la ashitaba fresca en una toalla de papel húmeda, ponla en una bolsa y guárdala en el refrigerador; úsala en 3 o 4 días. Las hojas blanqueadas se congelan bien. Guarda el polvo en una bolsa bien cerrada, lejos de la luz y la humedad.",
+    cautions: [
+      "La ashitaba es de la familia de la zanahoria y el apio. Evítala si tienes alergia al apio, al perejil o a la zanahoria.",
+      "Su savia amarilla tiene compuestos que pueden hacer la piel más sensible al sol. Lávate las manos después de tocar los tallos frescos y ten cuidado con el sol si la tomas seguido.",
+      "Puede hacer más lenta la coagulación de la sangre. Consulta primero a tu médico si tomas anticoagulantes o vas a tener una cirugía.",
+      "No hay suficiente información sobre su seguridad en el embarazo o la lactancia, así que evita cantidades mayores o medicinales.",
+    ],
   },
 };
