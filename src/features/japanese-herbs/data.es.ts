@@ -397,5 +397,72 @@ export const JAPANESE_HERB_TEXT_ES: Record<JapaneseHerbId, JapaneseHerbText> = {
       "Tiene mucho potasio. Si tienes problemas de los riñones o tomas medicamentos que suben el potasio, consulta primero a tu médico.",
       "No la uses si estás embarazada o amamantando, porque no hay suficiente información sobre su seguridad.",
     ],
+  },  "sakura-leaf": {
+    name: "Hoja de cerezo",
+    aliases: ["hoja de sakura", "sakura no ha", "cerezo yoshino", "somei yoshino", "hoja de sakuramochi"],
+    partsUsed: ["Hoja"],
+    flavor: "Dulce y con sabor a almendra, con un suave aroma a vainilla cuando la hoja está encurtida en sal",
+    summary: "La hoja salada con aroma a almendra que envuelve los dulces rosas de sakuramochi.",
+    description:
+      "Las hojas de cerezo son más conocidas como la envoltura encurtida en sal del sakuramochi, los pasteles de arroz rosas que se comen en primavera. El encurtido resalta la cumarina, el compuesto detrás de su aroma dulce, como de almendra. ORIFUSI incluye un extracto de hojas de cerezo Yoshino (Somei-yoshino) como ingrediente para calmar la piel sensible. La mayoría de las hojas que se venden para cocinar vienen del cerezo Ōshima, que es muy parecido.",
+    howToUse: [
+      "Compra hojas de cerezo encurtidas en sal (sakura no ha shiozuke) en una tienda japonesa en lugar de cortarlas de un árbol.",
+      "Remoja las hojas en agua fría de 10 a 15 minutos para quitarles un poco de sal y sécalas con cuidado.",
+      "Para el sakuramochi: envuelve cada pastel de arroz relleno con una hoja, con las venas hacia afuera. La hoja se puede comer o quitar.",
+      "Pica finamente una hoja remojada y agrégala al arroz, a galletas de mantequilla o a la masa de un panqué para un suave aroma a cerezo.",
+      "Para un té rápido: deja reposar una hoja enjuagada con unas flores de cerezo encurtidas (sakurayu) en agua caliente.",
+    ],
+    storage:
+      "Guarda las hojas encurtidas bien cerradas en el refrigerador, donde duran varios meses. Una vez remojadas, úsalas el mismo día.",
+    cautions: [
+      "No comas hojas de cerezo frescas y crudas. Como otras partes del cerezo, tienen compuestos naturales que pueden ser dañinos en grandes cantidades. Usa solo hojas preparadas y encurtidas.",
+      "Las hojas encurtidas son saladas. Remójalas primero y modera su uso si cuidas tu consumo de sal.",
+      "En grandes cantidades, la cumarina puede aumentar el efecto de los anticoagulantes. Una o dos hojas con un dulce está bien.",
+    ],
+  },
+  hatomugi: {
+    name: "Semilla de coix",
+    aliases: ["hatomugi", "lágrimas de job", "lagrimas de job", "adlay", "yokuinin", "cebada perlada china", "té de hatomugi"],
+    partsUsed: ["Semilla"],
+    flavor: "A nuez y tostado, como la cebada tostada, con una textura masticable cuando está cocida",
+    summary: "Un grano que se prepara en té tostado de hatomugi y que tradicionalmente se usa para una piel suave.",
+    description:
+      "El hatomugi, también llamado lágrimas de Job, es un pasto alto cuyas semillas peladas parecen granos de cebada grandes y llenitos. En Japón, las semillas tostadas se preparan en un té popular sin cafeína, y las semillas se cocinan como cualquier grano. En la medicina tradicional japonesa y china (donde se le llama yokuinin) se ha usado por mucho tiempo para una piel limpia y suave. ORIFUSI usa extracto de semilla de coix como ingrediente humectante para la piel.",
+    howToUse: [
+      "En té: hierve a fuego lento 1 o 2 cucharadas de hatomugi tostado en 4 tazas de agua de 5 a 10 minutos y cuela. También sirven las bolsitas de té.",
+      "Tómalo caliente o frío, a cualquier hora, porque no tiene cafeína. Combina bien con el té de cebada tostada (mugicha).",
+      "Para tostar semillas crudas: tuéstalas en un sartén seco a fuego medio, moviendo, hasta que estén doradas y aromáticas.",
+      "Como grano: enjuaga y remoja las semillas crudas por unas horas, y luego cocínalas a fuego lento unos 40 minutos hasta que estén suaves. Agrégalas a sopas, ensaladas o arroz.",
+      "Mezcla unas cucharadas con arroz blanco antes de cocerlo para darle una textura masticable y a nuez.",
+    ],
+    storage:
+      "Guarda las semillas o el té en un recipiente hermético en un lugar fresco y seco, y úsalos dentro de 6 meses. Guarda el té preparado en el refrigerador y tómalo en 2 días.",
+    cautions: [
+      "No lo uses si estás embarazada. Tradicionalmente se evita en el embarazo porque puede afectar el útero.",
+      "Puede bajar el azúcar en la sangre. Si tomas medicamento para la diabetes, vigila tus niveles.",
+      "Evítalo si tienes alergia a los granos o a los pastos.",
+    ],
+  },
+  tsubaki: {
+    name: "Camelia",
+    aliases: ["tsubaki", "camelia japonesa", "camellia japonica", "aceite de camelia", "aceite de tsubaki", "tsubaki abura", "flor de camelia"],
+    partsUsed: ["Aceite de la semilla", "Flor"],
+    flavor: "El aceite para cocinar es ligero y suave, casi sin sabor",
+    summary: "Una flor de invierno cuyo aceite de semilla ha cuidado el cabello y la piel en Japón por siglos.",
+    description:
+      "La tsubaki, o camelia japonesa, florece en rojo, rosa o blanco en invierno y a principios de la primavera. El aceite que se extrae de sus semillas, tsubaki abura, se ha usado por siglos para dar brillo al cabello, suavizar la piel y freír tempura ligera. Las islas Gotō, en Nagasaki, son famosas por él. ORIFUSI usa un extracto de flores de camelia de Gotō para dar humedad y luminosidad a la piel.",
+    howToUse: [
+      "Para el cabello: calienta 2 o 3 gotas de aceite de camelia entre las palmas y pásalas por las puntas del cabello húmedo o seco.",
+      "Para la piel: presiona 1 o 2 gotas sobre la cara después del tónico, o frota un poco en manos, codos y talones resecos.",
+      "Para cocinar: usa solo aceite de camelia de grado alimenticio. Es suave y estable al calentarse, así que pruébalo para tempura o en aderezos.",
+      "Las flores son sobre todo para admirarlas. Pon una flor fresca a flotar en un tazón de agua poco profundo, la forma tradicional de exhibirla.",
+    ],
+    storage:
+      "Guarda el aceite bien cerrado en un lugar fresco y oscuro. Dura como un año después de abierto. Si huele fuerte o rancio, cámbialo.",
+    cautions: [
+      "Haz una prueba antes de usar el aceite en la cara: pon un poco en la parte interna del brazo y espera un día.",
+      "El aceite de camelia cosmético no es para comer. Cocina solo con aceite que diga que es para alimentos.",
+      "Evítala si tienes alergia a la camelia o a la planta del té.",
+    ],
   },
 };

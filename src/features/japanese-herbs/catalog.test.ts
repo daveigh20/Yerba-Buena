@@ -1,3 +1,4 @@
+import { existsSync, statSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { HERB_IDS, HERB_PROFILES } from "../herbs/data/herbs";
 import { getJapaneseHerbs } from "./catalog";
@@ -5,7 +6,7 @@ import { JAPANESE_HERB_IDS, JAPANESE_HERB_TEXT_EN } from "./data";
 import { JAPANESE_HERB_TEXT_ES } from "./data.es";
 
 describe("Japanese herbs", () => {
-  it("covers the herbs from both sources, in order", () => {
+  it("covers the herbs from every source, in order", () => {
     expect(getJapaneseHerbs("en").map((h) => h.id)).toEqual([
       "shiso",
       "wasabi",
@@ -24,6 +25,9 @@ describe("Japanese herbs", () => {
       "getto",
       "hamanasu",
       "dokudami",
+      "sakura-leaf",
+      "hatomugi",
+      "tsubaki",
     ]);
   });
 
@@ -56,6 +60,23 @@ describe("Japanese herbs", () => {
         expect(herb.storage.length, `${lang} ${herb.id}`).toBeGreaterThan(20);
         expect(herb.cautions.length, `${lang} ${herb.id}`).toBeGreaterThan(0);
         expect(herb.japaneseName, herb.id).toBeTruthy();
+      }
+    }
+  });
+
+  it("gives the ORIFUSI herbs a credited photo that exists and stays small", () => {
+    const withPhotos = ["kuromoji", "dokudami", "getto", "sakura-leaf", "hatomugi", "tsubaki", "hamanasu"];
+    for (const herb of getJapaneseHerbs("en")) {
+      expect(Boolean(herb.images?.length), herb.id).toBe(withPhotos.includes(herb.id));
+      for (const image of herb.images ?? []) {
+        const file = new URL(`../../../public${image.src}`, import.meta.url);
+        expect(existsSync(file), image.src).toBe(true);
+        expect(statSync(file).size, image.src).toBeLessThan(300_000);
+        expect(image.credit, image.src).toBeTruthy();
+        expect(image.sourceUrl, image.src).toMatch(/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
+        expect(image.licenseUrl, image.src).toMatch(/^https:\/\/creativecommons\.org\//);
+        // A herb with several photos labels each one, so readers know which part they're looking at.
+        if (herb.images!.length > 1) expect(image.label?.en && image.label.es, image.src).toBeTruthy();
       }
     }
   });

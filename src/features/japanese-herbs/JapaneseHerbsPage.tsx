@@ -75,6 +75,17 @@ export default function JapaneseHerbsPage() {
           {results.map(({ herb, matchedAlias, matchedText }) => (
             <li key={herb.id}>
               <Link to={`/japanese-herbs/${herb.id}`} className="card card--link jp-card">
+                {herb.images?.[0] && (
+                  <img
+                    className="jp-card__photo"
+                    src={herb.images[0].src}
+                    width={herb.images[0].width}
+                    height={herb.images[0].height}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
                 <div className="herb-card__head">
                   <h2 className="card__title">
                     <Highlight text={herb.name} query={query} />
@@ -106,6 +117,7 @@ export default function JapaneseHerbsPage() {
         </ul>
       )}
 
+      <p className="small muted">{t.japanese.photoNote}</p>
       <JapaneseSourceNote />
     </>
   );

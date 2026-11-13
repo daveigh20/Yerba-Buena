@@ -9,7 +9,7 @@ import JapaneseSourceNote from "./JapaneseSourceNote";
 
 export default function JapaneseHerbDetailPage() {
   const t = useT();
-  const { herbs, getHerb } = useJapaneseHerbs();
+  const { lang, herbs, getHerb } = useJapaneseHerbs();
   const herb = getHerb(useParams().herbId);
   useDocumentTitle(herb?.name);
   if (!herb) return <NotFoundPage message={t.japanese.notFound} />;
@@ -30,6 +30,31 @@ export default function JapaneseHerbDetailPage() {
         <p className="scientific">{herb.scientificName}</p>
         {herb.aliases.length > 0 && <p className="small muted">{t.japanese.alsoKnownAs(herb.aliases.join(", "))}</p>}
       </header>
+
+      {herb.images && (
+        <div className={herb.images.length > 1 ? "jp-photos jp-photos--multi" : "jp-photos"}>
+          {herb.images.map((image) => {
+            const label = image.label?.[lang];
+            return (
+              <figure key={image.src} className="jp-photo">
+                <img src={image.src} width={image.width} height={image.height} alt={label ?? herb.name} />
+                <figcaption className="small muted">
+                  {label && <strong className="jp-photo__label">{label}</strong>}
+                  {t.japanese.photoBy} {image.credit},{" "}
+                  <a href={image.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    Wikimedia Commons
+                  </a>{" "}
+                  (
+                  <a href={image.licenseUrl} target="_blank" rel="noopener noreferrer">
+                    {image.license}
+                  </a>
+                  )
+                </figcaption>
+              </figure>
+            );
+          })}
+        </div>
+      )}
 
       <p className="lead">{herb.description}</p>
 

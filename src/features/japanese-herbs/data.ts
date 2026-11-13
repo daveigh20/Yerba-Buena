@@ -28,6 +28,13 @@ export const JAPANESE_SOURCES: readonly JapaneseSource[] = [
     publisher: "Waho-An Nature Tokyo",
     url: "https://natura-w.com/en/waherb.html",
   },
+  {
+    // A skincare brand's ingredient list. Kuromoji, dokudami, and gettō are already above, and tea leaf
+    // (Camellia sinensis) is in the main herb catalog, so only cherry leaf, coix seed, and camellia are new.
+    title: "Japanese herb list",
+    publisher: "ORIFUSI",
+    url: "https://orifusi.com/en-english/blogs/item/japanese-herbs",
+  },
 ];
 
 export const JAPANESE_HERB_IDS = [
@@ -48,6 +55,9 @@ export const JAPANESE_HERB_IDS = [
   "getto",
   "hamanasu",
   "dokudami",
+  "sakura-leaf",
+  "hatomugi",
+  "tsubaki",
 ] as const;
 
 export type JapaneseHerbId = (typeof JAPANESE_HERB_IDS)[number];
@@ -75,16 +85,55 @@ export interface JapaneseHerb extends JapaneseHerbText {
   /** The Japanese name in the Latin alphabet. */
   romaji: string;
   scientificName: string;
+  /** Photos for the detail page. The first one is also shown on the herb's card. */
+  images?: JapaneseHerbImage[];
 }
 
-type JapaneseHerbBase = Pick<JapaneseHerb, "japaneseName" | "romaji" | "scientificName">;
+/** A freely licensed photo, served from public/images/japanese-herbs. */
+export interface JapaneseHerbImage {
+  src: string;
+  width: number;
+  height: number;
+  /** What the photo shows, when the herb has more than one photo. */
+  label?: { en: string; es: string };
+  /** Photographer, as the license asks to credit them. */
+  credit: string;
+  license: string;
+  licenseUrl: string;
+  /** The photo's Wikimedia Commons page. */
+  sourceUrl: string;
+}
+
+type JapaneseHerbBase = Pick<JapaneseHerb, "japaneseName" | "romaji" | "scientificName" | "images">;
+
+const COMMONS = "https://commons.wikimedia.org/wiki/File:";
+const CC_BY_SA_3 = { license: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/" };
+const CC_BY_SA_4 = { license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/" };
+const CC_BY_4 = { license: "CC BY 4.0", licenseUrl: "https://creativecommons.org/licenses/by/4.0/" };
+const CC_BY_3 = { license: "CC BY 3.0", licenseUrl: "https://creativecommons.org/licenses/by/3.0/" };
+const CC0 = { license: "CC0", licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/" };
+const CC_BY_2 = { license: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0/" };
 
 export const JAPANESE_HERB_BASE: Record<JapaneseHerbId, JapaneseHerbBase> = {
   shiso: { japaneseName: "紫蘇", romaji: "Shiso", scientificName: "Perilla frutescens var. crispa" },
   wasabi: { japaneseName: "本わさび", romaji: "Hon-wasabi", scientificName: "Eutrema japonicum" },
   yomogi: { japaneseName: "蓬", romaji: "Yomogi", scientificName: "Artemisia princeps" },
   mitsuba: { japaneseName: "三つ葉", romaji: "Mitsuba", scientificName: "Cryptotaenia japonica" },
-  kuromoji: { japaneseName: "クロモジ", romaji: "Kuromoji", scientificName: "Lindera umbellata" },
+  kuromoji: {
+    japaneseName: "クロモジ",
+    romaji: "Kuromoji",
+    scientificName: "Lindera umbellata",
+    images: [
+      {
+        src: "/images/japanese-herbs/kuromoji.jpg",
+        width: 800,
+        height: 506,
+        credit: "Alpsdake",
+        ...CC_BY_SA_3,
+        sourceUrl: `${COMMONS}Lindera_umbellata.jpg`,
+      },
+    ],
+  },
   sansho: { japaneseName: "山椒", romaji: "Sanshō", scientificName: "Zanthoxylum piperitum" },
   kiku: { japaneseName: "菊", romaji: "Kiku", scientificName: "Chrysanthemum morifolium" },
   gobo: { japaneseName: "牛蒡", romaji: "Gobō", scientificName: "Arctium lappa" },
@@ -94,9 +143,106 @@ export const JAPANESE_HERB_BASE: Record<JapaneseHerbId, JapaneseHerbBase> = {
   "ibuki-jakoso": { japaneseName: "イブキジャコウソウ", romaji: "Ibuki-jakōsō", scientificName: "Thymus quinquecostatus" },
   toki: { japaneseName: "当帰", romaji: "Tōki", scientificName: "Angelica acutiloba" },
   tachibana: { japaneseName: "橘", romaji: "Tachibana", scientificName: "Citrus tachibana" },
-  getto: { japaneseName: "月桃", romaji: "Gettō", scientificName: "Alpinia zerumbet" },
-  hamanasu: { japaneseName: "ハマナス", romaji: "Hamanasu", scientificName: "Rosa rugosa" },
-  dokudami: { japaneseName: "ドクダミ", romaji: "Dokudami", scientificName: "Houttuynia cordata" },
+  getto: {
+    japaneseName: "月桃",
+    romaji: "Gettō",
+    scientificName: "Alpinia zerumbet",
+    images: [
+      {
+        src: "/images/japanese-herbs/getto.jpg",
+        width: 800,
+        height: 600,
+        credit: "Michael H. Parker",
+        ...CC_BY_SA_4,
+        sourceUrl: `${COMMONS}Alpinia_zerumbet_-_shell_ginger.jpg`,
+      },
+    ],
+  },
+  hamanasu: {
+    japaneseName: "ハマナス",
+    romaji: "Hamanasu",
+    scientificName: "Rosa rugosa",
+    images: [
+      {
+        src: "/images/japanese-herbs/hamanasu-rose.jpg",
+        width: 800,
+        height: 602,
+        label: { en: "Hamanasu rose", es: "Rosa hamanasu" },
+        credit: "Letartean",
+        ...CC_BY_3,
+        sourceUrl: `${COMMONS}Rosa_rugosa_2010.jpg`,
+      },
+      {
+        src: "/images/japanese-herbs/hamanasu-fruit.jpg",
+        width: 800,
+        height: 660,
+        label: { en: "Hamanasu fruit", es: "Fruto de hamanasu" },
+        credit: "W.carter",
+        ...CC0,
+        sourceUrl: `${COMMONS}Rose_hips_Rosa_rugosa_Hansa_2.jpg`,
+      },
+    ],
+  },
+  dokudami: {
+    japaneseName: "ドクダミ",
+    romaji: "Dokudami",
+    scientificName: "Houttuynia cordata",
+    images: [
+      {
+        src: "/images/japanese-herbs/dokudami.jpg",
+        width: 800,
+        height: 571,
+        credit: "Krzysztof Ziarnek, Kenraiz",
+        ...CC_BY_SA_4,
+        sourceUrl: `${COMMONS}Houttuynia_cordata_kz01.jpg`,
+      },
+    ],
+  },
+  "sakura-leaf": {
+    japaneseName: "桜の葉",
+    romaji: "Sakura no ha",
+    scientificName: "Prunus × yedoensis",
+    images: [
+      {
+        src: "/images/japanese-herbs/sakura-leaf.jpg",
+        width: 800,
+        height: 533,
+        credit: "David J. Stang",
+        ...CC_BY_SA_4,
+        sourceUrl: `${COMMONS}Prunus_x_yedoensis_2zz.jpg`,
+      },
+    ],
+  },
+  hatomugi: {
+    japaneseName: "ハトムギ",
+    romaji: "Hatomugi",
+    scientificName: "Coix lacryma-jobi var. ma-yuen",
+    images: [
+      {
+        src: "/images/japanese-herbs/hatomugi.jpg",
+        width: 800,
+        height: 600,
+        credit: "Joe Wu",
+        ...CC_BY_2,
+        sourceUrl: `${COMMONS}Coix_Seed(%E8%96%8F%E4%BB%81)_(2158988134).jpg`,
+      },
+    ],
+  },
+  tsubaki: {
+    japaneseName: "椿",
+    romaji: "Tsubaki",
+    scientificName: "Camellia japonica",
+    images: [
+      {
+        src: "/images/japanese-herbs/tsubaki.jpg",
+        width: 529,
+        height: 800,
+        credit: "Lucas Libre",
+        ...CC_BY_4,
+        sourceUrl: `${COMMONS}Camellia_japonica_flower_with_raindrops_in_the_sun.jpg`,
+      },
+    ],
+  },
 };
 
 const FOOD_AMOUNTS = "Enjoy it in the amounts used in cooking. If you're pregnant or breastfeeding, don't take it in larger, medicinal amounts.";
@@ -493,6 +639,73 @@ export const JAPANESE_HERB_TEXT_EN: Record<JapaneseHerbId, JapaneseHerbText> = {
       "It acts as a mild diuretic and laxative. Drink plenty of water, and don't use it if you take water pills unless your doctor approves.",
       "It's high in potassium. If you have kidney problems or take potassium-raising medicine, check with your doctor first.",
       "Don't use it if you're pregnant or breastfeeding, since there isn't enough safety information.",
+    ],
+  },  "sakura-leaf": {
+    name: "Cherry Leaf",
+    aliases: ["sakura leaf", "sakura no ha", "sakura-ba", "yoshino cherry", "somei yoshino", "cherry blossom leaf", "sakuramochi leaf"],
+    partsUsed: ["Leaf"],
+    flavor: "Sweet and almond-like, with a soft vanilla scent once the leaf is salt-pickled",
+    summary: "The salty, almond-scented leaf wrapped around pink sakuramochi sweets.",
+    description:
+      "Cherry leaves are best known as the salt-pickled wrapper on sakuramochi, the pink rice cakes eaten in spring. Pickling brings out coumarin, the compound behind their sweet, almond-like scent. ORIFUSI lists an extract of Yoshino cherry (Somei-yoshino) leaves as a skincare ingredient used to soothe easily upset skin. Most leaves sold for cooking come from the closely related Ōshima cherry.",
+    howToUse: [
+      "Buy salt-pickled cherry leaves (sakura no ha shiozuke) from a Japanese grocery rather than picking leaves from a tree.",
+      "Soak the leaves in cold water for 10 to 15 minutes to remove some of the salt, then pat them dry.",
+      "For sakuramochi: wrap one leaf around each filled rice cake, vein side out. The leaf can be eaten or peeled off.",
+      "Chop a soaked leaf finely and stir it into rice, butter cookies, or pound cake batter for a gentle cherry scent.",
+      "For a quick tea: steep one rinsed leaf with a few salt-pickled cherry blossoms (sakurayu) in hot water.",
+    ],
+    storage:
+      "Keep salt-pickled leaves sealed in the fridge, where they last for several months. Once soaked, use them the same day.",
+    cautions: [
+      "Don't eat fresh cherry leaves raw. Like other cherry parts, they contain natural compounds that can be harmful in large amounts. Stick to prepared, pickled leaves.",
+      "Pickled leaves are salty. Soak them first, and go easy if you're watching your salt.",
+      "Coumarin can add to the effect of blood thinners in large amounts. A leaf or two with a sweet is fine.",
+    ],
+  },
+  hatomugi: {
+    name: "Coix Seed",
+    aliases: ["hatomugi", "job's tears", "jobs tears", "adlay", "yokuinin", "chinese pearl barley", "hatomugi tea"],
+    partsUsed: ["Seed"],
+    flavor: "Nutty and toasty, like roasted barley, with a chewy texture when cooked",
+    summary: "A grain brewed into roasted hatomugi tea and traditionally used for smooth skin.",
+    description:
+      "Hatomugi, also called Job's tears, is a tall grass whose hulled seeds look like large, plump barley. In Japan, the roasted seeds make a popular caffeine-free tea, and the seeds are cooked like a grain. In traditional Japanese and Chinese medicine (where it's called yokuinin), it has long been used for clear, smooth skin. ORIFUSI uses coix seed extract as a moisturizing skincare ingredient.",
+    howToUse: [
+      "For tea: simmer 1 to 2 tablespoons of roasted hatomugi in 4 cups of water for 5 to 10 minutes, then strain. Tea bags work too.",
+      "Drink it hot or chilled, any time of day, since it has no caffeine. It mixes well with roasted barley tea (mugicha).",
+      "To roast raw seeds: toast them in a dry pan over medium heat, stirring, until golden brown and fragrant.",
+      "As a grain: rinse and soak raw seeds for a few hours, then simmer for about 40 minutes until tender. Add them to soups, salads, or rice.",
+      "Mix a few tablespoons into white rice before cooking for a chewy, nutty texture.",
+    ],
+    storage:
+      "Keep the seeds or tea in an airtight container in a cool, dry place and use within 6 months. Refrigerate brewed tea and drink it within 2 days.",
+    cautions: [
+      "Don't use it if you're pregnant. It's traditionally avoided in pregnancy because it may affect the uterus.",
+      "It may lower blood sugar. If you take diabetes medicine, watch your levels.",
+      "Avoid it if you're allergic to grains or grasses.",
+    ],
+  },
+  tsubaki: {
+    name: "Camellia",
+    aliases: ["tsubaki", "japanese camellia", "camellia japonica", "camellia oil", "tsubaki oil", "tsubaki abura", "camellia flower"],
+    partsUsed: ["Seed oil", "Flower"],
+    flavor: "The cooking oil is light and mild, with almost no taste",
+    summary: "A winter flower whose seed oil has cared for Japanese hair and skin for centuries.",
+    description:
+      "Tsubaki, the Japanese camellia, blooms with red, pink, or white flowers in winter and early spring. Oil pressed from its seeds, tsubaki abura, has been used for centuries to give hair shine, soften skin, and cook light tempura. The Gotō Islands in Nagasaki are famous for it. ORIFUSI uses an extract of Gotō camellia flowers to add moisture and glow to the skin.",
+    howToUse: [
+      "For hair: warm 2 or 3 drops of camellia oil between your palms and smooth it over the ends of damp or dry hair.",
+      "For skin: press 1 or 2 drops onto your face after toner, or rub a little into dry hands, elbows, and heels.",
+      "For cooking: use only food-grade camellia oil. It's mild and stable when heated, so try it for tempura or in salad dressings.",
+      "The flowers are mostly for looking at. Float a fresh bloom in a shallow bowl of water, the traditional way to display it.",
+    ],
+    storage:
+      "Keep the oil tightly closed in a cool, dark place. It lasts about a year once opened. If it smells sharp or stale, replace it.",
+    cautions: [
+      "Do a patch test before using the oil on your face: dab a little on your inner arm and wait a day.",
+      "Cosmetic camellia oil isn't meant to be eaten. Only cook with oil labeled for food.",
+      "Avoid it if you're allergic to camellia or tea plants.",
     ],
   },
 };
