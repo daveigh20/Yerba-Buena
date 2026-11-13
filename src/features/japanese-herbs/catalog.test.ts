@@ -47,15 +47,15 @@ describe("Japanese herbs", () => {
   });
 
   it("leaves out the shop prices from the Waho-An source", () => {
-    for (const lang of ["en", "es"] as const) {
+    for (const lang of ["en", "es", "ja", "zh"] as const) {
       for (const herb of getJapaneseHerbs(lang)) {
         expect(JSON.stringify(herb), `${lang} ${herb.id}`).not.toMatch(/\byen\b|¥|円|special price|loose leaf pack|\bpack \(/i);
       }
     }
   });
 
-  it("gives every herb how-to steps, storage tips, and cautions in both languages", () => {
-    for (const lang of ["en", "es"] as const) {
+  it("gives every herb how-to steps, storage tips, and cautions in every language", () => {
+    for (const lang of ["en", "es", "ja", "zh"] as const) {
       for (const herb of getJapaneseHerbs(lang)) {
         expect(herb.description.length, `${lang} ${herb.id}`).toBeGreaterThan(40);
         expect(herb.howToUse.length, `${lang} ${herb.id}`).toBeGreaterThanOrEqual(3);

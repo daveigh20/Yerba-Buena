@@ -77,6 +77,22 @@ const IMAGE_TEXT = {
     join: "Donde entras al sendero",
     joinAlt: (name: string) => `Imagen satelital de cerca del punto donde entras a ${name}`,
   },
+  ja: {
+    whole: "上空から見たトレイル全体",
+    wholeAlt: (name: string) => `ルートを黄色で示した${name}の航空写真`,
+    terrain: "地形",
+    terrainAlt: (name: string) => `ルートを黄色で示した${name}の地形図`,
+    join: "トレイルに入る地点",
+    joinAlt: (name: string) => `${name}に入る地点を拡大した航空写真`,
+  },
+  zh: {
+    whole: "从空中俯瞰整条步道",
+    wholeAlt: (name: string) => `${name}的卫星图像，路线以黄色标出`,
+    terrain: "地形",
+    terrainAlt: (name: string) => `${name}的地形图，路线以黄色标出`,
+    join: "你进入步道的地点",
+    joinAlt: (name: string) => `你进入${name}的地点的卫星近景图`,
+  },
 } satisfies Record<Lang, unknown>;
 
 export function trailImages(key: string, trail: Trail, lang: Lang = "en"): GoogleImage[] {

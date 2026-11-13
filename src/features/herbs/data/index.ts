@@ -3,21 +3,34 @@ import { type Lang, useLanguage } from "../../../i18n/LanguageContext";
 import type { Herb, HerbId, Remedy } from "../types";
 import { buildBenefitIndex } from "./benefits";
 import { BENEFIT_ES } from "./benefits.es";
+import { BENEFIT_JA } from "./benefits.ja";
+import { BENEFIT_ZH } from "./benefits.zh";
 import { HERB_IDS, HERB_PROFILES } from "./herbs";
 import { HERB_TEXT_ES } from "./herbs.es";
+import { HERB_TEXT_JA } from "./herbs.ja";
+import { HERB_TEXT_ZH } from "./herbs.zh";
 import { REMEDIES as REMEDIES_EN } from "./remedies";
 import { REMEDY_TEXT_ES } from "./remedies.es";
+import { REMEDY_TEXT_JA } from "./remedies.ja";
+import { REMEDY_TEXT_ZH } from "./remedies.zh";
 
 export { SOURCE } from "./benefits";
 
 const benefitIndex = buildBenefitIndex();
 
+/** Translated herb and remedy text. English is the source, in herbs.ts and remedies.ts. */
+const HERB_TEXT: Partial<Record<Lang, typeof HERB_TEXT_ES>> = { es: HERB_TEXT_ES, ja: HERB_TEXT_JA, zh: HERB_TEXT_ZH };
+const REMEDY_TEXT: Partial<Record<Lang, typeof REMEDY_TEXT_ES>> = { es: REMEDY_TEXT_ES, ja: REMEDY_TEXT_JA, zh: REMEDY_TEXT_ZH };
+const BENEFIT_TEXT: Partial<Record<Lang, typeof BENEFIT_ES>> = { es: BENEFIT_ES, ja: BENEFIT_JA, zh: BENEFIT_ZH };
+
 function buildHerbs(lang: Lang): Herb[] {
   return HERB_IDS.map((id): Herb => {
     const base = HERB_PROFILES[id];
     const benefits = benefitIndex.get(id) ?? [];
-    if (lang === "en") return { id, ...base, benefits };
-    const text = HERB_TEXT_ES[id];
+    const texts = HERB_TEXT[lang];
+    if (!texts) return { id, ...base, benefits };
+    const text = texts[id];
+    const benefitText = BENEFIT_TEXT[lang] ?? {};
     return {
       id,
       ...base,
@@ -25,15 +38,16 @@ function buildHerbs(lang: Lang): Herb[] {
       // Keep the English names searchable too, so "ginger" still finds Jengibre.
       searchNames: [base.name, ...base.aliases],
       remedyNote: text.remedyNote,
-      benefits: benefits.map((b) => BENEFIT_ES[b] ?? b),
+      benefits: benefits.map((b) => benefitText[b] ?? b),
     };
   }).sort((a, b) => a.name.localeCompare(b.name, lang));
 }
 
 function buildRemedies(lang: Lang): Remedy[] {
-  if (lang === "en") return REMEDIES_EN;
+  const texts = REMEDY_TEXT[lang];
+  if (!texts) return REMEDIES_EN;
   return REMEDIES_EN.map((r) => {
-    const text = REMEDY_TEXT_ES[r.id];
+    const text = texts[r.id];
     if (!text) return r;
     return {
       ...r,

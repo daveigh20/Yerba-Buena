@@ -2,8 +2,15 @@ import { useMemo } from "react";
 import { type Lang, useLanguage } from "../../i18n/LanguageContext";
 import { JAPANESE_HERB_BASE, JAPANESE_HERB_IDS, JAPANESE_HERB_TEXT_EN, type JapaneseHerb } from "./data";
 import { JAPANESE_HERB_TEXT_ES } from "./data.es";
+import { JAPANESE_HERB_TEXT_JA } from "./data.ja";
+import { JAPANESE_HERB_TEXT_ZH } from "./data.zh";
 
-const TEXT = { en: JAPANESE_HERB_TEXT_EN, es: JAPANESE_HERB_TEXT_ES } as const;
+const TEXT: Record<Lang, typeof JAPANESE_HERB_TEXT_EN> = {
+  en: JAPANESE_HERB_TEXT_EN,
+  es: JAPANESE_HERB_TEXT_ES,
+  ja: JAPANESE_HERB_TEXT_JA,
+  zh: JAPANESE_HERB_TEXT_ZH,
+};
 
 const cache = new Map<Lang, JapaneseHerb[]>();
 
@@ -21,7 +28,7 @@ export function useJapaneseHerbs() {
   const { lang } = useLanguage();
   return useMemo(() => {
     const herbs = getJapaneseHerbs(lang);
-    // On the Spanish site, English names still find the herb ("japanese pepper" finds Sansho).
+    // On the other-language sites, English names still find the herb ("japanese pepper" finds Sansho).
     const otherNames = (herb: JapaneseHerb) =>
       lang === "en" ? [] : [JAPANESE_HERB_TEXT_EN[herb.id].name, ...JAPANESE_HERB_TEXT_EN[herb.id].aliases];
     return { lang, herbs, otherNames, getHerb: (id: string | undefined) => herbs.find((h) => h.id === id) };

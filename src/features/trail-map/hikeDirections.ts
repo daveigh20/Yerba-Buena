@@ -20,6 +20,8 @@ const TURN_SAMPLE_KM = 0.03;
 const COMPASS: Record<Lang, string[]> = {
   en: ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest"],
   es: ["norte", "noreste", "este", "sureste", "sur", "suroeste", "oeste", "noroeste"],
+  ja: ["北", "北東", "東", "南東", "南", "南西", "西", "北西"],
+  zh: ["北", "东北", "东", "东南", "南", "西南", "西", "西北"],
 };
 
 const WORDS = {
@@ -48,6 +50,32 @@ const WORDS = {
     next: (turn: string, name: string, distance: string) => `${turn} hacia ${name} durante ${distance}`,
     back: "Volviste al punto donde entraste al sendero",
     end: (trail: string) => `Llega al final de ${trail} y regresa por donde viniste`,
+  },
+  ja: {
+    continue: "そのまま進み",
+    bear: (side: string) => `やや${side}に進み`,
+    turn: (side: string) => `${side}に曲がり`,
+    sharp: (side: string) => `${side}に鋭く曲がり`,
+    left: "左",
+    right: "右",
+    path: "道",
+    head: (heading: string, name: string, distance: string) => `${name}を${heading}へ${distance}進む`,
+    next: (turn: string, name: string, distance: string) => `${turn}、${name}を${distance}進む`,
+    back: "トレイルに入った地点に戻りました",
+    end: (trail: string) => `${trail}の終点に着いたら、来た道を戻る`,
+  },
+  zh: {
+    continue: "继续直行",
+    bear: (side: string) => `稍向${side}`,
+    turn: (side: string) => `向${side}转`,
+    sharp: (side: string) => `向${side}急转`,
+    left: "左",
+    right: "右",
+    path: "小路",
+    head: (heading: string, name: string, distance: string) => `沿${name}向${heading}走 ${distance}`,
+    next: (turn: string, name: string, distance: string) => `${turn}，进入${name}，走 ${distance}`,
+    back: "你已回到进入步道的地点",
+    end: (trail: string) => `到达${trail}的终点，然后原路返回`,
   },
 } satisfies Record<Lang, unknown>;
 

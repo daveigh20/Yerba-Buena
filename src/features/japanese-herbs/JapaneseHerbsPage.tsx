@@ -90,9 +90,11 @@ export default function JapaneseHerbsPage() {
                   <h2 className="card__title">
                     <Highlight text={herb.name} query={query} />
                   </h2>
-                  <span className="jp-name" lang="ja">
-                    <Highlight text={herb.japaneseName} query={query} />
-                  </span>
+                  {herb.japaneseName !== herb.name && (
+                    <span className="jp-name" lang="ja">
+                      <Highlight text={herb.japaneseName} query={query} />
+                    </span>
+                  )}
                 </div>
                 <p className="scientific">
                   <Highlight text={herb.scientificName} query={query} />

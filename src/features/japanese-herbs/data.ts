@@ -4,6 +4,8 @@
  * practical to cook or brew with.
  */
 
+import type { Lang } from "../../i18n/messages";
+
 export interface JapaneseSource {
   title: string;
   publisher: string;
@@ -103,7 +105,7 @@ export interface JapaneseHerbImage {
   width: number;
   height: number;
   /** What the photo shows, when the herb has more than one photo. */
-  label?: { en: string; es: string };
+  label?: Record<Lang, string>;
   /** Photographer, as the license asks to credit them. */
   credit: string;
   license: string;
@@ -175,7 +177,7 @@ export const JAPANESE_HERB_BASE: Record<JapaneseHerbId, JapaneseHerbBase> = {
         src: "/images/japanese-herbs/hamanasu-rose.jpg",
         width: 800,
         height: 602,
-        label: { en: "Hamanasu rose", es: "Rosa hamanasu" },
+        label: { en: "Hamanasu rose", es: "Rosa hamanasu", ja: "ハマナスの花", zh: "玫瑰花" },
         credit: "Letartean",
         ...CC_BY_3,
         sourceUrl: `${COMMONS}Rosa_rugosa_2010.jpg`,
@@ -184,7 +186,7 @@ export const JAPANESE_HERB_BASE: Record<JapaneseHerbId, JapaneseHerbBase> = {
         src: "/images/japanese-herbs/hamanasu-fruit.jpg",
         width: 800,
         height: 660,
-        label: { en: "Hamanasu fruit", es: "Fruto de hamanasu" },
+        label: { en: "Hamanasu fruit", es: "Fruto de hamanasu", ja: "ハマナスの実", zh: "玫瑰果" },
         credit: "W.carter",
         ...CC0,
         sourceUrl: `${COMMONS}Rose_hips_Rosa_rugosa_Hansa_2.jpg`,

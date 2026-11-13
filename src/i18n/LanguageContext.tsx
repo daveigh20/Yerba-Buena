@@ -1,5 +1,5 @@
 import { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from "react";
-import { type Lang, LANGS, type Messages, MESSAGES } from "./messages";
+import { HTML_LANG, type Lang, LANGS, type Messages, MESSAGES } from "./messages";
 
 export type { Lang, Messages };
 
@@ -12,7 +12,7 @@ interface LanguageState {
 
 const LanguageContext = createContext<LanguageState | null>(null);
 
-/** A saved choice wins; otherwise Spanish for browsers set to Spanish, English for everyone else. */
+/** A saved choice wins; otherwise the browser's language if we have it, English for everyone else. */
 function initialLang(): Lang {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -20,14 +20,15 @@ function initialLang(): Lang {
   } catch {
     // Storage can be blocked (private mode, strict settings). Fall through to the browser language.
   }
-  return typeof navigator !== "undefined" && navigator.language?.toLowerCase().startsWith("es") ? "es" : "en";
+  const browser = typeof navigator !== "undefined" ? (navigator.language?.toLowerCase().split("-")[0] ?? "") : "";
+  return (LANGS as readonly string[]).includes(browser) ? (browser as Lang) : "en";
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(initialLang);
 
   useEffect(() => {
-    document.documentElement.lang = lang;
+    document.documentElement.lang = HTML_LANG[lang];
   }, [lang]);
 
   const value = useMemo<LanguageState>(

@@ -23,9 +23,11 @@ export default function JapaneseHerbDetailPage() {
       <header className="page-header">
         <div className="title-row">
           <h1>{herb.name}</h1>
-          <span className="jp-name jp-name--large" lang="ja">
-            {herb.japaneseName}
-          </span>
+          {herb.japaneseName !== herb.name && (
+            <span className="jp-name jp-name--large" lang="ja">
+              {herb.japaneseName}
+            </span>
+          )}
         </div>
         <p className="scientific">{herb.scientificName}</p>
         {herb.aliases.length > 0 && <p className="small muted">{t.japanese.alsoKnownAs(herb.aliases.join(", "))}</p>}
@@ -103,7 +105,8 @@ export default function JapaneseHerbDetailPage() {
           {others.map((o) => (
             <li key={o.id}>
               <Link to={`/japanese-herbs/${o.id}`} className="tag tag--link">
-                {o.name} <span lang="ja">{o.japaneseName}</span>
+                {o.name}
+                {o.japaneseName !== o.name && <span lang="ja"> {o.japaneseName}</span>}
               </Link>
             </li>
           ))}

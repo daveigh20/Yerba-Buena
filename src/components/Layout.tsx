@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../features/auth/AuthContext";
-import { useLanguage, useT } from "../i18n/LanguageContext";
+import { type Lang, useLanguage, useT } from "../i18n/LanguageContext";
+import { HTML_LANG, LANG_NAMES, LANGS } from "../i18n/messages";
 
 const NAV = [
   { to: "/herbs", key: "herbs" },
@@ -45,15 +46,18 @@ export default function Layout() {
             </ul>
           </nav>
           <div className="auth-nav">
-            <button
-              type="button"
+            <select
               className="lang-switch"
-              lang={lang === "en" ? "es" : "en"}
-              aria-label={t.switchToLabel}
-              onClick={() => setLang(lang === "en" ? "es" : "en")}
+              aria-label={t.languageLabel}
+              value={lang}
+              onChange={(e) => setLang(e.target.value as Lang)}
             >
-              {t.switchTo}
-            </button>
+              {LANGS.map((code) => (
+                <option key={code} value={code} lang={HTML_LANG[code]}>
+                  {LANG_NAMES[code]}
+                </option>
+              ))}
+            </select>
             {user !== undefined &&
               (user ? (
                 <NavLink to="/account" className="nav__link">

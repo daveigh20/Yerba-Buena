@@ -276,8 +276,54 @@ function stepTextEs(step: RouteStep, trailName: string): string {
   }
 }
 
+const JA_SIDE: Record<string, string> = { left: "左", right: "右" };
+
+function stepTextJa(step: RouteStep, trailName: string): string {
+  const { type, modifier } = step.maneuver;
+  const onto = step.name ? `、${step.name}を進む` : "";
+  switch (type) {
+    case "depart":
+      return step.name ? `${step.name}から出発` : "現在地から出発";
+    case "arrive":
+      return `${trailName}に到着`;
+    case "roundabout":
+    case "rotary":
+      return `ロータリーに入る${onto}`;
+    default: {
+      if (modifier === "straight" || !modifier) return step.name ? `${step.name}をそのまま進む` : "そのまま進む";
+      if (modifier === "uturn") return "Uターンする";
+      const side = JA_SIDE[modifier.replace("slight ", "").replace("sharp ", "")] ?? modifier;
+      return `${modifier.startsWith("slight") ? `やや${side}に進む` : `${side}に曲がる`}${onto}`;
+    }
+  }
+}
+
+const ZH_SIDE: Record<string, string> = { left: "左", right: "右" };
+
+function stepTextZh(step: RouteStep, trailName: string): string {
+  const { type, modifier } = step.maneuver;
+  const onto = step.name ? `，进入${step.name}` : "";
+  switch (type) {
+    case "depart":
+      return step.name ? `从${step.name}出发` : "从你的位置出发";
+    case "arrive":
+      return `到达${trailName}`;
+    case "roundabout":
+    case "rotary":
+      return `进入环岛${onto}`;
+    default: {
+      if (modifier === "straight" || !modifier) return step.name ? `沿${step.name}继续直行` : "继续直行";
+      if (modifier === "uturn") return "掉头";
+      const side = ZH_SIDE[modifier.replace("slight ", "").replace("sharp ", "")] ?? modifier;
+      return `${modifier.startsWith("slight") ? `稍向${side}` : `向${side}转`}${onto}`;
+    }
+  }
+}
+
 export function stepText(step: RouteStep, trailName: string, lang: Lang = "en"): string {
   if (lang === "es") return stepTextEs(step, trailName);
+  if (lang === "ja") return stepTextJa(step, trailName);
+  if (lang === "zh") return stepTextZh(step, trailName);
   const { type, modifier } = step.maneuver;
   const onto = step.name ? ` onto ${step.name}` : "";
   switch (type) {

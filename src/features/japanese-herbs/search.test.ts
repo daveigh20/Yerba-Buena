@@ -61,5 +61,16 @@ describe("Japanese herb search", () => {
   it("gives every suggestion at least one result", () => {
     for (const s of MESSAGES.en.japanese.suggestions) expect(searchJapaneseHerbs(en, s).length, s).toBeGreaterThan(0);
     for (const s of MESSAGES.es.japanese.suggestions) expect(searchJapaneseHerbs(es, s).length, s).toBeGreaterThan(0);
+    for (const lang of ["ja", "zh"] as const) {
+      const herbs = getJapaneseHerbs(lang);
+      for (const s of MESSAGES[lang].japanese.suggestions) expect(searchJapaneseHerbs(herbs, s).length, `${lang} ${s}`).toBeGreaterThan(0);
+    }
+  });
+
+  it("finds Japanese and Chinese herbs by their own and English names", () => {
+    expect(ids(searchJapaneseHerbs(getJapaneseHerbs("ja"), "山椒"))[0]).toBe("sansho");
+    expect(ids(searchJapaneseHerbs(getJapaneseHerbs("ja"), "ワサビ"))[0]).toBe("wasabi");
+    expect(ids(searchJapaneseHerbs(getJapaneseHerbs("zh"), "枸杞"))[0]).toBe("kuko");
+    expect(ids(searchJapaneseHerbs(getJapaneseHerbs("zh"), "burdock", englishNames))).toContain("gobo");
   });
 });

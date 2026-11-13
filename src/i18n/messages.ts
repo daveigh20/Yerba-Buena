@@ -4,16 +4,23 @@
  * Herb, remedy, and check-in content lives next to that content (see `*.es.ts` files).
  */
 import type { Remedy } from "../features/herbs/types";
+import { ja } from "./messages.ja";
+import { zh } from "./messages.zh";
 
-export const LANGS = ["en", "es"] as const;
+export const LANGS = ["en", "es", "ja", "zh"] as const;
 export type Lang = (typeof LANGS)[number];
+
+/** Each language's name in that language, for the language picker. */
+export const LANG_NAMES: Record<Lang, string> = { en: "English", es: "Español", ja: "日本語", zh: "中文" };
+
+/** The `lang` attribute for each language. Mandarin is written in Simplified Chinese. */
+export const HTML_LANG: Record<Lang, string> = { en: "en", es: "es", ja: "ja", zh: "zh-Hans" };
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 const en = {
-  /** Shown on the switcher button: the name of the *other* language, in that language. */
-  switchTo: "Español",
-  switchToLabel: "Ver en español",
+  /** Accessible name for the language picker. */
+  languageLabel: "Language",
   layout: {
     skip: "Skip to content",
     mainNav: "Main",
@@ -351,8 +358,7 @@ function translateErrorEs(message: string): string | undefined {
 }
 
 const es: Messages = {
-  switchTo: "English",
-  switchToLabel: "View in English",
+  languageLabel: "Idioma",
   layout: {
     skip: "Saltar al contenido",
     mainNav: "Principal",
@@ -664,4 +670,10 @@ const es: Messages = {
   translateError: translateErrorEs,
 };
 
-export const MESSAGES: Record<Lang, Messages> = { en, es };
+export const MESSAGES: Record<Lang, Messages> = {
+  en,
+  es,
+  // The check-in's Japanese and Chinese text is waiting on review by a fluent speaker, so it stays in English.
+  ja: { ...ja, checkIn: en.checkIn },
+  zh: { ...zh, checkIn: en.checkIn },
+};
