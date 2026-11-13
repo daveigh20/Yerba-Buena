@@ -464,5 +464,50 @@ export const JAPANESE_HERB_TEXT_ES: Record<JapaneseHerbId, JapaneseHerbText> = {
       "El aceite de camelia cosmético no es para comer. Cocina solo con aceite que diga que es para alimentos.",
       "Evítala si tienes alergia a la camelia o a la planta del té.",
     ],
+  },  kawamidori: {
+    name: "Menta coreana",
+    aliases: ["kawamidori", "hisopo coreano", "agastache", "huo xiang", "té de menta coreana"],
+    partsUsed: ["Hoja", "Flor"],
+    flavor: "Dulce y anisado, parecido al regaliz con un toque fresco de menta",
+    summary: "Una menta con aroma a anís y espigas de flores moradas que se prepara en té o se pone en el baño.",
+    description:
+      "La kawamidori, o menta coreana, es una planta de la familia de la menta nativa del este de Asia que se ha usado por mucho tiempo en la medicina japonesa. Tiene un aroma dulce y anisado, y a finales del verano y en otoño da espigas altas de flores color lila. En Japón se usa en aromaterapia y en baños de hierbas, y tradicionalmente se toma para el dolor de cabeza, los resfriados y la digestión. Las hojas frescas se preparan en té y sirven para adornar ensaladas y sopas.",
+    howToUse: [
+      "En té: deja reposar 5 o 6 hojas frescas (o 1 cucharadita de hoja seca) en 1 taza de agua caliente por 5 minutos, tapada para que no se escape el aroma, y cuela.",
+      "Como adorno: rompe o corta en tiras finas unas hojas frescas sobre la ensalada o la sopa justo antes de servir.",
+      "Como condimento: seca las hojas, desmenúzalas o muélelas en polvo y espolvorea una pizca sobre la comida.",
+      "Para el baño: amarra un puñado de hojas frescas o secas en una bolsita de tela y ponla a flotar en el agua tibia.",
+      "Para cultivarla: plántala en una maceta con tierra que drene muy bien y a pleno sol. Resiste las plagas y la sequía, pero riégala si hace mucho calor seco. Corta las flores marchitas para que salgan nuevas.",
+    ],
+    storage:
+      "Guarda las ramitas frescas en un vaso con agua en el refrigerador por unos días. Para secarlas, cuelga ramitos boca abajo en un lugar con sombra y buena ventilación, y guarda las hojas en un frasco hermético hasta por un año.",
+    cautions: [
+      "Evítala si tienes alergia a las plantas de la familia de la menta.",
+      "Contiene estragol, igual que la albahaca y el estragón. Úsala solo en cantidades de comida o té, y no la tomes en cantidades mayores si estás embarazada o amamantando.",
+    ],
+  },
+  kuko: {
+    name: "Goji",
+    aliases: ["kuko", "baya de goji", "bayas de goji", "cereza del tibet", "kuko no mi", "té de goji"],
+    partsUsed: ["Baya", "Hoja"],
+    flavor: "Dulce y un poco ácido, entre arándano rojo y pasa, con un leve toque herbal",
+    summary: "Un arbusto de “larga vida” cuyas bayas rojo anaranjado se comen secas, frescas o en jugo.",
+    description:
+      "El kuko, o goji, es un arbusto resistente de la familia de las solanáceas que en Japón se conoce como una hierba de “larga vida”. Se pueden usar sus flores moradas, sus hojas y sus bayas rojo anaranjado, y las bayas se han hecho populares en todo el mundo como alimento para la salud y la belleza. Son ricas en antioxidantes, vitaminas B y C, y aminoácidos. En Japón son un adorno clásico del annin dofu (gelatina de almendra) y se agregan a pudines y gelatinas.",
+    howToUse: [
+      "Bayas secas: cómete un puñito como botana, o remójalas en agua tibia por 10 minutos para que se inflen.",
+      "Como adorno: espolvorea las bayas remojadas sobre annin dofu, yogur, pudines, gelatinas o atole de arroz.",
+      "En té: deja reposar 1 cucharada de bayas secas en 1 taza de agua caliente por unos 10 minutos, y cómete también las bayas suavizadas.",
+      "Al cocinar: agrega un puñito a sopas y guisos en los últimos 10 minutos para que queden jugosas.",
+      "Para cultivarlo: usa una maceta honda con buen drenaje y pleno sol. Resiste la sequía y es fácil de cuidar. Si lo siembras de semilla, da fruto a partir del segundo año, y a los pájaros les encantan las bayas.",
+    ],
+    storage:
+      "Guarda las bayas secas en un recipiente hermético en un lugar fresco y oscuro hasta por un año, o en el refrigerador una vez abiertas. Las bayas frescas se maltratan fácil, así que guárdalas en el refrigerador y cómelas en unos días.",
+    cautions: [
+      "El goji puede aumentar el efecto de la warfarina y otros anticoagulantes. Consulta a tu médico antes si los tomas.",
+      "Puede bajar el azúcar y la presión en la sangre. Si tomas medicamento para alguna de las dos, vigila tus niveles.",
+      "El goji es de la familia de las solanáceas. Evítalo si tienes alergia al jitomate, la berenjena o los chiles.",
+      FOOD_AMOUNTS,
+    ],
   },
 };

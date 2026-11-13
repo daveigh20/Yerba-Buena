@@ -35,6 +35,12 @@ export const JAPANESE_SOURCES: readonly JapaneseSource[] = [
     publisher: "ORIFUSI",
     url: "https://orifusi.com/en-english/blogs/item/japanese-herbs",
   },
+  {
+    // Four herbs to grow on a balcony. Shiso and sanshō are already above, so only Korean mint and goji are new.
+    title: "Grow Your Own Japanese Herbs and Spices",
+    publisher: "Savvy Tokyo",
+    url: "https://savvytokyo.com/grow-your-own-japanese-herbs-and-spices/",
+  },
 ];
 
 export const JAPANESE_HERB_IDS = [
@@ -58,6 +64,8 @@ export const JAPANESE_HERB_IDS = [
   "sakura-leaf",
   "hatomugi",
   "tsubaki",
+  "kawamidori",
+  "kuko",
 ] as const;
 
 export type JapaneseHerbId = (typeof JAPANESE_HERB_IDS)[number];
@@ -243,6 +251,8 @@ export const JAPANESE_HERB_BASE: Record<JapaneseHerbId, JapaneseHerbBase> = {
       },
     ],
   },
+  kawamidori: { japaneseName: "カワミドリ", romaji: "Kawamidori", scientificName: "Agastache rugosa" },
+  kuko: { japaneseName: "枸杞", romaji: "Kuko", scientificName: "Lycium chinense" },
 };
 
 const FOOD_AMOUNTS = "Enjoy it in the amounts used in cooking. If you're pregnant or breastfeeding, don't take it in larger, medicinal amounts.";
@@ -706,6 +716,51 @@ export const JAPANESE_HERB_TEXT_EN: Record<JapaneseHerbId, JapaneseHerbText> = {
       "Do a patch test before using the oil on your face: dab a little on your inner arm and wait a day.",
       "Cosmetic camellia oil isn't meant to be eaten. Only cook with oil labeled for food.",
       "Avoid it if you're allergic to camellia or tea plants.",
+    ],
+  },  kawamidori: {
+    name: "Korean Mint",
+    aliases: ["kawamidori", "korean hyssop", "wrinkled giant hyssop", "agastache", "huo xiang", "korean mint tea"],
+    partsUsed: ["Leaf", "Flower"],
+    flavor: "Sweet and anise-like, similar to licorice with a cool minty edge",
+    summary: "An anise-scented mint with purple flower spikes, brewed into tea or added to bath soaks.",
+    description:
+      "Kawamidori, or Korean mint, is a mint-family plant native to East Asia that has long been used in Japanese medicine. It has a sweet, anise-like scent and grows tall spikes of light purple flowers in late summer and fall. In Japan it's used in aromatherapy and bath soaks, and it's traditionally taken for headaches and colds and to help digestion. The fresh leaves make an herbal tea and a garnish for salads and soups.",
+    howToUse: [
+      "For tea: steep 5 to 6 fresh leaves (or 1 teaspoon dried) in 1 cup of hot water for 5 minutes, covered so the aroma stays in, then strain.",
+      "As a garnish: tear or finely slice a few fresh leaves over salad or soup just before serving.",
+      "As a seasoning: dry the leaves, crumble or blend them into a powder, and sprinkle a pinch over food.",
+      "For a bath soak: tie a handful of fresh or dried leaves in a cloth bag and float it in a warm bath.",
+      "To grow it: plant it in a pot with very well-drained soil in full sun. It's pest resistant and handles dry spells, but water it during long dry periods. Snip off faded flowers to keep new ones coming.",
+    ],
+    storage:
+      "Keep fresh sprigs in a glass of water in the fridge for a few days. To dry, hang small bunches upside down in a shady, airy spot, then store the leaves in an airtight jar for up to a year.",
+    cautions: [
+      "Avoid it if you're allergic to mint-family plants.",
+      "It contains estragole, like basil and tarragon. Stick to food and tea amounts, and don't use it in larger amounts if you're pregnant or breastfeeding.",
+    ],
+  },
+  kuko: {
+    name: "Goji",
+    aliases: ["kuko", "goji berry", "goji berries", "wolfberry", "chinese wolfberry", "kuko no mi", "kukoshi", "kuko tea"],
+    partsUsed: ["Berry", "Leaf"],
+    flavor: "Sweet and lightly tart, like a cross between a cranberry and a raisin, with a faint herbal note",
+    summary: "A “long-life” shrub whose red-orange berries are eaten dried, fresh, or as juice.",
+    description:
+      "Kuko, or goji, is a hardy shrub in the nightshade family known in Japan as a “long-life” herb. Its purple flowers, leaves, and red-orange berries can all be used, and the berries have become popular worldwide as a health and beauty food. They're high in antioxidants, B vitamins, vitamin C, and amino acids. In Japan the berries are a classic topping for annin dofu (almond jelly) and are added to puddings and jellies.",
+    howToUse: [
+      "Dried berries: eat a small handful as a snack, or soak them in warm water for 10 minutes to plump them up first.",
+      "As a topping: scatter soaked berries over annin dofu, yogurt, puddings, jellies, or rice porridge.",
+      "As tea: steep 1 tablespoon of dried berries in 1 cup of hot water for about 10 minutes, then eat the softened berries too.",
+      "In cooking: add a small handful to soups and stews in the last 10 minutes so they stay plump.",
+      "To grow it: use a deep pot with good drainage and full sun. It's drought tolerant and easy to care for. Plants grown from seed start to fruit in their second year, and birds love the berries.",
+    ],
+    storage:
+      "Keep dried berries in an airtight container in a cool, dark place for up to a year, or in the fridge once opened. Fresh berries bruise easily, so refrigerate them and eat them within a few days.",
+    cautions: [
+      "Goji can strengthen the effect of warfarin and other blood thinners. Check with your doctor first if you take them.",
+      "It may lower blood sugar and blood pressure. If you take medicine for either, watch your levels.",
+      "Goji is in the nightshade family. Avoid it if you're allergic to tomatoes, eggplant, or peppers.",
+      FOOD_AMOUNTS,
     ],
   },
 };

@@ -28,6 +28,8 @@ describe("Japanese herbs", () => {
       "sakura-leaf",
       "hatomugi",
       "tsubaki",
+      "kawamidori",
+      "kuko",
     ]);
   });
 

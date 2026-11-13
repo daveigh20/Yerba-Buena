@@ -33,6 +33,11 @@ describe("Japanese herb search", () => {
     expect(ids(searchJapaneseHerbs(en, "job's tears"))).toEqual(["hatomugi"]);
     expect(ids(searchJapaneseHerbs(en, "椿"))).toEqual(["tsubaki"]);
     expect(ids(searchJapaneseHerbs(es, "aceite de camelia"))[0]).toBe("tsubaki");
+    expect(ids(searchJapaneseHerbs(en, "korean mint"))[0]).toBe("kawamidori");
+    expect(ids(searchJapaneseHerbs(en, "agastache"))).toEqual(["kawamidori"]);
+    expect(ids(searchJapaneseHerbs(en, "wolfberry"))).toEqual(["kuko"]);
+    expect(ids(searchJapaneseHerbs(en, "枸杞"))).toEqual(["kuko"]);
+    expect(ids(searchJapaneseHerbs(es, "menta coreana"))[0]).toBe("kawamidori");
   });
 
   it("finds herbs by dish or use, and shows the matching passage", () => {
