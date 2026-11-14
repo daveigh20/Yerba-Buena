@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k -n web,api -c green,blue \"npm:dev:web\" \"npm:dev:api\"",
+    "dev": "concurrently -n web,api -c green,blue --restart-tries -1 --restart-after 3000 \"npm:dev:web\" \"npm:dev:api\"",
     "dev:web": "vite",
-    "dev:api": "tsx watch server/src/index.ts",
+    "dev:api": "node server/dev-supervisor.mjs",
     "dev:share": "wrangler tunnel quick-start http://localhost:5173",
     "build": "npm run typecheck && vite build && npm run build:api",
     "build:api": "rm -rf dist-server && tsc -p server/tsconfig.build.json && cp -R server/migrations dist-server/server/",
