@@ -1,53 +1,62 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
+import { useLanguage, useT } from "../../../i18n/LanguageContext";
 import { useAuth } from "../AuthContext";
 
 export default function AccountPage() {
-  useDocumentTitle("Your account");
+  const t = useT();
+  const { lang } = useLanguage();
+  useDocumentTitle(t.auth.accountTitle);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [loggingOut, setLoggingOut] = useState(false);
   if (!user) return null; // RequireAuth handles this case.
 
-  const memberSince = new Date(user.createdAt).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+  const memberSince = new Date(user.createdAt).toLocaleDateString(lang, { year: "numeric", month: "long", day: "numeric" });
 
   return (
     <section className="detail">
       <header className="page-header">
-        <h1>Hi, {user.name.split(" ")[0]}</h1>
-        <p className="lead muted">Member since {memberSince}</p>
+        <h1>{t.auth.hi(user.name.split(" ")[0] ?? user.name)}</h1>
+        <p className="lead muted">{t.auth.memberSince(memberSince)}</p>
       </header>
 
       <dl className="facts">
         <div>
-          <dt>Name</dt>
+          <dt>{t.auth.name}</dt>
           <dd>{user.name}</dd>
         </div>
         <div>
-          <dt>Email</dt>
+          <dt>{t.auth.email}</dt>
           <dd>{user.email}</dd>
         </div>
-        <div>
-          <dt>Goal</dt>
-          <dd>{user.goal}</dd>
-        </div>
-        <div>
-          <dt>Age</dt>
-          <dd>{user.age}</dd>
-        </div>
-        <div>
-          <dt>Weight</dt>
-          <dd>{user.weightKg} kg</dd>
-        </div>
-        <div>
-          <dt>Height</dt>
-          <dd>{user.heightCm} cm</dd>
-        </div>
-        <div>
-          <dt>Medical conditions</dt>
-          <dd>{user.conditions.length ? user.conditions.join(", ") : "None listed"}</dd>
-        </div>
+        {user.age !== null && (
+          <>
+            <div>
+              <dt>{t.auth.goal}</dt>
+              <dd>{t.auth.goals[user.goal] ?? user.goal}</dd>
+            </div>
+            <div>
+              <dt>{t.auth.age}</dt>
+              <dd>{user.age}</dd>
+            </div>
+            <div>
+              <dt>{t.auth.weight}</dt>
+              <dd>{user.weightKg} kg</dd>
+            </div>
+            <div>
+              <dt>{t.auth.height}</dt>
+              <dd>{user.heightCm} cm</dd>
+            </div>
+            <div>
+              <dt>{t.auth.conditions}</dt>
+              <dd>{user.conditions.length
+                  ? user.conditions.map((c) => t.auth.conditionLabels[c] ?? c).join(", ")
+                  : t.auth.noneListed}</dd>
+            </div>
+          </>
+        )}
       </dl>
 
       <button
@@ -64,7 +73,7 @@ export default function AccountPage() {
           }
         }}
       >
-        {loggingOut ? "Logging out…" : "Log out"}
+        {loggingOut ? t.auth.loggingOut : t.auth.logOut}
       </button>
     </section>
   );

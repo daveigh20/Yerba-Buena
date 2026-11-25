@@ -4,31 +4,26 @@ import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
 import HerbCard from "../components/HerbCard";
 import RemedyCard from "../components/RemedyCard";
 import SourceNote from "../components/SourceNote";
-import { HERBS, REMEDIES } from "../data";
+import { useT } from "../../../i18n/LanguageContext";
+import { useCatalog } from "../data";
 import { type CategoryFilter, searchHerbs, searchRemedies } from "../lib/search";
 
-const SUGGESTIONS = ["Sleep", "Digestion", "Stress", "Immunity", "Sore throat", "Energy"];
-
-const FILTERS: Array<{ value: CategoryFilter; label: string }> = [
-  { value: "all", label: "All" },
-  { value: "herbal", label: "Herbal" },
-  { value: "true-tea", label: "True teas" },
-];
+const FILTERS: CategoryFilter[] = ["all", "herbal", "true-tea"];
 
 function parseCategory(value: string | null): CategoryFilter {
   return value === "herbal" || value === "true-tea" ? value : "all";
 }
 
-const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
-
 export default function HerbSearchPage() {
-  useDocumentTitle("Herb Search");
+  const t = useT();
+  const { herbs, remedies } = useCatalog();
+  useDocumentTitle(t.herbs.searchTitle);
   const [params, setParams] = useSearchParams();
   const query = params.get("q") ?? "";
   const category = parseCategory(params.get("type"));
 
-  const herbResults = useMemo(() => searchHerbs(HERBS, query, category), [query, category]);
-  const remedyResults = useMemo(() => searchRemedies(REMEDIES, query), [query]);
+  const herbResults = useMemo(() => searchHerbs(herbs, query, category), [herbs, query, category]);
+  const remedyResults = useMemo(() => searchRemedies(remedies, query), [remedies, query]);
   const hasQuery = query.trim() !== "";
 
   const update = (changes: { q?: string; type?: CategoryFilter }) => {
@@ -47,15 +42,13 @@ export default function HerbSearchPage() {
   return (
     <>
       <header className="page-header">
-        <h1>Herb Search</h1>
-        <p className="lead muted">
-          Search by herb (like “ginger”) or by what you're looking for (like “sleep” or “sore throat”).
-        </p>
+        <h1>{t.herbs.searchTitle}</h1>
+        <p className="lead muted">{t.herbs.searchLead}</p>
       </header>
 
       <form role="search" className="search" onSubmit={(e) => e.preventDefault()}>
         <label htmlFor="herb-search" className="visually-hidden">
-          Search herbs, benefits, or remedies
+          {t.herbs.searchLabel}
         </label>
         <input
           id="herb-search"
@@ -63,30 +56,30 @@ export default function HerbSearchPage() {
           className="search__input"
           value={query}
           onChange={(e) => update({ q: e.target.value })}
-          placeholder="Search herbs, benefits, or remedies…"
+          placeholder={t.herbs.searchPlaceholder}
           autoComplete="off"
           autoFocus
         />
       </form>
 
       <div className="toolbar">
-        <div className="segmented" role="group" aria-label="Filter by type">
+        <div className="segmented" role="group" aria-label={t.herbs.filterLabel}>
           {FILTERS.map((f) => (
             <button
-              key={f.value}
+              key={f}
               type="button"
               className="segmented__button"
-              aria-pressed={category === f.value}
-              onClick={() => update({ type: f.value })}
+              aria-pressed={category === f}
+              onClick={() => update({ type: f })}
             >
-              {f.label}
+              {t.herbs.filters[f]}
             </button>
           ))}
         </div>
         {!hasQuery && (
           <div className="suggestions">
-            <span className="small muted">Try:</span>
-            {SUGGESTIONS.map((s) => (
+            <span className="small muted">{t.herbs.try}</span>
+            {t.herbs.suggestions.map((s) => (
               <button key={s} type="button" className="chip" onClick={() => update({ q: s })}>
                 {s}
               </button>
@@ -96,24 +89,22 @@ export default function HerbSearchPage() {
       </div>
 
       <p className="small muted" aria-live="polite">
-        {plural(herbResults.length, "herb", "herbs")}
-        {hasQuery && ` · ${plural(remedyResults.length, "remedy", "remedies")}`}
+        {t.herbs.herbCount(herbResults.length)}
+        {hasQuery && ` · ${t.herbs.remedyCount(remedyResults.length)}`}
       </p>
 
       {hasQuery && herbResults.length === 0 && remedyResults.length === 0 ? (
         <div className="empty-state">
-          <p>
-            Nothing matches “{query}”{category !== "all" && " with this filter"}.
-          </p>
-          <p className="muted">Try a different herb or benefit, or check the spelling.</p>
+          <p>{t.herbs.noMatch(query, category !== "all")}</p>
+          <p className="muted">{t.herbs.noMatchHint}</p>
           <button type="button" className="button button--secondary" onClick={() => update({ q: "", type: "all" })}>
-            Clear search
+            {t.herbs.clear}
           </button>
         </div>
       ) : (
         <>
           {herbResults.length > 0 && (
-            <section aria-label="Herbs">
+            <section aria-label={t.herbs.herbsSection}>
               <ul className="card-grid">
                 {herbResults.map((result) => (
                   <li key={result.herb.id}>
@@ -125,7 +116,7 @@ export default function HerbSearchPage() {
           )}
           {remedyResults.length > 0 && (
             <section className="section">
-              <h2 className="section__title">Remedies</h2>
+              <h2 className="section__title">{t.herbs.remediesSection}</h2>
               <ul className="card-grid">
                 {remedyResults.map((remedy) => (
                   <li key={remedy.id}>

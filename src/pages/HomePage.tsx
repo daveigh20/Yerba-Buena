@@ -1,42 +1,47 @@
 import { Link } from "react-router-dom";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import { useT } from "../i18n/LanguageContext";
+import herbsHero from "../assets/herbs-hero.svg";
 
 const FEATURES = [
-  { to: "/herbs", title: "Herb Search", text: "Look up herbs and teas by name or by what they're traditionally used for." },
-  { to: "/remedies", title: "Remedies", text: "Simple teas, syrups, and steams you can make with herbs from the catalog." },
-  { to: "/trail-map", title: "Trail Map", text: "See your route and stops on a map." },
-  { to: "/check-in", title: "Well-being Check-in", text: "Take a moment to note how you're feeling today." },
-];
-
-const COMING_SOON = ["Avatar", "Workouts", "Habit Tracker"];
+  { to: "/herbs", key: "herbs" },
+  { to: "/japanese-herbs", key: "japanese" },
+  { to: "/remedies", key: "remedies" },
+  { to: "/trail-map", key: "trailMap" },
+  { to: "/check-in", key: "checkIn" },
+] as const;
 
 export default function HomePage() {
   useDocumentTitle(undefined);
+  const t = useT();
   return (
     <>
       <section className="hero">
-        <h1>Yerba Buena</h1>
-        <p className="lead">Herbs, remedies, and small habits for everyday well-being.</p>
-        <Link to="/herbs" className="button">
-          Search herbs
-        </Link>
+        <div className="hero__text">
+          <h1>Yerba Buena</h1>
+          <p className="lead">{t.home.lead}</p>
+          <Link to="/herbs" className="button">
+            {t.home.cta}
+          </Link>
+        </div>
+        <img className="hero__image" src={herbsHero} alt={t.home.heroAlt} width={600} height={450} />
       </section>
 
       <ul className="card-grid">
         {FEATURES.map((f) => (
           <li key={f.to}>
             <Link to={f.to} className="card card--link">
-              <h2 className="card__title">{f.title}</h2>
-              <p className="muted">{f.text}</p>
+              <h2 className="card__title">{t.home.features[f.key].title}</h2>
+              <p className="muted">{t.home.features[f.key].text}</p>
             </Link>
           </li>
         ))}
       </ul>
 
       <section className="section">
-        <h2 className="section__title">Coming soon</h2>
+        <h2 className="section__title">{t.home.comingSoon}</h2>
         <ul className="tag-list">
-          {COMING_SOON.map((name) => (
+          {t.home.comingSoonItems.map((name) => (
             <li key={name} className="tag tag--muted">
               {name}
             </li>

@@ -1,12 +1,29 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
-import { assess, RESOURCES, TOPIC_IDS, TOPICS, type Assessment, type Resource, type TopicId } from "./support";
+import { type Messages, useLanguage, useT } from "../../i18n/LanguageContext";
+import { assess, RESOURCES, TOPIC_IDS, TOPICS, type Assessment, type Resource, type ResourceId, type TopicId } from "./support";
+import { RESOURCE_TEXT_ES, TOPIC_TEXT_ES } from "./support.es";
+import { RESOURCE_TEXT_JA, TOPIC_TEXT_JA } from "./support.ja";
+import { RESOURCE_TEXT_ZH, TOPIC_TEXT_ZH } from "./support.zh";
+
+/** Translated topic and resource text. English is the source, in support.ts. */
+const TOPIC_TEXT = { es: TOPIC_TEXT_ES, ja: TOPIC_TEXT_JA, zh: TOPIC_TEXT_ZH };
+const RESOURCE_TEXT = { es: RESOURCE_TEXT_ES, ja: RESOURCE_TEXT_JA, zh: RESOURCE_TEXT_ZH };
 
 const OPTIONS = [
-  { value: "good", emoji: "😊", label: "Good" },
-  { value: "okay", emoji: "😐", label: "Okay" },
-  { value: "not-good", emoji: "☹️", label: "Not good" },
+  { value: "good", emoji: "😊" },
+  { value: "okay", emoji: "😐" },
+  { value: "not-good", emoji: "☹️" },
 ] as const;
+
+/** Topic and resource text in the visitor's language. */
+function useSupportText() {
+  const { lang } = useLanguage();
+  return {
+    topic: (id: TopicId) => (lang === "en" ? TOPICS[id] : { ...TOPICS[id], ...TOPIC_TEXT[lang][id] }),
+    resource: (id: ResourceId): Resource => (lang === "en" ? RESOURCES[id] : { ...RESOURCES[id], ...RESOURCE_TEXT[lang][id] }),
+  };
+}
 
 type Mood = (typeof OPTIONS)[number]["value"];
 
@@ -18,7 +35,8 @@ type Step =
   | { kind: "support"; result: Assessment };
 
 export default function WellbeingCheckInPage() {
-  useDocumentTitle("Well-being Check-in");
+  const t = useT();
+  useDocumentTitle(t.checkIn.docTitle);
   const [step, setStep] = useState<Step>({ kind: "mood" });
 
   // Move focus to the new step's heading so screen readers announce it.
@@ -37,13 +55,13 @@ export default function WellbeingCheckInPage() {
   return (
     <section className="check-in">
       <header className="page-header">
-        <h1>Mental Well-being Check-in</h1>
-        {step.kind === "mood" && <p className="lead">How would you describe your overall mental well-being today?</p>}
+        <h1>{t.checkIn.title}</h1>
+        {step.kind === "mood" && <p className="lead">{t.checkIn.question}</p>}
       </header>
 
       {step.kind === "mood" && (
         <>
-          <div className="check-in__options" role="group" aria-label="How are you feeling?">
+          <div className="check-in__options" role="group" aria-label={t.checkIn.optionsLabel}>
             {OPTIONS.map((o) => (
               <button
                 key={o.value}
@@ -54,12 +72,12 @@ export default function WellbeingCheckInPage() {
                 <span className="check-in__emoji" aria-hidden="true">
                   {o.emoji}
                 </span>
-                {o.label}
+                {t.checkIn.moods[o.value]}
               </button>
             ))}
           </div>
           <button type="button" className="button button--secondary" onClick={() => setStep({ kind: "skipped" })}>
-            Skip
+            {t.checkIn.skip}
           </button>
         </>
       )}
@@ -67,19 +85,19 @@ export default function WellbeingCheckInPage() {
       {step.kind === "thanks" && (
         <div className="card check-in__result" role="status">
           <h2 ref={headingRef} tabIndex={-1} className="lead">
-            Thank you for sharing! {OPTIONS.find((o) => o.value === step.mood)?.emoji}
+            {t.checkIn.thanks} {OPTIONS.find((o) => o.value === step.mood)?.emoji}
           </h2>
           {step.mood === "okay" && (
             <p>
-              If something's on your mind,{" "}
+              {t.checkIn.okayBefore}{" "}
               <button type="button" className="link-button" onClick={() => setStep({ kind: "follow-up" })}>
-                you can tell me about it
+                {t.checkIn.okayLink}
               </button>
               .
             </p>
           )}
           <button type="button" className="button button--secondary" onClick={restart}>
-            Change answer
+            {t.checkIn.change}
           </button>
         </div>
       )}
@@ -87,38 +105,42 @@ export default function WellbeingCheckInPage() {
       {step.kind === "skipped" && (
         <div className="card check-in__result" role="status">
           <h2 ref={headingRef} tabIndex={-1} className="lead">
-            Survey skipped.
+            {t.checkIn.skipped}
           </h2>
           <button type="button" className="button button--secondary" onClick={restart}>
-            Take the check-in
+            {t.checkIn.take}
           </button>
         </div>
       )}
 
       {step.kind === "follow-up" && (
         <FollowUp
+          t={t}
           headingRef={headingRef}
           onBack={restart}
           onSubmit={(topics, text) => setStep({ kind: "support", result: assess(topics, text) })}
         />
       )}
 
-      {step.kind === "support" && <Support headingRef={headingRef} result={step.result} onRestart={restart} />}
+      {step.kind === "support" && <Support t={t} headingRef={headingRef} result={step.result} onRestart={restart} />}
     </section>
   );
 }
 
 function FollowUp({
+  t,
   headingRef,
   onBack,
   onSubmit,
 }: {
+  t: Messages;
   headingRef: RefObject<HTMLHeadingElement>;
   onBack: () => void;
   onSubmit: (topics: TopicId[], text: string) => void;
 }) {
   const [selected, setSelected] = useState<TopicId[]>([]);
   const [text, setText] = useState("");
+  const { topic } = useSupportText();
 
   const toggle = (id: TopicId) =>
     setSelected((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]));
@@ -132,11 +154,11 @@ function FollowUp({
       }}
     >
       <h2 ref={headingRef} tabIndex={-1} className="check-in__title">
-        I'm sorry you're not feeling good. Do you want to tell me what's going on?
+        {t.checkIn.followUpTitle}
       </h2>
-      <p className="muted small">Pick anything that fits, or write in your own words. Both are optional.</p>
+      <p className="muted small">{t.checkIn.followUpHint}</p>
 
-      <div className="check-in__topics" role="group" aria-label="What's going on?">
+      <div className="check-in__topics" role="group" aria-label={t.checkIn.topicsLabel}>
         {TOPIC_IDS.map((id) => (
           <button
             key={id}
@@ -145,13 +167,13 @@ function FollowUp({
             aria-pressed={selected.includes(id)}
             onClick={() => toggle(id)}
           >
-            {TOPICS[id].label}
+            {topic(id).label}
           </button>
         ))}
       </div>
 
       <label htmlFor="check-in-text" className="check-in__label">
-        What's on your mind?
+        {t.checkIn.textLabel}
       </label>
       <textarea
         id="check-in-text"
@@ -159,19 +181,19 @@ function FollowUp({
         rows={4}
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="For example: I'm feeling bad because…"
+        placeholder={t.checkIn.textPlaceholder}
       />
-      <p className="muted small">What you write stays on this device. It isn't saved or sent anywhere.</p>
+      <p className="muted small">{t.checkIn.privacy}</p>
 
       <div className="check-in__actions">
         <button type="submit" className="button">
-          Continue
+          {t.checkIn.continue}
         </button>
         <button type="button" className="button button--secondary" onClick={() => onSubmit([], "")}>
-          I'd rather not say
+          {t.checkIn.ratherNot}
         </button>
         <button type="button" className="link-button" onClick={onBack}>
-          Back
+          {t.checkIn.back}
         </button>
       </div>
     </form>
@@ -179,49 +201,49 @@ function FollowUp({
 }
 
 function Support({
+  t,
   headingRef,
   result,
   onRestart,
 }: {
+  t: Messages;
   headingRef: RefObject<HTMLHeadingElement>;
   result: Assessment;
   onRestart: () => void;
 }) {
   const topics = result.topics.length ? result.topics : (["other"] as TopicId[]);
+  const { topic, resource } = useSupportText();
 
   return (
     <div className="check-in__support">
       {result.crisis ? (
         <aside className="check-in__crisis" role="alert" aria-labelledby="crisis-title">
           <h2 id="crisis-title" ref={headingRef} tabIndex={-1}>
-            You don't have to go through this alone
+            {t.checkIn.crisisTitle}
           </h2>
-          <p>
-            It sounds like you might be thinking about hurting yourself. Please reach out right now. Someone is ready
-            to listen, any time of day.
-          </p>
+          <p>{t.checkIn.crisisText}</p>
           <div className="check-in__crisis-actions">
             <a className="button" href="tel:988">
-              Call 988
+              {t.checkIn.call988}
             </a>
             <a className="button button--secondary" href="sms:988">
-              Text 988
+              {t.checkIn.text988}
             </a>
           </div>
-          <p className="small">If you're in immediate danger, call 911 or go to the nearest emergency room.</p>
+          <p className="small">{t.checkIn.crisisEmergency}</p>
         </aside>
       ) : (
         <h2 ref={headingRef} tabIndex={-1} className="check-in__title">
-          Thank you for telling me
+          {t.checkIn.thankYou}
         </h2>
       )}
 
       {topics.map((id) => (
         <div key={id} className="card check-in__message">
-          <p className="lead">{TOPICS[id].message}</p>
-          {TOPICS[id].ideas.length > 0 && (
+          <p className="lead">{topic(id).message}</p>
+          {topic(id).ideas.length > 0 && (
             <ul>
-              {TOPICS[id].ideas.map((idea) => (
+              {topic(id).ideas.map((idea) => (
                 <li key={idea}>{idea}</li>
               ))}
             </ul>
@@ -229,26 +251,23 @@ function Support({
         </div>
       ))}
 
-      <h2 className="check-in__subtitle">People you can talk to</h2>
-      <p className="muted small">Free and confidential.</p>
+      <h2 className="check-in__subtitle">{t.checkIn.peopleTitle}</h2>
+      <p className="muted small">{t.checkIn.peopleNote}</p>
       <ul className="check-in__resources">
         {result.resources.map((id) => (
-          <ResourceCard key={id} resource={RESOURCES[id]} />
+          <ResourceCard key={id} resource={resource(id)} newTab={t.checkIn.newTab} />
         ))}
       </ul>
 
-      <p className="muted small">
-        This check-in isn't a substitute for professional help. If you're struggling, please talk to a doctor,
-        counselor, or someone you trust.
-      </p>
+      <p className="muted small">{t.checkIn.disclaimer}</p>
       <button type="button" className="button button--secondary" onClick={onRestart}>
-        Start over
+        {t.checkIn.startOver}
       </button>
     </div>
   );
 }
 
-function ResourceCard({ resource }: { resource: Resource }) {
+function ResourceCard({ resource, newTab }: { resource: Resource; newTab: string }) {
   return (
     <li className="card check-in__resource">
       <div className="check-in__resource-head">
@@ -267,7 +286,7 @@ function ResourceCard({ resource }: { resource: Resource }) {
               {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             >
               {a.label}
-              {external && <span className="visually-hidden"> (opens in a new tab)</span>}
+              {external && <span className="visually-hidden"> {newTab}</span>}
             </a>
           );
         })}

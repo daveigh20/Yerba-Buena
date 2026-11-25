@@ -8,6 +8,8 @@ import HerbDetailPage from "./features/herbs/pages/HerbDetailPage";
 import HerbSearchPage from "./features/herbs/pages/HerbSearchPage";
 import RemediesPage from "./features/herbs/pages/RemediesPage";
 import RemedyDetailPage from "./features/herbs/pages/RemedyDetailPage";
+import JapaneseHerbDetailPage from "./features/japanese-herbs/JapaneseHerbDetailPage";
+import JapaneseHerbsPage from "./features/japanese-herbs/JapaneseHerbsPage";
 import TrailMapPage from "./features/trail-map/TrailMapPage";
 import WellbeingCheckInPage from "./features/wellbeing/WellbeingCheckInPage";
 import HomePage from "./pages/HomePage";
@@ -20,6 +22,8 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route path="herbs" element={<HerbSearchPage />} />
         <Route path="herbs/:herbId" element={<HerbDetailPage />} />
+        <Route path="japanese-herbs" element={<JapaneseHerbsPage />} />
+        <Route path="japanese-herbs/:herbId" element={<JapaneseHerbDetailPage />} />
         <Route path="remedies" element={<RemediesPage />} />
         <Route path="remedies/:remedyId" element={<RemedyDetailPage />} />
         <Route path="trail-map" element={<TrailMapPage />} />

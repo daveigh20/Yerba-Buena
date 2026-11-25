@@ -26,7 +26,7 @@ export function createApp({ db, config }: { db: Db; config: Config }) {
   });
   api.use(express.json({ limit: "20kb" }));
   api.use(cookieParser());
-  api.use(csrfProtection(config.allowedOrigins));
+  api.use(csrfProtection(config.allowedOrigins, { allowSameHost: config.allowSameHostOrigin }));
   api.use(loadUser(db));
 
   api.get("/health", async (_req, res) => {

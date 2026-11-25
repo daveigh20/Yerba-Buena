@@ -2,12 +2,14 @@ import { type FormEvent, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
 import { ApiRequestError } from "../../../lib/api";
+import { useT } from "../../../i18n/LanguageContext";
 import { useAuth } from "../AuthContext";
 import Field from "../Field";
 import { redirectTarget } from "../RequireAuth";
 
 export default function LoginPage() {
-  useDocumentTitle("Log in");
+  const t = useT();
+  useDocumentTitle(t.auth.logIn);
   const { user, login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,15 +28,15 @@ export default function LoginPage() {
       await login({ email, password });
       navigate(redirectTarget(location.state), { replace: true });
     } catch (err) {
-      setError(err instanceof ApiRequestError ? err.message : "Something went wrong. Please try again.");
+      setError(err instanceof ApiRequestError ? (t.translateError(err.message) ?? err.message) : t.auth.genericError);
       setSubmitting(false);
     }
   }
 
   return (
     <section className="auth-card card">
-      <h1>Log in</h1>
-      <p className="muted">Welcome back to Yerba Buena.</p>
+      <h1>{t.auth.logIn}</h1>
+      <p className="muted">{t.auth.welcomeBack}</p>
       <form className="form" onSubmit={onSubmit} noValidate>
         {error && (
           <p className="alert alert--error" role="alert">
@@ -42,7 +44,7 @@ export default function LoginPage() {
           </p>
         )}
         <Field
-          label="Email"
+          label={t.auth.email}
           name="email"
           type="email"
           autoComplete="email"
@@ -52,7 +54,7 @@ export default function LoginPage() {
           autoFocus
         />
         <Field
-          label="Password"
+          label={t.auth.password}
           name="password"
           type="password"
           autoComplete="current-password"
@@ -61,11 +63,11 @@ export default function LoginPage() {
           required
         />
         <button type="submit" className="button button--block" disabled={submitting}>
-          {submitting ? "Logging in…" : "Log in"}
+          {submitting ? t.auth.loggingIn : t.auth.logIn}
         </button>
       </form>
       <p className="auth-card__switch">
-        New here? <Link to="/signup" state={location.state}>Create an account</Link>
+        {t.auth.newHere} <Link to="/signup" state={location.state}>{t.auth.createAccountLink}</Link>
       </p>
     </section>
   );

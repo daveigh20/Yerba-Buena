@@ -24,6 +24,8 @@ export interface HerbProfile {
 
 export interface Herb extends HerbProfile {
   id: HerbId;
+  /** More names that search should match but the page doesn't list, such as the English names on the Spanish site. */
+  searchNames?: string[];
   /** Traditional wellness benefits, from the source article. */
   benefits: string[];
 }

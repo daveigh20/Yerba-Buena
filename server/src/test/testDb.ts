@@ -34,6 +34,7 @@ export const testConfig: Config = {
   databaseUrl: "pglite://memory",
   isProduction: false,
   allowedOrigins: ["http://localhost:5173"],
+  allowSameHostOrigin: false,
   trustProxy: false,
   sessionDays: 30,
   authRateLimit: 1000,

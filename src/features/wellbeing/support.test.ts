@@ -66,3 +66,62 @@ describe("assess", () => {
     expect(r.resources).toEqual(expect.arrayContaining(["988", "crisis-text", "emergency"]));
   });
 });
+
+describe("Spanish text", () => {
+  it("flags thoughts of suicide or self-harm", () => {
+    expect(detectCrisis("Me quiero morir")).toBe(true);
+    expect(detectCrisis("pienso en quitarme la vida")).toBe(true);
+    expect(detectCrisis("ya no quiero vivir")).toBe(true);
+    expect(detectCrisis("a veces me lastimo")).toBe(true);
+    expect(detectCrisis("pensamientos suicidas")).toBe(true);
+    expect(detectCrisis("se murió mi abuela")).toBe(false);
+  });
+
+  it("finds topics", () => {
+    expect(detectTopics("Me siento mal porque murió mi mamá")).toContain("grief");
+    expect(detectTopics("Perdí a mi perro")).toContain("grief");
+    expect(detectTopics("Estoy muy estresada con el trabajo")).toEqual(["stress"]);
+    expect(detectTopics("me siento sola")).toEqual(["lonely"]);
+    expect(detectTopics("tengo mucha ansiedad")).toEqual(["anxious"]);
+    expect(detectTopics("estoy triste")).toEqual(["down"]);
+    expect(detectTopics("solo quiero dormir")).toEqual([]);
+  });
+});
+
+describe("Japanese text", () => {
+  it("flags thoughts of suicide or self-harm", () => {
+    expect(detectCrisis("もう死にたい")).toBe(true);
+    expect(detectCrisis("消えたいと思ってしまう")).toBe(true);
+    expect(detectCrisis("生きていたくない")).toBe(true);
+    expect(detectCrisis("自分を傷つけてしまう")).toBe(true);
+    expect(detectCrisis("祖母が亡くなりました")).toBe(false);
+  });
+
+  it("finds topics", () => {
+    expect(detectTopics("母が亡くなって、つらいです")).toEqual(["grief", "down"]);
+    expect(detectTopics("仕事のストレスがひどい")).toEqual(["stress"]);
+    expect(detectTopics("とても寂しい")).toEqual(["lonely"]);
+    expect(detectTopics("将来が不安です")).toEqual(["anxious"]);
+    expect(detectTopics("ずっと落ち込んでいる")).toEqual(["down"]);
+    expect(detectTopics("ただ眠りたい")).toEqual([]);
+  });
+});
+
+describe("Chinese text", () => {
+  it("flags thoughts of suicide or self-harm", () => {
+    expect(detectCrisis("我想死")).toBe(true);
+    expect(detectCrisis("我不想活了")).toBe(true);
+    expect(detectCrisis("我真的活不下去了")).toBe(true);
+    expect(detectCrisis("我會傷害自己")).toBe(true);
+    expect(detectCrisis("我奶奶去世了")).toBe(false);
+  });
+
+  it("finds topics", () => {
+    expect(detectTopics("我妈妈去世了")).toEqual(["grief"]);
+    expect(detectTopics("工作压力好大")).toEqual(["stress"]);
+    expect(detectTopics("我觉得很孤独")).toEqual(["lonely"]);
+    expect(detectTopics("我很焦虑")).toEqual(["anxious"]);
+    expect(detectTopics("最近心情很低落")).toEqual(["down"]);
+    expect(detectTopics("只想睡觉")).toEqual([]);
+  });
+});
