@@ -182,6 +182,47 @@ function SpotView({ sighting, t }: { sighting: HerbSighting; t: Messages }) {
   );
 }
 
+/** Whether people can eat the herb, why, and its benefits. */
+function HerbEdibility({ herb, t, showName }: { herb: MapHerb; t: Messages; showName: boolean }) {
+  const { edibility, eat } = herb;
+  const food = edibility !== "not-food";
+  return (
+    <section className={`herb-eat herb-eat--${edibility}`} aria-label={`${t.herbMap.eatTitle} ${herb.name}`}>
+      <h4 className="herb-eat__title">
+        {t.herbMap.eatTitle}
+        {showName && <span className="muted"> · {herb.name}</span>}
+      </h4>
+      <p className="herb-eat__status">{t.herbMap.eatStatus[edibility]}</p>
+      <dl className="herb-eat__facts">
+        <div>
+          <dt>{food ? t.herbMap.eatParts : t.herbMap.eatUse}</dt>
+          <dd>{eat.parts}</dd>
+        </div>
+        <div>
+          <dt>{food ? t.herbMap.eatWhy : t.herbMap.eatWhyNot}</dt>
+          <dd>{eat.why}</dd>
+        </div>
+        {eat.benefits.length > 0 && (
+          <div>
+            <dt>{t.herbMap.eatBenefits}</dt>
+            <dd>
+              <ul className="herb-eat__benefits">
+                {eat.benefits.map((benefit) => (
+                  <li key={benefit}>{benefit}</li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        )}
+        <div>
+          <dt>{t.herbMap.eatCare}</dt>
+          <dd>{eat.care}</dd>
+        </div>
+      </dl>
+    </section>
+  );
+}
+
 function SightingDetail({
   sighting,
   mapHerbs,
@@ -271,6 +312,15 @@ function SightingDetail({
           </dd>
         </div>
       </dl>
+
+      {herbs.length > 0 && (
+        <div className="herb-eat-group">
+          {herbs.map((herb) => (
+            <HerbEdibility key={herb.key} herb={herb} t={t} showName={herbs.length > 1} />
+          ))}
+          {herbs.some((herb) => herb.edibility !== "not-food") && <p className="muted small herb-eat__wild">{t.herbMap.eatWild}</p>}
+        </div>
+      )}
 
       <div className="herb-spot__actions">
         {herbs.map((herb) => (

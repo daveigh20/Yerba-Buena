@@ -1098,6 +1098,65 @@ mark {
 .herb-spot__facts dd {
   margin: 0;
 }
+.herb-eat-group {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 14px;
+}
+.herb-eat {
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--brand);
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: var(--surface);
+}
+.herb-eat--careful {
+  border-left-color: var(--caution-border);
+}
+.herb-eat--not-food {
+  border-left-color: var(--danger);
+}
+.herb-eat__title {
+  margin: 0 0 4px;
+  font-size: 1rem;
+}
+.herb-eat__status {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 1px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+.herb-eat--careful .herb-eat__status {
+  background: var(--caution-bg);
+  color: var(--caution-text);
+}
+.herb-eat--not-food .herb-eat__status {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+.herb-eat__facts {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+.herb-eat__facts dt {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.herb-eat__facts dd {
+  margin: 0;
+}
+.herb-eat__benefits {
+  margin: 0;
+  padding-left: 1.2em;
+}
+.herb-eat__wild {
+  margin: 0;
+}
 .herb-spot__actions {
   display: flex;
   flex-wrap: wrap;

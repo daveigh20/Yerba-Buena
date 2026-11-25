@@ -3,6 +3,7 @@ import type { Lang } from "../../i18n/messages";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { getCatalog } from "../herbs/data";
 import { getJapaneseHerbs } from "../japanese-herbs/catalog";
+import { type Edibility, type EdibilityText, edibilityText, HERB_EDIBILITY, JAPANESE_HERB_EDIBILITY } from "./edibility";
 import type { HerbSighting } from "./sightings";
 import { HERB_TAXON_IDS, JAPANESE_HERB_TAXON_IDS } from "./taxa";
 
@@ -15,6 +16,9 @@ export interface MapHerb {
   scientificName: string;
   href: string;
   taxonIds: number[];
+  /** Whether people can eat it, and what to know if so. */
+  edibility: Edibility;
+  eat: EdibilityText;
 }
 
 export interface MapHerbs {
@@ -36,6 +40,8 @@ export function buildMapHerbs(lang: Lang): MapHerbs {
       scientificName: herb.scientificName,
       href: `/herbs/${herb.id}`,
       taxonIds: HERB_TAXON_IDS[herb.id],
+      edibility: HERB_EDIBILITY[herb.id],
+      eat: edibilityText(lang, herb.id),
     }),
   );
   const japanese = getJapaneseHerbs(lang)
@@ -47,6 +53,8 @@ export function buildMapHerbs(lang: Lang): MapHerbs {
         scientificName: herb.scientificName,
         href: `/japanese-herbs/${herb.id}`,
         taxonIds: JAPANESE_HERB_TAXON_IDS[herb.id],
+        edibility: JAPANESE_HERB_EDIBILITY[herb.id],
+        eat: edibilityText(lang, herb.id),
       }),
     )
     .sort((a, b) => a.name.localeCompare(b.name, lang));

@@ -273,6 +273,16 @@ const en = {
       shown < total ? `Showing the ${shown} newest of ${total} sightings.` : plural(shown, "sighting", "sightings") + ".",
     safety:
       "Look, but don't pick or eat anything you find. Many herbs have poisonous look-alikes, and parks often don't allow foraging. Stay on the trail.",
+    eatTitle: "Can people eat it?",
+    eatStatus: { edible: "Yes, people can eat this", careful: "Yes, with care", "not-food": "No, not for eating" },
+    eatParts: "What people eat",
+    eatWhy: "Why eat it",
+    eatUse: "How it's used",
+    eatWhyNot: "Why not",
+    eatBenefits: "Benefits",
+    eatCare: "Watch out",
+    eatWild:
+      "Edible doesn't mean this wild plant is safe to pick. Only eat a wild herb if you're completely sure what it is, the spot isn't sprayed, and picking is allowed. Otherwise, buy it or grow your own.",
     creditBefore: "Sightings and photos shared by the community on",
     creditAfter: ", under each photographer's Creative Commons license.",
     close: "Close",
@@ -674,6 +684,16 @@ const es: Messages = {
         : esPlural(shown, "avistamiento", "avistamientos") + ".",
     safety:
       "Mira, pero no recojas ni comas nada de lo que encuentres. Muchas hierbas tienen parecidas venenosas y muchos parques no permiten recolectar. No te salgas del sendero.",
+    eatTitle: "¿Se puede comer?",
+    eatStatus: { edible: "Sí, las personas pueden comerla", careful: "Sí, con cuidado", "not-food": "No, no es comestible" },
+    eatParts: "Qué se come",
+    eatWhy: "Por qué comerla",
+    eatUse: "Cómo se usa",
+    eatWhyNot: "Por qué no",
+    eatBenefits: "Beneficios",
+    eatCare: "Ten cuidado",
+    eatWild:
+      "Que sea comestible no significa que sea seguro recoger esta planta silvestre. Come una hierba silvestre solo si estás completamente seguro de qué es, el lugar no está fumigado y está permitido recolectar. Si no, cómprala o cultívala.",
     creditBefore: "Avistamientos y fotos compartidos por la comunidad en",
     creditAfter: ", con la licencia Creative Commons de cada fotógrafo.",
     close: "Cerrar",
