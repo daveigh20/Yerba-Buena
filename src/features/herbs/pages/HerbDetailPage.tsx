@@ -3,6 +3,7 @@ import BackLink from "../../../components/BackLink";
 import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
 import NotFoundPage from "../../../pages/NotFoundPage";
 import { useT } from "../../../i18n/LanguageContext";
+import FindOnMapLink from "../../herb-map/FindOnMapLink";
 import CategoryBadge from "../components/CategoryBadge";
 import CautionBox from "../components/CautionBox";
 import RemedyCard from "../components/RemedyCard";
@@ -49,6 +50,8 @@ export default function HerbDetailPage() {
           <dd>{t.herbs.category[herb.category]}</dd>
         </div>
       </dl>
+
+      <FindOnMapLink herbKey={`herbs:${herb.id}`} />
 
       <section className="section">
         <h2 className="section__title">{t.herbs.howToUse}</h2>

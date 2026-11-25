@@ -1,5 +1,6 @@
 import "leaflet/dist/leaflet.css";
 import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { CircleMarker, MapContainer, Polyline, TileLayer, Tooltip, useMap } from "react-leaflet";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { type Lang, type Messages, useLanguage, useT } from "../../i18n/LanguageContext";
@@ -24,6 +25,18 @@ import {
 } from "./trailGuide";
 import { GOOGLE_MAPS_KEY, googleSatelliteUrl, trailImages } from "./googleImages";
 import { buildHike, formatDistance } from "./hikeDirections";
+import { MAP_VIEWS, type MapView } from "./mapViews";
+import {
+  FocusSighting,
+  HerbCredit,
+  HerbPins,
+  HerbSafetyNote,
+  NearbyHerbs,
+  SightingsPanel,
+  useHerbSightings,
+} from "../herb-map/HerbSightings";
+import { useMapHerbs } from "../herb-map/mapHerbs";
+import { ALONG_TRAIL_KM, distanceToPathsKm, trailBox } from "../herb-map/sightings";
 
 
 function FitBounds({ points }: { points: LatLng[] }) {
@@ -33,27 +46,6 @@ function FitBounds({ points }: { points: LatLng[] }) {
   }, [map, points]);
   return null;
 }
-
-type MapView = "map" | "satellite" | "terrain";
-
-const MAP_VIEWS: Record<MapView, { url: string; attribution: string; maxNativeZoom: number }> = {
-  map: {
-    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxNativeZoom: 19,
-  },
-  satellite: {
-    url: "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}",
-    attribution: 'Imagery: <a href="https://www.usgs.gov/">U.S. Geological Survey</a>',
-    maxNativeZoom: 16,
-  },
-  terrain: {
-    url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-    attribution:
-      'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, SRTM | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
-    maxNativeZoom: 17,
-  },
-};
 
 function GoogleTrailImages({ apiKey, trail, lang, t }: { apiKey: string; trail: Trail; lang: Lang; t: Messages }) {
   const images = useMemo(() => trailImages(apiKey, trail, lang), [apiKey, trail, lang]);
@@ -110,6 +102,17 @@ function TrailGuide({
   const onPhoto = view === "satellite";
   const hike = useMemo(() => buildHike(trail, reverse, lang), [trail, reverse, lang]);
 
+  const mapHerbs = useMapHerbs();
+  const [showHerbs, setShowHerbs] = useState(true);
+  const [herbSpotId, setHerbSpotId] = useState<number | null>(null);
+  const herbArea = useMemo(() => (showHerbs && !showGoogle ? trailBox(trail.paths) : null), [showHerbs, showGoogle, trail]);
+  const herbs = useHerbSightings(herbArea, mapHerbs.allTaxonIds, false);
+  const alongTrail = useMemo(
+    () => (herbs.results?.sightings ?? []).filter((s) => distanceToPathsKm(s.point, trail.paths) <= ALONG_TRAIL_KM),
+    [herbs.results, trail],
+  );
+  const herbSpot = showHerbs ? (alongTrail.find((s) => s.id === herbSpotId) ?? null) : null;
+
   useEffect(() => {
     const controller = new AbortController();
     setDirections(null);
@@ -139,6 +142,9 @@ function TrailGuide({
               {t.trail.views[option]}
             </button>
           ))}
+          <button type="button" className="chip" aria-pressed={showHerbs} onClick={() => setShowHerbs((value) => !value)}>
+            {t.herbMap.trailToggle}
+          </button>
         </div>
         <div className="map">
           <MapContainer
@@ -172,8 +178,40 @@ function TrailGuide({
                 <Tooltip>{t.trail.turnAround}</Tooltip>
               </CircleMarker>
             )}
+            {showHerbs && (
+              <>
+                <HerbPins sightings={alongTrail} mapHerbs={mapHerbs} selectedId={herbSpotId} onSelect={(s) => setHerbSpotId(s.id)} />
+                <FocusSighting sighting={herbSpot} />
+              </>
+            )}
           </MapContainer>
         </div>
+        {showHerbs && (
+          <div className="herb-map herb-map--trail">
+            <h3 className="trail-guide__heading">{t.herbMap.alongTrail}</h3>
+            {herbs.loading && <p className="muted" role="status">{t.herbMap.loading}</p>}
+            {herbs.failed && (
+              <p className="alert alert--error" role="alert">
+                {t.herbMap.failed}
+              </p>
+            )}
+            {herbs.results && alongTrail.length === 0 && <p className="muted">{t.herbMap.alongNone}</p>}
+            {alongTrail.length > 0 && (
+              <>
+                <p className="muted small" role="status">{t.herbMap.alongCount(alongTrail.length)}</p>
+                <HerbSafetyNote t={t} />
+                <SightingsPanel
+                  sightings={alongTrail}
+                  mapHerbs={mapHerbs}
+                  selected={herbSpot}
+                  onSelect={(s) => setHerbSpotId(s?.id ?? null)}
+                  from={null}
+                />
+                <HerbCredit t={t} />
+              </>
+            )}
+          </div>
+        )}
         </>
       )}
 
@@ -236,6 +274,22 @@ export default function TrailMapPage() {
   const t = useT();
   const { lang } = useLanguage();
   useDocumentTitle(t.trail.title);
+
+  // Herb pages link here with ?herb=herbs:nettle, so the herb map opens on that herb.
+  const mapHerbs = useMapHerbs();
+  const [params, setParams] = useSearchParams();
+  const linkedHerb = mapHerbs.get(params.get("herb") ?? "") ?? null;
+  function chooseHerb(key: string | null) {
+    setParams(
+      (current) => {
+        const next = new URLSearchParams(current);
+        if (key) next.set("herb", key);
+        else next.delete("herb");
+        return next;
+      },
+      { replace: true },
+    );
+  }
 
   const [query, setQuery] = useState("");
   const [origin, setOrigin] = useState<Origin | null>(null);
@@ -316,6 +370,15 @@ export default function TrailMapPage() {
     }
   }
 
+  // Arriving from an herb's page, jump to that herb's map once there's a starting point.
+  useEffect(() => {
+    if (!origin || !linkedHerb) return;
+    requestAnimationFrame(() =>
+      document.getElementById("herb-map-title")?.scrollIntoView({ behavior: "smooth", block: "start" }),
+    );
+    // Only when the starting point changes, not every time the visitor picks another herb.
+  }, [origin]);
+
   function chooseTrail(trail: Trail) {
     setSelectedId(trail.id);
     setMode(trail.distanceKm > 3 ? "car" : "foot");
@@ -328,6 +391,12 @@ export default function TrailMapPage() {
         <h1>{t.trail.title}</h1>
         <p className="lead muted">{t.trail.lead}</p>
       </header>
+
+      {linkedHerb && !origin && (
+        <p className="alert herb-map__linked" role="status">
+          {t.herbMap.pickStart(linkedHerb.name)}
+        </p>
+      )}
 
       <section className="trail-step card" aria-labelledby="trail-step-where">
         <h2 id="trail-step-where">{t.trail.step1}</h2>
@@ -458,6 +527,14 @@ export default function TrailMapPage() {
               </p>
             </section>
           )}
+
+          <NearbyHerbs
+            origin={originPoint}
+            radiusKm={radius}
+            label={origin.label}
+            herb={linkedHerb?.key ?? null}
+            onHerbChange={chooseHerb}
+          />
 
           {!showGoogle && (
             <section className="trail-step" aria-labelledby="trail-komoot">

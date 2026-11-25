@@ -3,6 +3,7 @@ import BackLink from "../../components/BackLink";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { useT } from "../../i18n/LanguageContext";
 import NotFoundPage from "../../pages/NotFoundPage";
+import FindOnMapLink from "../herb-map/FindOnMapLink";
 import CautionBox from "../herbs/components/CautionBox";
 import { useJapaneseHerbs } from "./catalog";
 import JapaneseSourceNote from "./JapaneseSourceNote";
@@ -76,6 +77,8 @@ export default function JapaneseHerbDetailPage() {
           <dd>{herb.flavor}</dd>
         </div>
       </dl>
+
+      <FindOnMapLink herbKey={`japanese:${herb.id}`} />
 
       <section className="section">
         <h2 className="section__title">{t.japanese.howToUse}</h2>
