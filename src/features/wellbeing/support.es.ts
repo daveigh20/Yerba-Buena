@@ -7,8 +7,8 @@
  */
 import type { Resource, ResourceId, Topic, TopicId } from "./support";
 
-type TopicText = Pick<Topic, "label" | "message" | "ideas">;
-type ResourceText = Pick<Resource, "name" | "description" | "hours" | "actions">;
+export type TopicText = Pick<Topic, "label" | "message" | "ideas">;
+export type ResourceText = Pick<Resource, "name" | "description" | "hours" | "actions">;
 
 export const TOPIC_TEXT_ES: Record<TopicId, TopicText> = {
   grief: {

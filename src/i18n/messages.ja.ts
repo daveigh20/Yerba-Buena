@@ -44,8 +44,7 @@ function translateErrorJa(message: string): string | undefined {
   return undefined;
 }
 
-/** The check-in page shows in English until its Japanese text has been reviewed (see messages.ts). */
-export const ja: Omit<Messages, "checkIn"> = {
+export const ja: Messages = {
   languageLabel: "言語",
   layout: {
     skip: "本文へスキップ",
@@ -167,6 +166,42 @@ export const ja: Omit<Messages, "checkIn"> = {
     beforeYouMake: "作る前に",
     disclaimer:
       "レシピは伝統的でシンプルな家庭の作り方であり、医療の代わりにはなりません。ハーブを使う前に、特に妊娠中・授乳中の方や服薬中の方は、医療専門家に相談してください。",
+  },
+  checkIn: {
+    docTitle: "ウェルビーイング・チェックイン",
+    title: "こころのウェルビーイング・チェックイン",
+    question: "今日のこころの調子は、全体的にどうですか？",
+    optionsLabel: "今の気分は？",
+    moods: { good: "良い", okay: "まあまあ", "not-good": "良くない" },
+    skip: "スキップ",
+    thanks: "教えてくれてありがとう！",
+    okayBefore: "気になっていることがあれば、",
+    okayLink: "話してみてください",
+    change: "回答を変更",
+    skipped: "アンケートをスキップしました。",
+    take: "チェックインする",
+    followUpTitle: "つらい気持ちなんですね。何があったか話してみませんか？",
+    followUpHint: "当てはまるものを選ぶか、自分の言葉で書いてください。どちらも任意です。",
+    topicsLabel: "何がありましたか？",
+    textLabel: "どんなことを考えていますか？",
+    textPlaceholder: "例：…なので気分が落ち込んでいます",
+    privacy: "書いた内容はこの端末にとどまり、保存や送信はされません。",
+    continue: "続ける",
+    ratherNot: "言いたくない",
+    back: "戻る",
+    crisisTitle: "ひとりで抱え込まなくて大丈夫です",
+    crisisText:
+      "自分を傷つけることを考えているのかもしれません。今すぐ誰かに連絡してください。いつでも話を聞いてくれる人がいます。",
+    call988: "988に電話する",
+    text988: "988にメッセージを送る",
+    crisisEmergency: "差し迫った危険がある場合は、911に電話するか、最寄りの救急外来へ行ってください。",
+    thankYou: "話してくれてありがとう",
+    peopleTitle: "相談できる窓口",
+    peopleNote: "無料・秘密厳守。",
+    disclaimer:
+      "このチェックインは専門的な支援の代わりにはなりません。つらいときは、医師やカウンセラー、信頼できる人に相談してください。",
+    startOver: "最初からやり直す",
+    newTab: "（新しいタブで開きます）",
   },
   trail: {
     title: "トレイルマップ",

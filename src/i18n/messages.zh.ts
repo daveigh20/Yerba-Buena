@@ -42,8 +42,7 @@ function translateErrorZh(message: string): string | undefined {
   return undefined;
 }
 
-/** The check-in page shows in English until its Chinese text has been reviewed (see messages.ts). */
-export const zh: Omit<Messages, "checkIn"> = {
+export const zh: Messages = {
   languageLabel: "语言",
   layout: {
     skip: "跳到正文",
@@ -165,6 +164,40 @@ export const zh: Omit<Messages, "checkIn"> = {
     beforeYouMake: "制作前须知",
     disclaimer:
       "这些配方是简单的传统家庭做法，不能替代医疗护理。使用草本前请先咨询医疗专业人员，尤其是在怀孕、哺乳或服药期间。",
+  },
+  checkIn: {
+    docTitle: "身心健康打卡",
+    title: "心理健康打卡",
+    question: "你今天的整体心理状态怎么样？",
+    optionsLabel: "你感觉如何？",
+    moods: { good: "很好", okay: "还行", "not-good": "不太好" },
+    skip: "跳过",
+    thanks: "谢谢你的分享！",
+    okayBefore: "如果你有什么心事，",
+    okayLink: "可以跟我说说",
+    change: "修改回答",
+    skipped: "已跳过问卷。",
+    take: "开始打卡",
+    followUpTitle: "很遗憾你感觉不太好。想跟我说说发生了什么吗？",
+    followUpHint: "选择符合的选项，或用自己的话写下来。两者都是可选的。",
+    topicsLabel: "发生了什么？",
+    textLabel: "你在想什么？",
+    textPlaceholder: "例如：我感觉很难受，因为…",
+    privacy: "你写的内容只保存在这台设备上，不会被存储或发送到任何地方。",
+    continue: "继续",
+    ratherNot: "我不想说",
+    back: "返回",
+    crisisTitle: "你不必独自面对",
+    crisisText: "听起来你可能有伤害自己的念头。请现在就联系他人。无论何时，都有人愿意倾听。",
+    call988: "拨打 988",
+    text988: "发短信到 988",
+    crisisEmergency: "如果你正处于紧急危险中，请拨打 911 或前往最近的急诊室。",
+    thankYou: "谢谢你告诉我",
+    peopleTitle: "可以倾诉的对象",
+    peopleNote: "免费且保密。",
+    disclaimer: "此打卡不能替代专业帮助。如果你正在经历困难，请与医生、心理咨询师或你信任的人谈谈。",
+    startOver: "重新开始",
+    newTab: "（在新标签页中打开）",
   },
   trail: {
     title: "步道地图",

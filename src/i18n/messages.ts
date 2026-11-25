@@ -766,10 +766,4 @@ const es: Messages = {
   translateError: translateErrorEs,
 };
 
-export const MESSAGES: Record<Lang, Messages> = {
-  en,
-  es,
-  // The check-in's Japanese and Chinese text is waiting on review by a fluent speaker, so it stays in English.
-  ja: { ...ja, checkIn: en.checkIn },
-  zh: { ...zh, checkIn: en.checkIn },
-};
+export const MESSAGES: Record<Lang, Messages> = { en, es, ja, zh };

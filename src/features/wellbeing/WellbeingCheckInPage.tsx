@@ -3,6 +3,12 @@ import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 import { type Messages, useLanguage, useT } from "../../i18n/LanguageContext";
 import { assess, RESOURCES, TOPIC_IDS, TOPICS, type Assessment, type Resource, type ResourceId, type TopicId } from "./support";
 import { RESOURCE_TEXT_ES, TOPIC_TEXT_ES } from "./support.es";
+import { RESOURCE_TEXT_JA, TOPIC_TEXT_JA } from "./support.ja";
+import { RESOURCE_TEXT_ZH, TOPIC_TEXT_ZH } from "./support.zh";
+
+/** Translated topic and resource text. English is the source, in support.ts. */
+const TOPIC_TEXT = { es: TOPIC_TEXT_ES, ja: TOPIC_TEXT_JA, zh: TOPIC_TEXT_ZH };
+const RESOURCE_TEXT = { es: RESOURCE_TEXT_ES, ja: RESOURCE_TEXT_JA, zh: RESOURCE_TEXT_ZH };
 
 const OPTIONS = [
   { value: "good", emoji: "😊" },
@@ -14,8 +20,8 @@ const OPTIONS = [
 function useSupportText() {
   const { lang } = useLanguage();
   return {
-    topic: (id: TopicId) => (lang === "es" ? { ...TOPICS[id], ...TOPIC_TEXT_ES[id] } : TOPICS[id]),
-    resource: (id: ResourceId): Resource => (lang === "es" ? { ...RESOURCES[id], ...RESOURCE_TEXT_ES[id] } : RESOURCES[id]),
+    topic: (id: TopicId) => (lang === "en" ? TOPICS[id] : { ...TOPICS[id], ...TOPIC_TEXT[lang][id] }),
+    resource: (id: ResourceId): Resource => (lang === "en" ? RESOURCES[id] : { ...RESOURCES[id], ...RESOURCE_TEXT[lang][id] }),
   };
 }
 
