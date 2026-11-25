@@ -10,7 +10,6 @@ import {
   findPlace,
   findTrails,
   getDirections,
-  hasSatelliteImagery,
   googleMapsUrl,
   komootEmbedUrl,
   type LatLng,
@@ -25,13 +24,13 @@ import {
 } from "./trailGuide";
 import { GOOGLE_MAPS_KEY, googleSatelliteUrl, trailImages } from "./googleImages";
 import { buildHike, formatDistance } from "./hikeDirections";
-import { MAP_VIEWS, type MapView } from "./mapViews";
+import { ALL_VIEWS, mapStyle, type MapView } from "./mapViews";
 import {
   FocusSighting,
   HerbCredit,
   HerbPins,
+  HerbMap,
   HerbSafetyNote,
-  NearbyHerbs,
   SightingsPanel,
   useHerbSightings,
 } from "../herb-map/HerbSightings";
@@ -98,7 +97,7 @@ function TrailGuide({
   const [failed, setFailed] = useState(false);
   const [reverse, setReverse] = useState(false);
   const [view, setView] = useState<MapView>("map");
-  const views: MapView[] = hasSatelliteImagery(trail.access) ? ["map", "satellite", "terrain"] : ["map", "terrain"];
+  const tiles = mapStyle(view, trail.access);
   const onPhoto = view === "satellite";
   const hike = useMemo(() => buildHike(trail, reverse, lang), [trail, reverse, lang]);
 
@@ -137,7 +136,7 @@ function TrailGuide({
       ) : (
         <>
         <div className="trail-modes" role="group" aria-label={t.trail.mapStyle}>
-          {views.map((option) => (
+          {ALL_VIEWS.map((option) => (
             <button key={option} type="button" className="chip" aria-pressed={view === option} onClick={() => setView(option)}>
               {t.trail.views[option]}
             </button>
@@ -155,10 +154,10 @@ function TrailGuide({
             className="map__canvas"
           >
             <TileLayer
-              key={view}
-              attribution={MAP_VIEWS[view].attribution}
-              url={MAP_VIEWS[view].url}
-              maxNativeZoom={MAP_VIEWS[view].maxNativeZoom}
+              key={tiles.url}
+              attribution={tiles.attribution}
+              url={tiles.url}
+              maxNativeZoom={tiles.maxNativeZoom}
               maxZoom={19}
             />
             <FitBounds points={points} />
@@ -476,6 +475,10 @@ export default function TrailMapPage() {
         </div>
       </section>
 
+      {!origin && (
+        <HerbMap origin={null} radiusKm={radius} label={null} herb={linkedHerb?.key ?? null} onHerbChange={chooseHerb} />
+      )}
+
       {origin && originPoint && (
         <>
           <section className="trail-step" aria-labelledby="trail-step-choose">
@@ -528,7 +531,7 @@ export default function TrailMapPage() {
             </section>
           )}
 
-          <NearbyHerbs
+          <HerbMap
             origin={originPoint}
             radiusKm={radius}
             label={origin.label}

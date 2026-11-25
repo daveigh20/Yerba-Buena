@@ -1,15 +1,13 @@
 /**
- * Herb sightings: photographed, located observations of the plants in our herb guide, from the
- * iNaturalist community. Only observations whose photos carry a Creative Commons license are
- * requested, so every photo we show can be shown with its credit.
+ * Herb sightings: photographed, located observations of the plants in our herb guides, from the
+ * iNaturalist community, anywhere in the world. We only show photos that carry a Creative Commons
+ * license, with their credit. A sighting whose photos are "all rights reserved" is still placed on
+ * the map, but its photo stays on iNaturalist and we link to it there.
  */
 
 import { distanceKm, type LatLng } from "../trail-map/trailGuide";
 
 const API = "https://api.inaturalist.org/v1/observations";
-
-/** iNaturalist's Creative Commons photo licenses. "All rights reserved" photos are left out. */
-const OPEN_LICENSES = ["cc0", "cc-by", "cc-by-nc", "cc-by-sa", "cc-by-nc-sa", "cc-by-nd", "cc-by-nc-nd"];
 
 /** The most sightings one request returns. The newest come first. */
 export const SIGHTINGS_LIMIT = 200;
@@ -43,8 +41,8 @@ export interface HerbSighting {
   /** True when the observer or iNaturalist blurred the location, for example to protect a rare plant. */
   obscured: boolean;
   accuracyM: number | null;
-  /** Always at least one. */
-  photos: [HerbPhoto, ...HerbPhoto[]];
+  /** The openly licensed photos. Empty when the photographer keeps all rights, so the photo is only on iNaturalist. */
+  photos: HerbPhoto[];
 }
 
 export interface Box {
@@ -66,7 +64,6 @@ export function sightingsUrl(area: SightingArea, taxonIds: number[], confirmedOn
   const params = new URLSearchParams({
     taxon_id: [...new Set(taxonIds)].join(","),
     photos: "true",
-    photo_license: OPEN_LICENSES.join(","),
     // Leaves out garden and potted plants, which aren't something a hiker can visit.
     verifiable: "true",
     quality_grade: confirmedOnly ? "research" : "research,needs_id",
@@ -126,8 +123,7 @@ export function parseSighting(raw: ApiObservation): HerbSighting | null {
   if (!raw.taxon || !coords || coords.length !== 2) return null;
   const [lng, lat] = coords;
   if (typeof lat !== "number" || typeof lng !== "number" || !Number.isFinite(lat) || !Number.isFinite(lng)) return null;
-  const [cover, ...more] = (raw.photos ?? []).flatMap((p) => parsePhoto(p) ?? []);
-  if (!cover) return null;
+  if (!raw.photos?.length) return null;
   const quality = raw.quality_grade === "research" ? "research" : raw.quality_grade === "needs_id" ? "needs_id" : null;
   if (!quality) return null;
   return {
@@ -141,7 +137,7 @@ export function parseSighting(raw: ApiObservation): HerbSighting | null {
     quality,
     obscured: raw.obscured === true,
     accuracyM: typeof raw.positional_accuracy === "number" ? Math.round(raw.positional_accuracy) : null,
-    photos: [cover, ...more],
+    photos: raw.photos.flatMap((p) => parsePhoto(p) ?? []),
   };
 }
 
@@ -164,6 +160,19 @@ export async function findHerbSightings(
   });
   if (!response.ok) throw new Error(`iNaturalist answered ${response.status}`);
   return parseSightings(await response.json());
+}
+
+/**
+ * The search box for what's showing on a map. Longitudes are wrapped to -180..180; a box that
+ * crosses the date line keeps west > east, which iNaturalist understands. A view wider than the
+ * whole world searches the whole world.
+ */
+export function viewBox(south: number, west: number, north: number, east: number): Box {
+  const clampLat = (lat: number) => Math.max(-90, Math.min(90, lat));
+  if (east - west >= 360) return { south: clampLat(south), west: -180, north: clampLat(north), east: 180 };
+  const wrap = (lng: number) => ((((lng + 180) % 360) + 360) % 360) - 180;
+  const eastEdge = wrap(east);
+  return { south: clampLat(south), west: wrap(west), north: clampLat(north), east: eastEdge === -180 ? 180 : eastEdge };
 }
 
 /** A box around the trail, padded so sightings just off the path are included. */

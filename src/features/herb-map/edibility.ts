@@ -1,6 +1,7 @@
 import type { Lang } from "../../i18n/messages";
 import type { HerbId } from "../herbs/data/herbs";
 import type { JapaneseHerbId } from "../japanese-herbs/data";
+import type { WorldHerbId } from "./worldHerbs";
 import { EDIBILITY_TEXT_ES } from "./edibility.es";
 import { EDIBILITY_TEXT_JA } from "./edibility.ja";
 import { EDIBILITY_TEXT_ZH } from "./edibility.zh";
@@ -26,7 +27,9 @@ export interface EdibilityText {
   care: string;
 }
 
-export type EdibilityTexts = Record<HerbId, EdibilityText> & Record<JapaneseHerbId, EdibilityText>;
+export type EdibilityTexts = Record<HerbId, EdibilityText> &
+  Record<JapaneseHerbId, EdibilityText> &
+  Record<WorldHerbId, EdibilityText>;
 
 export const HERB_EDIBILITY: Record<HerbId, Edibility> = {
   artichoke: "edible",
@@ -97,6 +100,30 @@ export const JAPANESE_HERB_EDIBILITY: Record<JapaneseHerbId, Edibility> = {
   tsubaki: "careful",
   kawamidori: "edible",
   kuko: "edible",
+};
+
+export const WORLD_HERB_EDIBILITY: Record<WorldHerbId, Edibility> = {
+  "yerba-buena": "edible",
+  yarrow: "careful",
+  rosemary: "edible",
+  sage: "edible",
+  oregano: "edible",
+  mullein: "careful",
+  plantain: "edible",
+  purslane: "edible",
+  "wild-garlic": "careful",
+  "holy-basil": "edible",
+  moringa: "edible",
+  lemongrass: "edible",
+  "yerba-mate": "edible",
+  epazote: "careful",
+  "gotu-kola": "careful",
+  calendula: "edible",
+  comfrey: "not-food",
+  baobab: "edible",
+  "lemon-myrtle": "edible",
+  kawakawa: "careful",
+  "sea-buckthorn": "edible",
 };
 
 const TEA_PLANT_CARE = "Has caffeine, so go easy late in the day, in pregnancy, or if caffeine makes you jittery.";
@@ -492,6 +519,133 @@ export const EDIBILITY_TEXT_EN: EdibilityTexts = {
     benefits: ["Rich in vitamin A and antioxidants", "Traditionally used for eye health"],
     care: "Ask a doctor if you take blood thinners. Don't eat unripe berries.",
   },
+  // Herbs from around the world, on the herb map only.
+  "yerba-buena": {
+    parts: "Leaves, fresh or dried, for tea",
+    why: "The gentle native mint that gave San Francisco its first name brews a soothing tea.",
+    benefits: ["Calming, mild mint flavor", "Traditionally used for upset stomachs"],
+    care: "Drink in normal tea amounts. Skip strong doses in pregnancy.",
+  },
+  yarrow: {
+    parts: "Flowers and a few young leaves, mostly as tea",
+    why: "A bitter, aromatic herb brewed as tea and once used to flavor beer.",
+    benefits: ["Traditionally used for colds and fevers", "Bitter taste may help digestion"],
+    care: "Avoid in pregnancy and if you're allergic to the daisy family. Its white flower clusters look like deadly poison hemlock and water hemlock.",
+  },
+  rosemary: {
+    parts: "Leaves and flowers",
+    why: "A favorite kitchen herb for roasts, breads, and tea.",
+    benefits: ["Rich in antioxidants like rosmarinic acid", "Its scent is traditionally linked to focus and memory"],
+    care: "Safe as seasoning. Avoid the concentrated oil and large medicinal doses in pregnancy or with seizure disorders.",
+  },
+  sage: {
+    parts: "Leaves",
+    why: "Earthy leaves for stuffing, butter sauces, and tea.",
+    benefits: ["Rich in antioxidants", "Traditionally used as a sore-throat gargle"],
+    care: "Contains thujone. Fine as seasoning, but don't drink strong sage tea every day for long or take sage oil.",
+  },
+  oregano: {
+    parts: "Leaves and flower tops",
+    why: "A pizza-and-pasta classic, even more fragrant when it grows wild.",
+    benefits: ["Rich in antioxidants", "Contains carvacrol, studied for fighting germs"],
+    care: "Safe as seasoning. Don't swallow oregano oil without a doctor's advice.",
+  },
+  mullein: {
+    parts: "Leaves and flowers, as a well-strained tea",
+    why: "A soft, woolly weed long brewed into tea for coughs.",
+    benefits: ["Traditionally used to soothe coughs", "Mild, gentle-tasting tea"],
+    care: "Strain the tea through a coffee filter to remove the tiny irritating hairs. Don't eat the seeds, which are poisonous.",
+  },
+  plantain: {
+    parts: "Young leaves and seeds",
+    why: "A common lawn weed whose young leaves are eaten like spinach. (Not the banana-like plantain.)",
+    benefits: ["Has vitamins A and C and fiber", "Crushed leaves are traditionally put on stings and scrapes"],
+    care: "Older leaves are tough and stringy. Skip lawns and roadsides that may be sprayed.",
+  },
+  purslane: {
+    parts: "Leaves, stems, and seeds, raw or cooked",
+    why: "A juicy, lemony succulent eaten in salads and stews from Mexico to the Mediterranean.",
+    benefits: ["One of the richest leafy sources of omega-3 fats", "Rich in vitamins A and C"],
+    care: "High in oxalates, so go easy if you get kidney stones. Don't mix it up with spurge, whose stems leak white milky sap.",
+  },
+  "wild-garlic": {
+    parts: "Leaves, flowers, and bulbs",
+    why: "Garlicky spring leaves for pesto, soups, and salads.",
+    benefits: ["Garlic flavor plus vitamin C", "Has the same sulfur compounds as garlic"],
+    care: "Deadly look-alikes include lily of the valley and autumn crocus. Crush a leaf: if it doesn't smell of garlic, don't eat it.",
+  },
+  "holy-basil": {
+    parts: "Leaves and flowers, often as tea",
+    why: "Tulsi is a sacred, clove-scented basil in India, brewed into an everyday tea.",
+    benefits: ["Traditionally used to ease stress", "Rich in antioxidants"],
+    care: "Ask a doctor first if you're pregnant, trying to conceive, or about to have surgery.",
+  },
+  moringa: {
+    parts: "Leaves, flowers, and young seed pods",
+    why: "The 'drumstick tree'; its leaves and pods are an everyday vegetable in South Asia and Africa.",
+    benefits: ["High in protein, iron, calcium, and vitamins", "Leaf powder is used to fight hunger and malnutrition"],
+    care: "Eat only the leaves, pods, and flowers. Avoid the root and bark, especially in pregnancy.",
+  },
+  lemongrass: {
+    parts: "Stalk bases, and leaves for tea",
+    why: "Bright lemony stalks for Thai and Vietnamese curries, soups, and tea.",
+    benefits: ["Refreshing caffeine-free tea", "Traditionally used to help digestion"],
+    care: "Safe in food amounts. Don't swallow the concentrated oil.",
+  },
+  "yerba-mate": {
+    parts: "Dried leaves, steeped as tea",
+    why: "South America's shared caffeinated drink, sipped from a gourd.",
+    benefits: ["Natural caffeine for alertness", "Rich in polyphenol antioxidants"],
+    care: "Has caffeine. Drinking it very hot every day is linked to throat cancer, so let it cool a little.",
+  },
+  epazote: {
+    parts: "A few leaves, cooked into beans and other dishes",
+    why: "A pungent Mexican herb cooked into black beans and quesadillas.",
+    benefits: ["Classic flavor for beans", "Traditionally said to ease gas from beans"],
+    care: "Use only a few leaves when cooking. Large amounts, the seeds, and the oil are poisonous. Avoid in pregnancy.",
+  },
+  "gotu-kola": {
+    parts: "Leaves and stems",
+    why: "A small leafy green eaten in salads and juices in Sri Lanka and Southeast Asia.",
+    benefits: ["Traditionally used for memory and healing wounds", "Fresh green full of antioxidants"],
+    care: "Avoid in pregnancy and if you have liver disease. Large doses over time have been linked to liver harm.",
+  },
+  calendula: {
+    parts: "Flower petals",
+    why: "Bright orange petals color salads, rice, and butter.",
+    benefits: ["Rich in carotenoid antioxidants", "Traditionally used to soothe skin"],
+    care: "Avoid in pregnancy or if you're allergic to the daisy family. Be sure it's pot marigold (Calendula), not another 'marigold.'",
+  },
+  comfrey: {
+    parts: "Leaves are only used on unbroken skin, in creams and poultices",
+    why: "It contains pyrrolizidine alkaloids that can badly damage the liver.",
+    benefits: [],
+    care: "Don't eat it or drink it as tea. Young leaves look like foxglove, which is deadly.",
+  },
+  baobab: {
+    parts: "Dried fruit pulp, young leaves, and roasted seeds",
+    why: "The tangy, powdery fruit pulp is made into drinks and porridge across Africa, and the leaves are cooked as greens.",
+    benefits: ["Very high in vitamin C", "Rich in fiber"],
+    care: "Eat the pulp dried or in drinks, and roast the seeds before eating. Many baobabs are protected, so don't damage the tree.",
+  },
+  "lemon-myrtle": {
+    parts: "Leaves, fresh or dried",
+    why: "An Australian bush food with a strong lemon scent for tea, baking, and seasoning.",
+    benefits: ["Caffeine-free lemony tea", "Contains citral, studied for fighting germs"],
+    care: "Use a little, since it's very strong. Don't swallow the concentrated oil.",
+  },
+  kawakawa: {
+    parts: "Leaves for tea, and the ripe orange fruit",
+    why: "A Māori healing plant whose peppery leaves make a traditional tea.",
+    benefits: ["Traditionally used for digestion and skin", "Warming, peppery flavor"],
+    care: "Drink in moderation and avoid in pregnancy. Eat only fully ripe fruit.",
+  },
+  "sea-buckthorn": {
+    parts: "Ripe orange berries, and leaves for tea",
+    why: "Sour orange berries from Europe and Asia, juiced or made into jam.",
+    benefits: ["Very high in vitamin C", "Contains rare omega-7 fats"],
+    care: "Very sour raw. The shrubs are thorny, so pick carefully.",
+  },
 };
 
 const TEXT: Record<Lang, EdibilityTexts> = {
@@ -501,6 +655,6 @@ const TEXT: Record<Lang, EdibilityTexts> = {
   zh: EDIBILITY_TEXT_ZH,
 };
 
-export function edibilityText(lang: Lang, id: HerbId | JapaneseHerbId): EdibilityText {
+export function edibilityText(lang: Lang, id: HerbId | JapaneseHerbId | WorldHerbId): EdibilityText {
   return TEXT[lang][id];
 }

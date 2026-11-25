@@ -3,18 +3,30 @@ import type { Lang } from "../../i18n/messages";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { getCatalog } from "../herbs/data";
 import { getJapaneseHerbs } from "../japanese-herbs/catalog";
-import { type Edibility, type EdibilityText, edibilityText, HERB_EDIBILITY, JAPANESE_HERB_EDIBILITY } from "./edibility";
+import {
+  type Edibility,
+  type EdibilityText,
+  edibilityText,
+  HERB_EDIBILITY,
+  JAPANESE_HERB_EDIBILITY,
+  WORLD_HERB_EDIBILITY,
+} from "./edibility";
 import type { HerbSighting } from "./sightings";
 import { HERB_TAXON_IDS, JAPANESE_HERB_TAXON_IDS } from "./taxa";
+import { WORLD_HERB_IDS, WORLD_HERB_NAMES, WORLD_HERBS } from "./worldHerbs";
 
-/** An herb from one of our catalogs that can be found on the map. */
+export const MAP_HERB_GROUPS = ["herbs", "japanese", "world"] as const;
+export type MapHerbGroup = (typeof MAP_HERB_GROUPS)[number];
+
+/** An herb from one of our catalogs, or from around the world, that can be found on the map. */
 export interface MapHerb {
-  /** Unique across both catalogs, such as "herbs:nettle" or "japanese:yomogi". */
+  /** Unique across all groups, such as "herbs:nettle", "japanese:yomogi", or "world:moringa". */
   key: string;
-  group: "herbs" | "japanese";
+  group: MapHerbGroup;
   name: string;
   scientificName: string;
-  href: string;
+  /** The herb's page on our site. World herbs don't have one yet. */
+  href: string | null;
   taxonIds: number[];
   /** Whether people can eat it, and what to know if so. */
   edibility: Edibility;
@@ -22,7 +34,7 @@ export interface MapHerb {
 }
 
 export interface MapHerbs {
-  /** Every mappable herb, the herb guide first, each group sorted by name. */
+  /** Every mappable herb: the herb guide, then Japanese herbs, then world herbs, each group sorted by name. */
   herbs: MapHerb[];
   get(key: string): MapHerb | undefined;
   /** Our herbs that a sighting is of. Several herbs can share a plant, like the true teas. */
@@ -58,7 +70,20 @@ export function buildMapHerbs(lang: Lang): MapHerbs {
       }),
     )
     .sort((a, b) => a.name.localeCompare(b.name, lang));
-  const herbs = [...main, ...japanese].filter((herb) => herb.taxonIds.length > 0);
+  const names = WORLD_HERB_NAMES[lang];
+  const world = WORLD_HERB_IDS.map(
+    (id): MapHerb => ({
+      key: `world:${id}`,
+      group: "world",
+      name: names[id],
+      scientificName: WORLD_HERBS[id].scientificName,
+      href: null,
+      taxonIds: WORLD_HERBS[id].taxonIds,
+      edibility: WORLD_HERB_EDIBILITY[id],
+      eat: edibilityText(lang, id),
+    }),
+  ).sort((a, b) => a.name.localeCompare(b.name, lang));
+  const herbs = [...main, ...japanese, ...world].filter((herb) => herb.taxonIds.length > 0);
 
   const byKey = new Map(herbs.map((herb) => [herb.key, herb]));
   const byTaxon = new Map<number, MapHerb[]>();

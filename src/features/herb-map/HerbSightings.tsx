@@ -1,45 +1,61 @@
 import L from "leaflet";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Circle, CircleMarker, MapContainer, Marker, TileLayer, Tooltip, useMap } from "react-leaflet";
+import { Circle, CircleMarker, MapContainer, Marker, TileLayer, Tooltip, useMap, useMapEvents } from "react-leaflet";
 import { Link } from "react-router-dom";
 import { type Lang, type Messages, useLanguage, useT } from "../../i18n/LanguageContext";
 import { HTML_LANG } from "../../i18n/messages";
-import { MAP_VIEWS, type MapView } from "../trail-map/mapViews";
+import { ALL_VIEWS, MAP_VIEWS, mapStyle, type MapView } from "../trail-map/mapViews";
 import { distanceKm, hasSatelliteImagery, type LatLng } from "../trail-map/trailGuide";
-import { type MapHerb, type MapHerbs, useMapHerbs } from "./mapHerbs";
+import { MAP_HERB_GROUPS, type MapHerb, type MapHerbGroup, type MapHerbs, useMapHerbs } from "./mapHerbs";
 import {
   findHerbSightings,
   googleMapsSpotUrl,
   type HerbSighting,
   type SightingArea,
   type SightingResults,
+  type Box,
+  viewBox,
 } from "./sightings";
 
 const LIST_STEP = 12;
 
-/** Loads sightings for an area. `area` is compared by value, so it can be rebuilt on each render. */
-export function useHerbSightings(area: SightingArea | null, taxonIds: number[], confirmedOnly: boolean) {
-  const [results, setResults] = useState<SightingResults | null>(null);
-  const [failed, setFailed] = useState(false);
+/**
+ * Loads sightings for an area. `area` is compared by value, so it can be rebuilt on each render.
+ * With `keepWhileLoading`, the last results stay up while the next ones load, so panning a map
+ * doesn't blank it.
+ */
+export function useHerbSightings(
+  area: SightingArea | null,
+  taxonIds: number[],
+  confirmedOnly: boolean,
+  keepWhileLoading = false,
+) {
+  const [state, setState] = useState<{ key: string; results: SightingResults | null; failed: boolean }>({
+    key: "",
+    results: null,
+    failed: false,
+  });
   const areaKey = area ? JSON.stringify(area) : "";
   const taxaKey = taxonIds.join(",");
+  const requestKey = areaKey ? `${areaKey}|${taxaKey}|${confirmedOnly}` : "";
 
   useEffect(() => {
     if (!areaKey) return;
     const controller = new AbortController();
-    setResults(null);
-    setFailed(false);
+    const key = `${areaKey}|${taxaKey}|${confirmedOnly}`;
     findHerbSightings(JSON.parse(areaKey) as SightingArea, taxaKey ? taxaKey.split(",").map(Number) : [], confirmedOnly, controller.signal)
       .then((found) => {
-        if (!controller.signal.aborted) setResults(found);
+        if (!controller.signal.aborted) setState({ key, results: found, failed: false });
       })
       .catch(() => {
-        if (!controller.signal.aborted) setFailed(true);
+        if (!controller.signal.aborted) setState((last) => ({ key, results: last.results, failed: true }));
       });
     return () => controller.abort();
   }, [areaKey, taxaKey, confirmedOnly]);
 
-  return { results, failed, loading: Boolean(areaKey) && !results && !failed };
+  const current = Boolean(requestKey) && state.key === requestKey;
+  const results = (current && !state.failed) || (keepWhileLoading && requestKey) ? state.results : null;
+  return { results, failed: current && state.failed, loading: Boolean(requestKey) && !current };
 }
 
 function formatDate(day: string | null, lang: Lang): string | null {
@@ -59,14 +75,17 @@ function escapeAttr(value: string): string {
 
 const iconCache = new Map<string, L.DivIcon>();
 
-function pinIcon(photo: string, selected: boolean): L.DivIcon {
-  const key = `${photo}|${selected}`;
+/** A photo pin, or a plain leaf pin when the photo is only on iNaturalist. */
+function pinIcon(photo: string | undefined, selected: boolean): L.DivIcon {
+  const key = `${photo ?? ""}|${selected}`;
   let icon = iconCache.get(key);
   if (!icon) {
-    const size = selected ? 52 : 38;
+    const size = selected ? 52 : photo ? 38 : 30;
     icon = L.divIcon({
-      className: selected ? "herb-pin herb-pin--selected" : "herb-pin",
-      html: `<img src="${escapeAttr(photo)}" alt="" width="${size}" height="${size}" loading="lazy">`,
+      className: ["herb-pin", selected && "herb-pin--selected", !photo && "herb-pin--plain"].filter(Boolean).join(" "),
+      html: photo
+        ? `<img src="${escapeAttr(photo)}" alt="" width="${size}" height="${size}" loading="lazy">`
+        : `<span aria-hidden="true"></span>`,
       iconSize: [size, size],
       iconAnchor: [size / 2, size / 2],
       tooltipAnchor: [0, -size / 2],
@@ -97,7 +116,7 @@ export function HerbPins({
           <Marker
             key={sighting.id}
             position={sighting.point}
-            icon={pinIcon(sighting.photos[0].square, selected)}
+            icon={pinIcon(sighting.photos[0]?.square, selected)}
             title={title}
             alt={title}
             zIndexOffset={selected ? 1000 : 0}
@@ -239,7 +258,7 @@ function SightingDetail({
   const [photoIndex, setPhotoIndex] = useState(0);
   const herbs = mapHerbs.herbsFor(sighting);
   const title = herbTitle(herbs, sighting);
-  const photo = sighting.photos[photoIndex] ?? sighting.photos[0];
+  const photo = sighting.photos[photoIndex] ?? sighting.photos[0] ?? null;
   const seen = formatDate(sighting.observedOn, lang);
 
   const ref = useRef<HTMLElement>(null);
@@ -264,6 +283,15 @@ function SightingDetail({
       </div>
 
       <div className="herb-spot__media">
+        {!photo && (
+          <div className="herb-spot__photo herb-spot__no-photo">
+            <p className="muted small">{t.herbMap.photoOnINat}</p>
+            <a className="button button--secondary" href={sighting.url} target="_blank" rel="noreferrer">
+              {t.herbMap.seePhoto}
+            </a>
+          </div>
+        )}
+        {photo && (
         <figure className="herb-spot__photo">
           <a href={sighting.url} target="_blank" rel="noreferrer">
             <img src={photo.src} alt={t.herbMap.photoOf(title)} loading="lazy" />
@@ -286,6 +314,7 @@ function SightingDetail({
             </div>
           )}
         </figure>
+        )}
         {sighting.obscured ? (
           <p className="herb-spot__place herb-spot__hidden muted small">{t.herbMap.approximate}</p>
         ) : (
@@ -323,11 +352,14 @@ function SightingDetail({
       )}
 
       <div className="herb-spot__actions">
-        {herbs.map((herb) => (
-          <Link key={herb.key} className="button" to={herb.href}>
-            {t.herbMap.readAbout(herb.name)}
-          </Link>
-        ))}
+        {herbs.map(
+          (herb) =>
+            herb.href && (
+              <Link key={herb.key} className="button" to={herb.href}>
+                {t.herbMap.readAbout(herb.name)}
+              </Link>
+            ),
+        )}
         {!sighting.obscured && (
           <a className="button button--secondary" href={googleMapsSpotUrl(sighting.point)} target="_blank" rel="noreferrer">
             {t.herbMap.openSpot}
@@ -373,7 +405,11 @@ function SightingList({
                 aria-pressed={sighting.id === selectedId}
                 onClick={() => onSelect(sighting)}
               >
-                <img src={sighting.photos[0].thumb} alt="" width={240} height={180} loading="lazy" />
+                {sighting.photos[0] ? (
+                  <img src={sighting.photos[0].thumb} alt="" width={240} height={180} loading="lazy" />
+                ) : (
+                  <span className="herb-spots__no-photo small">{t.herbMap.noPhoto}</span>
+                )}
                 <span className="herb-spots__text">
                   <strong>{title}</strong>
                   <span className="muted small">{sighting.placeName || t.herbMap.unknownPlace}</span>
@@ -448,17 +484,61 @@ export function SightingsPanel({
 
 const ALL = "all";
 
-/** Herbs photographed around the visitor's starting point, with their own map. */
-export function NearbyHerbs({
+export type HerbMapScope = "near" | "world";
+
+/** Where the world map opens: the whole globe, with the most land in view. */
+const WORLD_CENTER: LatLng = [20, 0];
+const WORLD_ZOOM = 2;
+/** Below this zoom, the map shows more than the US, so satellite uses world imagery. */
+const US_AERIAL_MIN_ZOOM = 7;
+
+interface WorldView {
+  box: Box;
+  center: LatLng;
+  zoom: number;
+}
+
+/** Reports the part of the world the map is showing, after the visitor stops moving it. */
+function TrackView({ onChange }: { onChange: (view: WorldView) => void }) {
+  const timer = useRef<number | undefined>(undefined);
+  const map = useMapEvents({
+    moveend: () => report(),
+  });
+  function report() {
+    window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => {
+      const bounds = map.getBounds();
+      const center = map.getCenter();
+      onChange({
+        box: viewBox(bounds.getSouth(), bounds.getWest(), bounds.getNorth(), bounds.getEast()),
+        center: [center.lat, ((((center.lng + 180) % 360) + 360) % 360) - 180],
+        zoom: map.getZoom(),
+      });
+    }, 400);
+  }
+  useEffect(() => {
+    report();
+    return () => window.clearTimeout(timer.current);
+    // Only once, for the opening view. Later moves report through `moveend`.
+  }, []);
+  return null;
+}
+
+/**
+ * Herbs people have photographed in the wild: around the visitor's starting point, or anywhere
+ * in the world. In the world view, the list follows whatever part of the map is showing.
+ */
+export function HerbMap({
   origin,
   radiusKm,
   label,
   herb,
   onHerbChange,
 }: {
-  origin: LatLng;
+  /** The visitor's starting point. Without one, only the world view is offered. */
+  origin: LatLng | null;
   radiusKm: number;
-  label: string;
+  label: string | null;
   /** The chosen herb's key, or null for all herbs. */
   herb: string | null;
   onHerbChange: (key: string | null) => void;
@@ -470,32 +550,57 @@ export function NearbyHerbs({
   const [confirmedOnly, setConfirmedOnly] = useState(false);
   const [view, setView] = useState<MapView>("map");
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [chosenScope, setScope] = useState<HerbMapScope>(origin ? "near" : "world");
+  const scope: HerbMapScope = origin ? chosenScope : "world";
+  const [worldView, setWorldView] = useState<WorldView | null>(null);
 
   const chosen = herbKey === ALL ? undefined : mapHerbs.get(herbKey);
   const taxonIds = chosen ? chosen.taxonIds : mapHerbs.allTaxonIds;
-  const area = useMemo(() => ({ center: origin, radiusKm }), [origin, radiusKm]);
-  const { results, failed, loading } = useHerbSightings(area, taxonIds, confirmedOnly);
+  const area = useMemo<SightingArea | null>(
+    () => (scope === "near" && origin ? { center: origin, radiusKm } : (worldView?.box ?? null)),
+    [scope, origin, radiusKm, worldView],
+  );
+  const { results, failed, loading } = useHerbSightings(area, taxonIds, confirmedOnly, scope === "world");
 
   const sightings = useMemo(() => results?.sightings ?? [], [results]);
   const counts = useMemo(() => herbCounts(sightings, mapHerbs), [sightings, mapHerbs]);
   const selected = sightings.find((s) => s.id === selectedId) ?? null;
   const fitPoints = useMemo<LatLng[]>(
-    () => (sightings.length > 0 ? [origin, ...sightings.map((s) => s.point)] : [origin]),
+    () => (!origin ? [] : sightings.length > 0 ? [origin, ...sightings.map((s) => s.point)] : [origin]),
     [origin, sightings],
   );
-  const views: MapView[] = hasSatelliteImagery(origin) ? ["map", "satellite", "terrain"] : ["map", "terrain"];
+  const aerialAt =
+    scope === "near" ? origin : worldView && worldView.zoom >= US_AERIAL_MIN_ZOOM ? worldView.center : null;
+  const tiles = mapStyle(view, aerialAt);
+  const from = scope === "near" ? origin : null;
 
-  useEffect(() => setSelectedId(null), [herbKey, confirmedOnly, origin, radiusKm]);
+  useEffect(() => setSelectedId(null), [herbKey, confirmedOnly, origin, radiusKm, scope]);
 
-  const groups = (["herbs", "japanese"] as const).map((group) => ({
+  const groupLabel: Record<MapHerbGroup, string> = {
+    herbs: t.herbMap.groupHerbs,
+    japanese: t.herbMap.groupJapanese,
+    world: t.herbMap.groupWorld,
+  };
+  const groups = MAP_HERB_GROUPS.map((group) => ({
     group,
-    herbs: mapHerbs.herbs.filter((herb) => herb.group === group),
+    herbs: mapHerbs.herbs.filter((h) => h.group === group),
   }));
 
   return (
     <section className="trail-step herb-map" aria-labelledby="herb-map-title">
-      <h2 id="herb-map-title">{t.herbMap.title}</h2>
-      <p className="muted">{t.herbMap.lead(label)}</p>
+      <h2 id="herb-map-title">{scope === "near" ? t.herbMap.title : t.herbMap.worldTitle}</h2>
+      <p className="muted">{scope === "near" && label ? t.herbMap.lead(label) : t.herbMap.worldLead}</p>
+
+      {origin && label && (
+        <div className="trail-modes" role="group" aria-label={t.herbMap.scopeLabel}>
+          <button type="button" className="chip" aria-pressed={scope === "near"} onClick={() => setScope("near")}>
+            {t.herbMap.scopeNear(label)}
+          </button>
+          <button type="button" className="chip" aria-pressed={scope === "world"} onClick={() => setScope("world")}>
+            {t.herbMap.scopeWorld}
+          </button>
+        </div>
+      )}
 
       <div className="herb-map__filters">
         <div className="field">
@@ -505,10 +610,10 @@ export function NearbyHerbs({
           <select id="herb-map-herb" className="input" value={herbKey} onChange={(e) => setHerbKey(e.target.value)}>
             <option value={ALL}>{t.herbMap.allHerbs}</option>
             {groups.map(({ group, herbs }) => (
-              <optgroup key={group} label={group === "herbs" ? t.herbMap.groupHerbs : t.herbMap.groupJapanese}>
-                {herbs.map((herb) => (
-                  <option key={herb.key} value={herb.key}>
-                    {herb.name}
+              <optgroup key={group} label={groupLabel[group]}>
+                {herbs.map((h) => (
+                  <option key={h.key} value={h.key}>
+                    {h.name}
                   </option>
                 ))}
               </optgroup>
@@ -522,11 +627,11 @@ export function NearbyHerbs({
 
       {herbKey === ALL && counts.length > 0 && (
         <div className="herb-map__found">
-          <p className="small herb-map__found-label">{t.herbMap.spotted}</p>
+          <p className="small herb-map__found-label">{scope === "near" ? t.herbMap.spotted : t.herbMap.spottedHere}</p>
           <div className="herb-map__chips">
-            {counts.map(({ herb, count }) => (
-              <button key={herb.key} type="button" className="chip" onClick={() => setHerbKey(herb.key)}>
-                {herb.name} <span className="muted">{count}</span>
+            {counts.map(({ herb: h, count }) => (
+              <button key={h.key} type="button" className="chip" onClick={() => setHerbKey(h.key)}>
+                {h.name} <span className="muted">{count}</span>
               </button>
             ))}
           </div>
@@ -537,12 +642,12 @@ export function NearbyHerbs({
           <button type="button" className="chip" onClick={() => setHerbKey(ALL)}>
             {t.herbMap.backToAll}
           </button>{" "}
-          <Link to={chosen.href}>{t.herbMap.readAbout(chosen.name)}</Link>
+          {chosen.href && <Link to={chosen.href}>{t.herbMap.readAbout(chosen.name)}</Link>}
         </p>
       )}
 
       <div className="trail-modes" role="group" aria-label={t.trail.mapStyle}>
-        {views.map((option) => (
+        {ALL_VIEWS.map((option) => (
           <button key={option} type="button" className="chip" aria-pressed={view === option} onClick={() => setView(option)}>
             {t.trail.views[option]}
           </button>
@@ -550,24 +655,31 @@ export function NearbyHerbs({
       </div>
       <div className="map">
         <MapContainer
-          center={origin}
-          zoom={13}
+          // A fresh map for each scope, so each opens on its own view.
+          key={scope}
+          center={scope === "near" && origin ? origin : WORLD_CENTER}
+          zoom={scope === "near" ? 13 : WORLD_ZOOM}
+          minZoom={2}
+          worldCopyJump
           scrollWheelZoom={false}
-          dragging={!window.matchMedia("(pointer: coarse)").matches}
+          dragging={!window.matchMedia("(pointer: coarse)").matches || scope === "world"}
           className="map__canvas"
         >
           <TileLayer
-            key={view}
-            attribution={MAP_VIEWS[view].attribution}
-            url={MAP_VIEWS[view].url}
-            maxNativeZoom={MAP_VIEWS[view].maxNativeZoom}
+            key={tiles.url}
+            attribution={tiles.attribution}
+            url={tiles.url}
+            maxNativeZoom={tiles.maxNativeZoom}
             maxZoom={19}
           />
-          <FitTo points={fitPoints} />
+          {scope === "near" && <FitTo points={fitPoints} />}
+          {scope === "world" && <TrackView onChange={setWorldView} />}
           <FocusSighting sighting={selected} />
-          <CircleMarker center={origin} radius={9} pathOptions={{ color: "#fff", weight: 2, fillColor: "#2f6fdb", fillOpacity: 1 }}>
-            <Tooltip>{t.trail.youStartHere}</Tooltip>
-          </CircleMarker>
+          {origin && (
+            <CircleMarker center={origin} radius={9} pathOptions={{ color: "#fff", weight: 2, fillColor: "#2f6fdb", fillOpacity: 1 }}>
+              <Tooltip>{t.trail.youStartHere}</Tooltip>
+            </CircleMarker>
+          )}
           <HerbPins
             sightings={sightings}
             mapHerbs={mapHerbs}
@@ -587,7 +699,9 @@ export function NearbyHerbs({
           {t.herbMap.failed}
         </p>
       )}
-      {results && sightings.length === 0 && <p className="muted">{t.herbMap.none}</p>}
+      {!loading && results && sightings.length === 0 && (
+        <p className="muted">{scope === "near" ? t.herbMap.none : t.herbMap.worldNone}</p>
+      )}
       {results && sightings.length > 0 && (
         <p className="muted small" role="status">
           {t.herbMap.showing(sightings.length, results.total)}
@@ -601,7 +715,7 @@ export function NearbyHerbs({
           mapHerbs={mapHerbs}
           selected={selected}
           onSelect={(s) => setSelectedId(s?.id ?? null)}
-          from={origin}
+          from={from}
         />
       )}
       <HerbCredit t={t} />

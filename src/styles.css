@@ -951,6 +951,20 @@ mark {
 .herb-pin--selected img {
   border: 3px solid #ffd23f;
 }
+/* A sighting whose photo is only on iNaturalist: a plain leaf-green dot. */
+.herb-pin--plain span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50% 0;
+  border: 2px solid #fff;
+  background: #2f7d4f;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.45);
+  transform: rotate(45deg) scale(0.8);
+}
+.herb-pin--plain.herb-pin--selected span {
+  border: 3px solid #ffd23f;
+}
 
 .herb-safety {
   margin: 12px 0;
@@ -998,6 +1012,28 @@ mark {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   background: var(--brand-soft);
+}
+.herb-spots__no-photo {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 8px;
+  background: var(--brand-soft);
+  color: var(--text);
+  text-align: center;
+}
+.herb-spot__no-photo {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 8px;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--brand-soft);
+}
+.herb-spot__no-photo p {
+  margin: 0;
 }
 .herb-spots__text {
   display: grid;
